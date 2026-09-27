@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import nodemailer from 'nodemailer';
+import { siteUrl } from '../../lib/site';
 import { applySchema, describe, fieldErrors, type Application } from '../../lib/apply';
 
 export const prerender = false;
@@ -55,7 +56,7 @@ function notification(a: Application) {
 }
 
 function confirmation(a: Application) {
-  const site = (process.env.SITE_URL || '').replace(/\/$/, '');
+  const site = siteUrl.startsWith('http://localhost') ? '' : siteUrl;
   const text = `Hi ${a.name},\n\nThanks for applying to Life Leads Plus. We got your application for ${a.agency}.\n\nWe'll reply with your program and rate.\n\nLife Leads Plus`;
   const logo = site
     ? `<img src="${esc(site)}/brand/wordmark.png" width="78" height="50" alt="Life Leads Plus" style="display:block">`

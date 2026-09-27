@@ -2,7 +2,11 @@
 const env = process.env;
 const clean = (v?: string) => v?.trim() || undefined;
 
-export const siteUrl = (clean(env.SITE_URL) ?? 'http://localhost:4321').replace(/\/$/, '');
+// SITE_URL wins; otherwise Vercel's production domain (custom domain once added, else *.vercel.app).
+const vercelUrl = clean(env.VERCEL_PROJECT_PRODUCTION_URL);
+export const siteUrl = (
+  clean(env.SITE_URL) ?? (vercelUrl ? `https://${vercelUrl}` : 'http://localhost:4321')
+).replace(/\/$/, '');
 export const portalUrl = clean(env.PORTAL_URL)?.replace(/\/$/, '');
 export const loginHref = portalUrl ? `${portalUrl}/login` : '/login';
 export const phone = clean(env.PUBLIC_PHONE);

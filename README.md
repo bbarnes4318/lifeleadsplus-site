@@ -52,19 +52,19 @@ First Playwright run: `npx playwright install chromium`.
 
 ## Environment variables
 
-| Variable             | Required | Used for                                                            |
-| -------------------- | -------- | ------------------------------------------------------------------- |
-| `SITE_URL`           | yes      | Canonical URLs, sitemap, OG image URL, logo in confirmation email   |
-| `PORTAL_URL`         | yes      | "Client login" links (`PORTAL_URL/login`) and the `/login` redirect |
-| `APPLY_TO_EMAIL`     | yes      | Recipient of new client applications                                |
-| `SMTP_HOST`          | yes      | SMTP server                                                         |
-| `SMTP_PORT`          | yes      | `465` = TLS, otherwise STARTTLS (default `587`)                     |
-| `SMTP_USER`          | usually  | SMTP username                                                       |
-| `SMTP_PASSWORD`      | usually  | SMTP password                                                       |
-| `SMTP_FROM`          | yes      | From address, e.g. `Life Leads Plus <no-reply@yourdomain.com>`      |
-| `PUBLIC_PHONE`       | no       | Shown in header, footer and Get Started when set; hidden when unset |
-| `PUBLIC_EMAIL`       | no       | Same rule as `PUBLIC_PHONE`; also the Privacy page contact          |
-| `COMPANY_LEGAL_NAME` | no       | Footer copyright and Privacy page (default `Life Leads Plus`)       |
+| Variable             | Required | Used for                                                                                                                                                                             |
+| -------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `SITE_URL`           | no       | Canonical URLs, sitemap, OG image URL, email logo. Defaults on Vercel to the production domain (`VERCEL_PROJECT_PRODUCTION_URL`: your custom domain once added, else `*.vercel.app`) |
+| `PORTAL_URL`         | yes      | "Client login" links (`PORTAL_URL/login`) and the `/login` redirect                                                                                                                  |
+| `APPLY_TO_EMAIL`     | yes      | Recipient of new client applications                                                                                                                                                 |
+| `SMTP_HOST`          | yes      | SMTP server                                                                                                                                                                          |
+| `SMTP_PORT`          | yes      | `465` = TLS, otherwise STARTTLS (default `587`)                                                                                                                                      |
+| `SMTP_USER`          | usually  | SMTP username                                                                                                                                                                        |
+| `SMTP_PASSWORD`      | usually  | SMTP password                                                                                                                                                                        |
+| `SMTP_FROM`          | yes      | From address, e.g. `Life Leads Plus <no-reply@yourdomain.com>`                                                                                                                       |
+| `PUBLIC_PHONE`       | no       | Shown in header, footer and Get Started when set; hidden when unset                                                                                                                  |
+| `PUBLIC_EMAIL`       | no       | Same rule as `PUBLIC_PHONE`; also the Privacy page contact                                                                                                                           |
+| `COMPANY_LEGAL_NAME` | no       | Footer copyright and Privacy page (default `Life Leads Plus`)                                                                                                                        |
 
 Pages are prerendered, so every variable except those read by `/api/apply` and `/login` is baked
 in at build time. On Vercel, any env var change takes effect on the next deployment — redeploy
