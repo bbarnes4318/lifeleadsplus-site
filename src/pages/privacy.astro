@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { legalName, email } from '../lib/site';
+
+const updated = new Date().toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Base
+  title="Privacy | Life Leads Plus"
+  description={`How ${legalName} handles information submitted through this website.`}
+>
+  <PageIntro
+    title="Privacy"
+    intro={`This notice covers this website only. It explains what ${legalName} collects here and how we use it.`}
+  >
+    <p class="text-ink-3 mt-4 text-sm">Last updated {updated}</p>
+  </PageIntro>
+
+  <section class="section">
+    <div class="container legal">
+      <h2>What we collect</h2>
+      <p>
+        When you send the Get Started form, we collect what you enter: your agency name, your name,
+        email address, mobile phone number, licensed states, number of agents, verticals, program
+        and call preferences, delivery hours and any message you add.
+      </p>
+      <h2>How we use it</h2>
+      <p>
+        We use it to respond to you and to set up and run your program. With your consent on the
+        form, we may contact you about our programs by phone, text and email.
+      </p>
+      <h2>Sharing</h2>
+      <p>We do not sell your information.</p>
+      <h2>How long we keep it</h2>
+      <p>We keep it as long as we need it for our business relationship with you.</p>
+      <h2>Cookies and analytics</h2>
+      <p>This website sets no cookies and uses no analytics or third-party tracking.</p>
+      <h2>Contact</h2>
+      <p>
+        {email ? (
+          <>
+            Questions about this notice? Email <a href={`mailto:${email}`}>{email}</a>.
+          </>
+        ) : (
+          <>
+            Questions about this notice? Reach us through the{' '}
+            <a href="/get-started">Get Started form</a>.
+          </>
+        )}
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal h2 {
+    font-size: 1.375rem;
+    margin-top: 2.25rem;
+  }
+  .legal h2:first-child {
+    margin-top: 0;
+  }
+  .legal p {
+    margin-top: 0.75rem;
+    color: var(--ink-2);
+  }
+</style>

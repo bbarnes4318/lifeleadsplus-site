@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import Frame from '../components/Frame.astro';
+import FaqStrip from '../components/FaqStrip.astro';
+
+const intro =
+  'You pay for the business your agents write — not for calls that don’t close. It works for agencies that want their cost tied directly to production.';
+---
+
+<Base
+  title="Pay Per Application Insurance Leads | Life Leads Plus"
+  description="Pay for the business your agents write, not for calls that don’t close. Live Final Expense and Medicare calls with cost tied directly to production."
+>
+  <PageIntro eyebrow="Pay Per Application" title="Pay per submitted application." intro={intro} />
+
+  <section class="section" aria-labelledby="counted-title">
+    <div class="container grid gap-12 md:grid-cols-2">
+      <div class="prose-block">
+        <h2 id="counted-title">How it’s counted</h2>
+        <p class="text-ink-2 mt-4">
+          Your agents take calls inside the Life Leads Plus portal. When they submit an application,
+          they log it on that call, before they hang up.
+        </p>
+        <p class="text-ink-2">
+          That logged application is what you pay for, and you can see every one of them, with the
+          call it came from, in your portal.
+        </p>
+      </div>
+      <div>
+        <h2>What you need</h2>
+        <ul class="ticks mt-5">
+          <li>Licensed agents in the states you want calls from</li>
+          <li>Your agents taking calls in the portal (in the browser; no phone system needed)</li>
+          <li>A prepaid balance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-paper" aria-labelledby="see-title">
+    <div class="container grid items-center gap-10 lg:grid-cols-[1.3fr_1fr]">
+      <Frame
+        shot="applications"
+        alt="Applications page listing carrier, plan, face amount, premium and agent for each application"
+        sizes="(min-width: 1248px) 680px, (min-width: 1024px) 55vw, 100vw"
+      />
+      <div>
+        <h2 id="see-title">What you see</h2>
+        <ul class="ticks mt-5">
+          <li>Every application with carrier, face amount and premium</li>
+          <li>The call each application came from, with its recording</li>
+          <li>Your closing percentage by agent and by day</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pricing-title">
+    <div class="container">
+      <div class="card flex flex-col items-start gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-10">
+        <div>
+          <h2 id="pricing-title">Pricing</h2>
+          <p class="text-ink-2 mt-3">
+            Your rate depends on vertical, states and volume. Tell us about your agency and we’ll
+            send your rate.
+          </p>
+        </div>
+        <a href="/get-started" class="btn btn-primary shrink-0">
+          Get started
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <FaqStrip
+    items={[
+      ['Do my agents need a dialer?', 'No. They take calls in the portal in their browser.'],
+      [
+        'What if an agent forgets to log an application?',
+        'Agents log applications on the call; your portal shows every call and every application side by side, so gaps are easy to spot.',
+      ],
+      ['Can I switch to pay per call later?', 'Yes. Talk to us and we’ll move your program.'],
+    ]}
+  />
+</Base>

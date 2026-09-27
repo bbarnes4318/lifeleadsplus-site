@@ -1,0 +1,109 @@
+---
+import { Image } from 'astro:assets';
+import wordmarkOnDark from '../assets/brand/wordmark-on-dark.png';
+import Icon from './Icon.astro';
+import { loginHref, phone, telHref, email, legalName } from '../lib/site';
+
+const columns = [
+  {
+    title: 'Programs',
+    links: [
+      { href: '/pay-per-application', label: 'Pay Per Application' },
+      { href: '/pay-per-call', label: 'Pay Per Call' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { href: '/platform', label: 'The Portal' },
+      { href: '/faq', label: 'FAQ' },
+      { href: '/get-started', label: 'Get started' },
+      { href: loginHref, label: 'Client login' },
+    ],
+  },
+  { title: 'Legal', links: [{ href: '/privacy', label: 'Privacy' }] },
+];
+---
+
+<footer class="site-footer">
+  <div class="container py-14">
+    <div class="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+      <div>
+        <a href="/" aria-label="Life Leads Plus home" class="inline-block">
+          <Image
+            src={wordmarkOnDark}
+            alt="Life Leads Plus"
+            height={56}
+            densities={[1, 2]}
+            class="h-14 w-auto"
+          />
+        </a>
+        <p class="mt-4 max-w-[34ch] text-[0.9375rem]">
+          Live Final Expense and Medicare calls for licensed agencies.
+        </p>
+        {(phone || email) && (
+          <ul class="mt-5 grid gap-2 text-[0.9375rem]">
+            {phone && (
+              <li>
+                <a href={telHref} class="flex items-center gap-2">
+                  <Icon name="phone" size={16} class="text-blue" />
+                  {phone}
+                </a>
+              </li>
+            )}
+            {email && (
+              <li>
+                <a href={`mailto:${email}`} class="flex items-center gap-2">
+                  <Icon name="mail" size={16} class="text-blue" />
+                  {email}
+                </a>
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
+      {columns.map((col) => (
+        <nav aria-label={col.title}>
+          <h2 class="footer-title">{col.title}</h2>
+          <ul class="mt-3 grid gap-2 text-[0.9375rem]">
+            {col.links.map((l) => (
+              <li>
+                <a href={l.href}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+    <p class="mt-12 max-w-none border-t border-white/15 pt-6 text-sm">
+      © {new Date().getFullYear()}
+      {legalName}. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--navy);
+    color: #c8d3e6;
+  }
+  .footer-title {
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  a {
+    color: #e6ecf6;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  a:focus-visible {
+    outline-color: #fff;
+  }
+</style>

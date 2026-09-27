@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const faqs: [string, string][] = [
+  ['What verticals do you offer?', 'Final Expense and Medicare.'],
+  [
+    'What’s the difference between pay per application and pay per call?',
+    'Pay per application charges for submitted applications your agents log in the portal. Pay per call charges for calls that pass the buffer on your agreement.',
+  ],
+  [
+    'Do I have to use the portal?',
+    'For pay per application, yes: your agents take calls and log applications there. For pay per call, you can take calls on your own phones or dialer and use the portal for your call log, recordings, spend and statements.',
+  ],
+  [
+    'How do I pay?',
+    'Programs are prepaid. You fund a balance and calls or applications draw from it.',
+  ],
+  [
+    'Can I choose my states and hours?',
+    'Yes. Calls only come from your licensed states, during your delivery hours, up to your daily cap.',
+  ],
+  ['Can I listen to my calls?', 'Yes. Every call in your call log has its recording.'],
+  [
+    'Can I get a statement for my accountant?',
+    'Yes. Download a statement for any month from your portal.',
+  ],
+  [
+    'How fast can I start?',
+    'Once your agreement is signed and your balance is funded, we schedule your first delivery day.',
+  ],
+  ['How do I log in?', 'Use Client login at the top of this page.'],
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(([q, a]) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+};
+---
+
+<Base
+  title="FAQ | Life Leads Plus"
+  description="Answers about Life Leads Plus pay per application and pay per call programs: verticals, the portal, prepaid billing, states, hours, recordings and statements."
+  jsonLd={jsonLd}
+>
+  <PageIntro
+    eyebrow="FAQ"
+    title="Questions from agencies."
+    intro="How our programs, billing and portal work."
+  />
+
+  <section class="section" aria-label="Questions">
+    <div class="container max-w-[880px]">
+      <div class="faq-list">
+        {faqs.map(([q, a]) => (
+          <details>
+            <summary>
+              <span>{q}</span>
+              <Icon name="chevron-down" size={20} class="chev" />
+            </summary>
+            <p>{a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .faq-list {
+    border-top: 1px solid var(--rule);
+  }
+  details {
+    border-bottom: 1px solid var(--rule);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+    color: var(--navy);
+    font-size: 1.125rem;
+    font-weight: 650;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary :global(.chev) {
+    flex-shrink: 0;
+    color: var(--blue-strong);
+    transition: transform 0.2s;
+  }
+  details[open] summary :global(.chev) {
+    transform: rotate(180deg);
+  }
+  details p {
+    padding-bottom: 1.25rem;
+    color: var(--ink-2);
+  }
+</style>

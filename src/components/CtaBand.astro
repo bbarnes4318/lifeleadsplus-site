@@ -1,0 +1,24 @@
+---
+interface Props {
+  title?: string;
+  sub?: string;
+}
+const {
+  title = 'Ready for live calls?',
+  sub = "Tell us about your agency and we'll set up your program.",
+} = Astro.props;
+---
+
+<section class="bg-navy text-white" aria-labelledby="cta-title">
+  <div class="container flex flex-col items-start gap-6 py-16 md:flex-row md:items-center md:justify-between">
+    <div>
+      <h2 id="cta-title" class="text-white">
+        {title}
+      </h2>
+      <p class="mt-3 text-lg text-[#c8d3e6]">{sub}</p>
+    </div>
+    <a href="/get-started" class="btn btn-light shrink-0">
+      Get started
+    </a>
+  </div>
+</section>

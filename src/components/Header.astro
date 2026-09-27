@@ -1,0 +1,206 @@
+---
+import { Image } from 'astro:assets';
+import wordmark from '../assets/brand/wordmark.png';
+import Icon from './Icon.astro';
+import { nav, loginHref, phone, telHref } from '../lib/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '');
+---
+
+<header class="site-header" data-header>
+  <div class="container flex h-16 items-center gap-6 lg:h-[72px]">
+    <a href="/" class="shrink-0" aria-label="Life Leads Plus home">
+      <Image src={wordmark} alt="Life Leads Plus" height={36} densities={[1, 2, 3]} class="logo" />
+    </a>
+
+    <nav aria-label="Main" class="ml-4 hidden lg:block">
+      <ul class="flex items-center gap-7">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="nav-link"
+              aria-current={path === item.href ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="ml-auto hidden items-center gap-6 lg:flex">
+      {phone && (
+        <a href={telHref} class="nav-link hidden items-center gap-2 xl:inline-flex">
+          <Icon name="phone" size={16} />
+          {phone}
+        </a>
+      )}
+      <a href={loginHref} class="nav-link">
+        Client login
+      </a>
+      <a href="/get-started" class="btn btn-primary">
+        Get started
+      </a>
+    </div>
+
+    <button
+      type="button"
+      class="menu-btn ml-auto inline-grid lg:hidden"
+      aria-haspopup="dialog"
+      aria-controls="mobile-menu"
+      data-menu-open
+    >
+      <Icon name="menu" size={24} />
+      <span class="sr-only">Open menu</span>
+    </button>
+  </div>
+
+  <dialog id="mobile-menu" class="sheet" aria-label="Menu">
+    <div class="container flex h-16 items-center">
+      <a href="/" aria-label="Life Leads Plus home">
+        <Image
+          src={wordmark}
+          alt="Life Leads Plus"
+          height={36}
+          densities={[1, 2, 3]}
+          class="logo"
+        />
+      </a>
+      <button type="button" class="menu-btn ml-auto inline-grid" data-menu-close>
+        <Icon name="x" size={24} />
+        <span class="sr-only">Close menu</span>
+      </button>
+    </div>
+    <nav aria-label="Mobile" class="container pt-2 pb-6">
+      <ul class="border-rule border-t">
+        {nav.map((item) => (
+          <li class="border-rule border-b">
+            <a
+              href={item.href}
+              class="sheet-link"
+              aria-current={path === item.href ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+        <li class="border-rule border-b">
+          <a href={loginHref} class="sheet-link">
+            Client login
+          </a>
+        </li>
+      </ul>
+      <a href="/get-started" class="btn btn-primary mt-6 w-full">
+        Get started
+      </a>
+      {phone && (
+        <a href={telHref} class="sheet-link mt-2 flex items-center gap-2">
+          <Icon name="phone" size={18} />
+          {phone}
+        </a>
+      )}
+    </nav>
+  </dialog>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--surface);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .site-header.scrolled {
+    border-bottom-color: var(--rule);
+  }
+  .logo {
+    height: 30px;
+    width: auto;
+  }
+  @media (min-width: 1024px) {
+    .logo {
+      height: 36px;
+    }
+  }
+  .nav-link {
+    color: var(--ink-2);
+    font-weight: 550;
+    font-size: 0.9875rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-link:hover,
+  .nav-link[aria-current='page'] {
+    color: var(--navy);
+  }
+  .nav-link[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-color: var(--blue);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+  }
+  .menu-btn {
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px;
+    border-radius: 6px;
+    color: var(--navy);
+  }
+  .sheet {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--surface);
+    box-shadow: var(--shadow-raised);
+  }
+  .sheet::backdrop {
+    background: rgba(11, 35, 80, 0.4);
+  }
+  .sheet-link {
+    display: block;
+    padding: 0.875rem 0;
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 1.125rem;
+    text-decoration: none;
+  }
+  .sheet-link[aria-current='page'] {
+    color: var(--blue-strong);
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 4);
+  onScroll();
+  addEventListener('scroll', onScroll, { passive: true });
+
+  // Native modal <dialog>: traps focus and closes on Esc.
+  const dialog = document.querySelector<HTMLDialogElement>('#mobile-menu')!;
+  const opener = document.querySelector<HTMLButtonElement>('[data-menu-open]')!;
+  opener.addEventListener('click', () => dialog.showModal());
+  dialog.querySelector('[data-menu-close]')!.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (e) => e.target === dialog && dialog.close());
+  // Keep Tab inside the sheet instead of escaping to the browser UI.
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const items = [...dialog.querySelectorAll<HTMLElement>('a[href], button')];
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+  addEventListener('resize', () => innerWidth >= 1024 && dialog.open && dialog.close());
+</script>

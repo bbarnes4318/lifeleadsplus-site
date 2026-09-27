@@ -1,0 +1,124 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import Frame from '../components/Frame.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const rows = [
+  {
+    shot: 'buyer-billing',
+    title: 'Your balance, spend and top-ups',
+    alt: 'Billing page with transactions, top-ups and monthly statements',
+    bullets: [
+      'Prepaid balance and what you’ve spent',
+      'Request a top-up in one click',
+      'Download a monthly statement for any month',
+    ],
+  },
+  {
+    shot: 'agents-floor',
+    title: 'Your agents, live',
+    alt: 'Agents page showing who is ready, on a call or away, with calls and applications today',
+    bullets: [
+      'Who’s ready, who’s on a call, and for how long',
+      'Calls, talk time and applications today',
+      'Each agent’s calls and recordings',
+    ],
+  },
+  {
+    shot: 'crm-agent',
+    title: 'Every agent’s own customers',
+    alt: 'An agent’s customer list with prospects, stages and follow-ups',
+    bullets: [
+      'Each agent sees only their own customers',
+      'The owner sees everyone’s',
+      'Notes, tasks and follow-ups on every customer',
+    ],
+  },
+  {
+    shot: 'applications',
+    title: 'Every application, logged on the call',
+    alt: 'Applications page listing carrier, face amount, premium and agent',
+    bullets: [
+      'Carrier, face amount and premium',
+      'Open the customer behind every application',
+      'Closing percentage by agent',
+    ],
+  },
+] as const;
+
+const also = [
+  'Call log with recordings',
+  'Delivery hours, states and daily caps',
+  'Returns',
+  'Monthly statements',
+  'Browser softphone for your agents',
+  'Password reset and invites for your team',
+];
+---
+
+<Base
+  title="The Client Portal | Life Leads Plus"
+  description="Every Life Leads Plus client gets a portal login for calls, recordings, agents, applications, prepaid balance and monthly statements."
+>
+  <PageIntro
+    eyebrow="The Portal"
+    title="One portal for your calls, your agents and your money."
+    intro="Every client gets a Life Leads Plus portal login. What you see depends on how you take calls."
+  />
+
+  <div class="section">
+    <div class="container grid gap-20 md:gap-28">
+      {rows.map((row, i) => (
+        <section class="feature" aria-labelledby={`f-${i}`}>
+          <Frame
+            shot={row.shot}
+            alt={row.alt}
+            sizes="(min-width: 1248px) 690px, (min-width: 900px) 56vw, 100vw"
+            class={i % 2 ? 'min-[900px]:order-2' : undefined}
+          />
+          <div>
+            <h2 id={`f-${i}`} class="text-[1.75rem]">
+              {row.title}
+            </h2>
+            <ul class="ticks mt-5">
+              {row.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+
+  <section class="section bg-paper" aria-labelledby="also-title">
+    <div class="container">
+      <h2 id="also-title">Also in the portal</h2>
+      <ul class="ticks mt-8 sm:grid-cols-2 lg:grid-cols-3">
+        {also.map((a) => (
+          <li>{a}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .feature {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .feature {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 4rem;
+    }
+    .feature:nth-child(even) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    }
+  }
+</style>
