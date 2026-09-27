@@ -1,0 +1,264 @@
+---
+import Base from '../layouts/Base.astro';
+import Frame from '../components/Frame.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { loginHref, siteUrl } from '../lib/site';
+
+const programs = [
+  {
+    href: '/pay-per-application',
+    icon: 'file-check',
+    title: 'Pay Per Application',
+    body: 'You pay for submitted applications, not for calls. Your agents take calls in the Life Leads Plus portal and log each application before they hang up.',
+  },
+  {
+    href: '/pay-per-call',
+    icon: 'phone-incoming',
+    title: 'Pay Per Call',
+    body: 'You pay for each call that passes the buffer time on your agreement. Take calls on your own phones or dialer, or in the portal.',
+  },
+] as const;
+
+const steps = [
+  ['Apply', 'Tell us your licensed states, how many agents you have and the volume you want.'],
+  [
+    'Set up',
+    'Sign your agreement, fund your prepaid balance, and set your delivery hours, states and daily caps.',
+  ],
+  ['Take calls', 'Callers transfer live to your agents, in the portal or to your own number.'],
+  [
+    'Track everything',
+    'Calls, recordings, applications, spend and monthly statements, all in your portal.',
+  ],
+];
+
+const controls = [
+  ['map-pin', 'Your states', "Calls only come from the states you're licensed in."],
+  ['clock', 'Your hours', 'Calls only arrive during the delivery hours you set.'],
+  ['gauge', 'Your daily cap', 'Set how many calls a day you want, and change it any time.'],
+  ['headphones', 'Every recording', 'Listen to any call from your call log.'],
+  ['wallet', 'Prepaid balance', 'You fund a balance up front. No surprise invoices.'],
+  ['file-text', 'Monthly statements', 'Download a statement for any month.'],
+] as const;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Life Leads Plus',
+  url: `${siteUrl}/`,
+  logo: `${siteUrl}/brand/wordmark.png`,
+};
+---
+
+<Base
+  title="Live Final Expense and Medicare Calls | Life Leads Plus"
+  description="Live Final Expense and Medicare calls transferred to your licensed agents. Pay per submitted application or pay per call, with every call, recording and dollar in your own portal."
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Final Expense · Medicare</p>
+        <h1 class="mt-4">
+          Live insurance calls,{' '}
+          <span class="underline-stroke">
+            priced the way
+            <svg
+              viewBox="0 0 300 16"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4"
+                fill="none"
+                stroke="var(--red)"
+                stroke-width="3"
+                stroke-linecap="round"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
+          </span>{' '}
+          your agency sells.
+        </h1>
+        <p class="lead mt-6">
+          Callers transferred live to your licensed agents. Pay per submitted application or pay per
+          call — and see every call, recording and dollar in your own portal.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/get-started" class="btn btn-primary">
+            Get started
+          </a>
+          <a href={loginHref} class="btn btn-secondary">
+            Client login
+          </a>
+        </div>
+      </div>
+      <Frame
+        shot="agents-floor"
+        alt="The Life Leads Plus portal showing agents who are ready, on a call, and their calls and applications today"
+        sizes="(min-width: 1248px) 660px, (min-width: 900px) 54vw, 390px"
+        hero
+      />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="programs-title">
+    <div class="container">
+      <h2 id="programs-title">Two programs</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {programs.map((p) => (
+          <article class="card flex flex-col p-7 md:p-8">
+            <span class="icon-tile">
+              <Icon name={p.icon} size={22} />
+            </span>
+            <h3 class="mt-5 text-2xl">{p.title}</h3>
+            <p class="text-ink-2 mt-3">{p.body}</p>
+            <a href={p.href} class="link-arrow mt-auto pt-6">
+              Learn more<span class="sr-only"> about {p.title}</span>
+              <Icon name="arrow-right" size={18} />
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-paper" aria-labelledby="how-title">
+    <div class="container">
+      <h2 id="how-title">How it works</h2>
+      <ol class="mt-10 grid gap-8 md:grid-cols-4 md:gap-6">
+        {steps.map(([title, body], i) => (
+          <li class="step">
+            <span class="step-num" aria-hidden="true">
+              {i + 1}
+            </span>
+            <h3 class="mt-4">
+              <span class="sr-only">Step {i + 1}: </span>
+              {title}
+            </h3>
+            <p class="text-ink-2 mt-2">{body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="control-title">
+    <div class="container">
+      <h2 id="control-title">What you control</h2>
+      <ul class="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        {controls.map(([icon, title, body]) => (
+          <li class="flex gap-4">
+            <span class="icon-tile shrink-0">
+              <Icon name={icon} size={22} />
+            </span>
+            <div>
+              <h3 class="text-lg">{title}</h3>
+              <p class="text-ink-2 mt-1">{body}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="pb-16 md:pb-24" aria-label="Verticals">
+    <div class="container grid gap-6 md:grid-cols-2">
+      <div class="vertical">
+        <h2 class="text-2xl">Final Expense</h2>
+        <p class="text-ink-2 mt-2">Seniors looking for coverage for funeral and final costs.</p>
+      </div>
+      <div class="vertical">
+        <h2 class="text-2xl">Medicare</h2>
+        <p class="text-ink-2 mt-2">Beneficiaries looking at their Medicare options.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-paper" aria-labelledby="portal-title">
+    <div class="container">
+      <h2 id="portal-title">Everything in one portal</h2>
+      <p class="lead mt-4">
+        Your calls, your agents and your spend in one place, from any browser.
+      </p>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        <Frame
+          shot="buyer-billing"
+          alt="Billing page with transactions, top-ups and monthly statements"
+          sizes="(min-width: 1248px) 588px, (min-width: 768px) 48vw, 100vw"
+        />
+        <Frame
+          shot="crm-agent"
+          alt="An agent's own customers list with prospects and submitted applications"
+          sizes="(min-width: 1248px) 588px, (min-width: 768px) 48vw, 100vw"
+        />
+      </div>
+      <a href="/platform" class="link-arrow mt-8">
+        See the portal
+        <Icon name="arrow-right" size={18} />
+      </a>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(2.5rem, 6vw, 5rem);
+  }
+  .hero-grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+  .underline-stroke {
+    position: relative;
+    white-space: nowrap;
+  }
+  .underline-stroke svg {
+    position: absolute;
+    left: -2%;
+    bottom: -0.16em;
+    width: 104%;
+    height: 0.3em;
+    overflow: visible;
+  }
+  .step {
+    position: relative;
+  }
+  .step-num {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 750;
+  }
+  @media (min-width: 768px) {
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 52px;
+      right: -12px;
+      height: 1px;
+      background: var(--rule);
+    }
+  }
+  .vertical {
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--blue);
+    border-radius: 8px;
+    padding: 1.75rem 2rem;
+  }
+</style>

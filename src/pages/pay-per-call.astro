@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import FaqStrip from '../components/FaqStrip.astro';
+import Icon from '../components/Icon.astro';
+
+const intro =
+  'You pay for calls that last past the buffer time on your agreement. Shorter calls don’t count.';
+---
+
+<Base
+  title="Pay Per Call Insurance Leads | Life Leads Plus"
+  description="Live Final Expense and Medicare calls. You pay for calls that last past the buffer time on your agreement. Shorter calls don’t count."
+>
+  <PageIntro eyebrow="Pay Per Call" title="Pay per call, with a buffer." intro={intro} />
+
+  <section class="section" aria-labelledby="billing-title">
+    <div class="container">
+      <h2 id="billing-title">How billing works</h2>
+      <div class="prose-block mt-4">
+        <p class="text-ink-2">
+          Every call has a buffer, agreed before your first call. A call that ends inside the buffer
+          isn’t billable. A call that passes it is billed once, from your prepaid balance.
+        </p>
+        <p class="text-ink-2">
+          You can see each call’s length and whether it was billable in your call log.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-paper" aria-labelledby="ways-title">
+    <div class="container">
+      <h2 id="ways-title">Two ways to take calls</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        <article class="card p-7 md:p-8">
+          <span class="icon-tile">
+            <Icon name="phone-incoming" size={22} />
+          </span>
+          <h3 class="mt-5 text-2xl">On your phones or dialer</h3>
+          <p class="text-ink-2 mt-3">
+            We transfer each call to the number you give us. You still get the portal for your call
+            log, recordings, spend and statements.
+          </p>
+        </article>
+        <article class="card p-7 md:p-8">
+          <span class="icon-tile">
+            <Icon name="monitor" size={22} />
+          </span>
+          <h3 class="mt-5 text-2xl">In the portal</h3>
+          <p class="text-ink-2 mt-3">
+            Your agents take calls in their browser, with a CRM and application logging built in.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="returns-title">
+    <div class="container grid gap-12 md:grid-cols-2">
+      <div>
+        <h2 id="returns-title">Returns</h2>
+        <p class="text-ink-2 mt-4">
+          If a call doesn’t meet the criteria on your agreement, you can request a return from your
+          call log. Each request is reviewed and the decision shows in your portal.
+        </p>
+      </div>
+      <div class="card flex flex-col items-start gap-5 p-8">
+        <h2 class="text-2xl" id="pricing-title">
+          Pricing
+        </h2>
+        <p class="text-ink-2">
+          Your per-call price depends on vertical, states, buffer and volume. Tell us about your
+          agency and we’ll send your rate.
+        </p>
+        <a href="/get-started" class="btn btn-primary">
+          Get started
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <FaqStrip
+    items={[
+      [
+        'What’s the buffer?',
+        'A number of seconds agreed on your agreement. A call has to pass it to be billable.',
+      ],
+      ['Can I pause calls?', 'Yes. Lower your daily cap or change your hours in the portal.'],
+      ['How do I add funds?', 'Request a top-up from the portal’s billing page.'],
+    ]}
+  />
+</Base>
