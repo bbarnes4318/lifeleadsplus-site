@@ -4,6 +4,7 @@ import Icon from '../components/Icon.astro';
 import { STATES, VERTICALS, PROGRAMS, TAKE_CALLS, TIMES, TIME_ZONES } from '../lib/apply';
 import { phone, telHref, email } from '../lib/site';
 
+const STEPS = ['Your agency', 'Coverage', 'Program', 'Review'];
 const req = '<span class="req" aria-hidden="true">*</span>';
 ---
 
@@ -21,103 +22,134 @@ const req = '<span class="req" aria-hidden="true">*</span>';
 
   <section class="container grid gap-10 py-12 md:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-14">
     <div>
-      <div id="apply-success" class="card p-8" tabindex="-1" hidden>
-        <h2 class="text-2xl">Thanks — we got it.</h2>
+      <div id="apply-success" class="card success" tabindex="-1" hidden>
+        <svg class="success-check" viewBox="0 0 52 52" aria-hidden="true">
+          <circle cx="26" cy="26" r="24" />
+          <path d="M15 27l7 7 15-15" />
+        </svg>
+        <h2 class="mt-5 text-2xl">Thanks — we got it.</h2>
         <p class="text-ink-2 mt-2">We’ll reply with your program and rate.</p>
       </div>
 
-      <form id="apply-form" class="grid gap-7" novalidate>
+      <form id="apply-form" class="card form-card" novalidate>
         <noscript>
           <p class="form-alert">Please turn on JavaScript to send this form.</p>
         </noscript>
 
-        <div class="grid gap-7 sm:grid-cols-2">
-          <div class="field">
-            <label for="agency">
-              Agency name <Fragment set:html={req} />
-            </label>
-            <input
-              id="agency"
-              name="agency"
-              autocomplete="organization"
-              aria-required="true"
-              aria-describedby="err-agency"
-              maxlength="200"
-            />
-            <p class="error" id="err-agency" hidden></p>
-          </div>
-          <div class="field">
-            <label for="name">
-              Your name <Fragment set:html={req} />
-            </label>
-            <input
-              id="name"
-              name="name"
-              autocomplete="name"
-              aria-required="true"
-              aria-describedby="err-name"
-              maxlength="200"
-            />
-            <p class="error" id="err-name" hidden></p>
-          </div>
-          <div class="field">
-            <label for="email">
-              Email <Fragment set:html={req} />
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              aria-required="true"
-              aria-describedby="err-email"
-              maxlength="200"
-            />
-            <p class="error" id="err-email" hidden></p>
-          </div>
-          <div class="field">
-            <label for="phone">
-              Mobile phone <Fragment set:html={req} />
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              autocomplete="tel"
-              aria-required="true"
-              aria-describedby="err-phone"
-              maxlength="40"
-            />
-            <p class="error" id="err-phone" hidden></p>
-          </div>
+        <div class="progress" aria-hidden="true">
+          <span data-progress></span>
         </div>
+        <ol class="steps-nav" aria-label="Form steps">
+          {STEPS.map((label, i) => (
+            <li aria-current={i === 0 ? 'step' : undefined} data-step-label={i}>
+              <span class="steps-num">{i + 1}</span>
+              <span class="steps-text">{label}</span>
+            </li>
+          ))}
+        </ol>
 
-        <fieldset class="field" aria-describedby="err-states">
-          <legend>
-            States you’re licensed in <Fragment set:html={req} />
-          </legend>
-          <ul class="chips" data-chips aria-label="Selected states"></ul>
-          <input
-            type="search"
-            class="mt-2"
-            placeholder="Search states"
-            aria-label="Search states"
-            aria-controls="state-list"
-            data-state-search
-            autocomplete="off"
-          />
-          <div id="state-list" class="state-list">
-            {Object.entries(STATES).map(([code, label]) => (
-              <label class="check" data-state-name={label.toLowerCase()}>
-                <input type="checkbox" name="states" value={code} data-label={label} />
-                {label}
+        <section class="step" data-step="0" aria-labelledby="step-0-title">
+          <h2 id="step-0-title" class="step-title" tabindex="-1">
+            Your agency
+          </h2>
+          <div class="grid gap-7 sm:grid-cols-2">
+            <div class="field">
+              <label for="agency">
+                Agency name <Fragment set:html={req} />
               </label>
-            ))}
+              <input
+                id="agency"
+                name="agency"
+                autocomplete="organization"
+                aria-required="true"
+                aria-describedby="err-agency"
+                maxlength="200"
+              />
+              <p class="error" id="err-agency" hidden></p>
+            </div>
+            <div class="field">
+              <label for="name">
+                Your name <Fragment set:html={req} />
+              </label>
+              <input
+                id="name"
+                name="name"
+                autocomplete="name"
+                aria-required="true"
+                aria-describedby="err-name"
+                maxlength="200"
+              />
+              <p class="error" id="err-name" hidden></p>
+            </div>
+            <div class="field">
+              <label for="email">
+                Email <Fragment set:html={req} />
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                aria-required="true"
+                aria-describedby="err-email"
+                maxlength="200"
+              />
+              <p class="error" id="err-email" hidden></p>
+            </div>
+            <div class="field">
+              <label for="phone">
+                Mobile phone <Fragment set:html={req} />
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+                aria-required="true"
+                aria-describedby="err-phone"
+                maxlength="40"
+              />
+              <p class="error" id="err-phone" hidden></p>
+            </div>
           </div>
-          <p class="error" id="err-states" hidden></p>
-        </fieldset>
+        </section>
 
-        <div class="grid gap-7 sm:grid-cols-2">
+        <section class="step" data-step="1" aria-labelledby="step-1-title" hidden>
+          <h2 id="step-1-title" class="step-title" tabindex="-1">
+            Coverage
+          </h2>
+          <fieldset class="field" aria-describedby="err-states">
+            <legend>
+              States you’re licensed in <Fragment set:html={req} />
+            </legend>
+            <ul class="chips" data-chips aria-label="Selected states"></ul>
+            <input
+              type="search"
+              class="mt-2"
+              placeholder="Search states"
+              aria-label="Search states"
+              aria-controls="state-list"
+              data-state-search
+              autocomplete="off"
+            />
+            <div class="flex gap-2">
+              <button type="button" class="mini-btn" data-states-all>
+                Select all
+              </button>
+              <button type="button" class="mini-btn" data-states-clear>
+                Clear
+              </button>
+            </div>
+            <div id="state-list" class="state-list">
+              {Object.entries(STATES).map(([code, label]) => (
+                <label class="check" data-state-name={label.toLowerCase()}>
+                  <input type="checkbox" name="states" value={code} data-label={label} />
+                  {label}
+                </label>
+              ))}
+            </div>
+            <p class="error" id="err-states" hidden></p>
+          </fieldset>
           <div class="field">
             <label for="agents">
               Number of licensed agents <Fragment set:html={req} />
@@ -135,6 +167,54 @@ const req = '<span class="req" aria-hidden="true">*</span>';
             />
             <p class="error" id="err-agents" hidden></p>
           </div>
+          <fieldset class="field" aria-describedby="err-verticals">
+            <legend>
+              Verticals <Fragment set:html={req} />
+            </legend>
+            <div class="options">
+              {VERTICALS.map((v) => (
+                <label class="check">
+                  <input type="checkbox" name="verticals" value={v} />
+                  {v}
+                </label>
+              ))}
+            </div>
+            <p class="error" id="err-verticals" hidden></p>
+          </fieldset>
+        </section>
+
+        <section class="step" data-step="2" aria-labelledby="step-2-title" hidden>
+          <h2 id="step-2-title" class="step-title" tabindex="-1">
+            Program
+          </h2>
+          <fieldset class="field" aria-describedby="err-program">
+            <legend>
+              Program <Fragment set:html={req} />
+            </legend>
+            <div class="options">
+              {PROGRAMS.map((v) => (
+                <label class="check">
+                  <input type="radio" name="program" value={v} />
+                  {v}
+                </label>
+              ))}
+            </div>
+            <p class="error" id="err-program" hidden></p>
+          </fieldset>
+          <fieldset class="field" aria-describedby="err-takeCalls">
+            <legend>
+              How will your agents take calls? <Fragment set:html={req} />
+            </legend>
+            <div class="options">
+              {TAKE_CALLS.map((v) => (
+                <label class="check">
+                  <input type="radio" name="takeCalls" value={v} />
+                  {v}
+                </label>
+              ))}
+            </div>
+            <p class="error" id="err-takeCalls" hidden></p>
+          </fieldset>
           <div class="field">
             <label for="callsPerDay">Calls you want per day</label>
             <input
@@ -148,121 +228,85 @@ const req = '<span class="req" aria-hidden="true">*</span>';
             />
             <p class="error" id="err-callsPerDay" hidden></p>
           </div>
-        </div>
+          <fieldset class="field" aria-describedby="err-hours">
+            <legend>Delivery hours</legend>
+            <div class="grid gap-3 sm:grid-cols-3">
+              <select name="hoursFrom" aria-label="Start time">
+                <option value="">Start time</option>
+                {TIMES.map(([v, l]) => (
+                  <option value={v}>{l}</option>
+                ))}
+              </select>
+              <select name="hoursTo" aria-label="End time">
+                <option value="">End time</option>
+                {TIMES.map(([v, l]) => (
+                  <option value={v}>{l}</option>
+                ))}
+              </select>
+              <select name="timezone" aria-label="Time zone">
+                <option value="">Time zone</option>
+                {TIME_ZONES.map((z) => (
+                  <option value={z}>{z}</option>
+                ))}
+              </select>
+            </div>
+            <p class="error" id="err-hours" hidden></p>
+          </fieldset>
+        </section>
 
-        <fieldset class="field" aria-describedby="err-verticals">
-          <legend>
-            Verticals <Fragment set:html={req} />
-          </legend>
-          <div class="options">
-            {VERTICALS.map((v) => (
-              <label class="check">
-                <input type="checkbox" name="verticals" value={v} />
-                {v}
-              </label>
-            ))}
+        <section class="step" data-step="3" aria-labelledby="step-3-title" hidden>
+          <h2 id="step-3-title" class="step-title" tabindex="-1">
+            Review
+          </h2>
+          <div class="review" data-review></div>
+          <div class="field">
+            <label for="notes">Anything else</label>
+            <textarea
+              id="notes"
+              name="notes"
+              rows="4"
+              maxlength="1000"
+              aria-describedby="notes-hint err-notes"
+            ></textarea>
+            <p class="hint" id="notes-hint">
+              Up to 1000 characters.
+            </p>
+            <p class="error" id="err-notes" hidden></p>
           </div>
-          <p class="error" id="err-verticals" hidden></p>
-        </fieldset>
-
-        <fieldset class="field" aria-describedby="err-program">
-          <legend>
-            Program <Fragment set:html={req} />
-          </legend>
-          <div class="options">
-            {PROGRAMS.map((v) => (
-              <label class="check">
-                <input type="radio" name="program" value={v} />
-                {v}
-              </label>
-            ))}
+          <div class="field">
+            <label class="check items-start">
+              <input
+                type="checkbox"
+                name="consent"
+                aria-required="true"
+                aria-describedby="err-consent"
+                class="mt-1"
+              />
+              <span>
+                I agree that Life Leads Plus may contact me about its programs by phone, text and
+                email at the number and address above. <Fragment set:html={req} />
+              </span>
+            </label>
+            <p class="error" id="err-consent" hidden></p>
           </div>
-          <p class="error" id="err-program" hidden></p>
-        </fieldset>
-
-        <fieldset class="field" aria-describedby="err-takeCalls">
-          <legend>
-            How will your agents take calls? <Fragment set:html={req} />
-          </legend>
-          <div class="options">
-            {TAKE_CALLS.map((v) => (
-              <label class="check">
-                <input type="radio" name="takeCalls" value={v} />
-                {v}
-              </label>
-            ))}
-          </div>
-          <p class="error" id="err-takeCalls" hidden></p>
-        </fieldset>
-
-        <fieldset class="field" aria-describedby="err-hours">
-          <legend>Delivery hours</legend>
-          <div class="grid gap-3 sm:grid-cols-3">
-            <select name="hoursFrom" aria-label="Start time">
-              <option value="">Start time</option>
-              {TIMES.map(([v, l]) => (
-                <option value={v}>{l}</option>
-              ))}
-            </select>
-            <select name="hoursTo" aria-label="End time">
-              <option value="">End time</option>
-              {TIMES.map(([v, l]) => (
-                <option value={v}>{l}</option>
-              ))}
-            </select>
-            <select name="timezone" aria-label="Time zone">
-              <option value="">Time zone</option>
-              {TIME_ZONES.map((z) => (
-                <option value={z}>{z}</option>
-              ))}
-            </select>
-          </div>
-          <p class="error" id="err-hours" hidden></p>
-        </fieldset>
-
-        <div class="field">
-          <label for="notes">Anything else</label>
-          <textarea
-            id="notes"
-            name="notes"
-            rows="4"
-            maxlength="1000"
-            aria-describedby="notes-hint err-notes"
-          ></textarea>
-          <p class="hint" id="notes-hint">
-            Up to 1000 characters.
-          </p>
-          <p class="error" id="err-notes" hidden></p>
-        </div>
+        </section>
 
         <div class="hp" aria-hidden="true">
           <label for="company_website">Company website</label>
           <input id="company_website" name="company_website" tabindex="-1" autocomplete="off" />
         </div>
 
-        <div class="field">
-          <label class="check items-start">
-            <input
-              type="checkbox"
-              name="consent"
-              aria-required="true"
-              aria-describedby="err-consent"
-              class="mt-1"
-            />
-            <span>
-              I agree that Life Leads Plus may contact me about its programs by phone, text and
-              email at the number and address above. <Fragment set:html={req} />
-            </span>
-          </label>
-          <p class="error" id="err-consent" hidden></p>
-        </div>
-
         <div id="form-status" role="status" aria-live="polite"></div>
 
-        <div>
-          <button type="submit" class="btn btn-primary min-w-[200px]">
+        <div class="form-nav">
+          <button type="button" class="btn btn-secondary" data-back hidden>
+            <Icon name="arrow-left" size={18} />
+            Back
+          </button>
+          <button type="submit" class="btn btn-primary ml-auto min-w-[200px]">
             <span class="spinner" aria-hidden="true" hidden></span>
-            <span data-label>Send application</span>
+            <span data-label>Next</span>
+            <Icon name="arrow-right" size={18} />
           </button>
         </div>
       </form>
@@ -444,6 +488,179 @@ const req = '<span class="req" aria-hidden="true">*</span>';
       transform: rotate(360deg);
     }
   }
+  .form-card {
+    --pad: clamp(1.25rem, 4vw, 2.5rem);
+    display: grid;
+    gap: 1.75rem;
+    padding: var(--pad);
+    overflow: hidden;
+  }
+  .progress {
+    height: 4px;
+    margin: calc(-1 * var(--pad)) calc(-1 * var(--pad)) 0;
+    background: var(--rule);
+  }
+  .progress span {
+    display: block;
+    width: 25%;
+    height: 100%;
+    background: var(--blue-strong);
+    transition: width 300ms var(--ease);
+  }
+  .steps-nav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+  .steps-nav li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ink-3);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .steps-num {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 1.5px solid #b7c2d2;
+    font-size: 0.8125rem;
+  }
+  .steps-nav li[aria-current='step'] {
+    color: var(--navy);
+  }
+  .steps-nav li[aria-current='step'] .steps-num,
+  .steps-nav li[data-done] .steps-num {
+    border-color: var(--blue-strong);
+    background: var(--blue-strong);
+    color: #fff;
+  }
+  @media (max-width: 639px) {
+    .steps-nav li:not([aria-current='step']) .steps-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+  .step {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .step[hidden] {
+    display: none;
+  }
+  .step-title {
+    font-size: 1.5rem;
+  }
+  .step-title:focus {
+    outline: none;
+  }
+  .form-nav {
+    display: flex;
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .form-nav .btn[hidden] {
+    display: none;
+  }
+  .mini-btn,
+  .review :global(.mini-btn) {
+    min-height: 36px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+    background: #fff;
+    color: var(--blue-strong);
+    font-size: 0.875rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .mini-btn:hover,
+  .review :global(.mini-btn:hover) {
+    border-color: var(--blue-strong);
+  }
+  .review {
+    display: grid;
+    gap: 1rem;
+  }
+  .review :global(.review-group) {
+    padding: 1.25rem;
+    border-radius: 10px;
+    background: var(--paper);
+  }
+  .review :global(.review-head) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .review :global(h3) {
+    font-size: 1.0625rem;
+  }
+  .review :global(dl) {
+    display: grid;
+    gap: 0.125rem 1rem;
+    font-size: 0.9375rem;
+  }
+  .review :global(dt) {
+    color: var(--ink-3);
+  }
+  .review :global(dd) {
+    color: var(--ink);
+    font-weight: 550;
+    overflow-wrap: anywhere;
+  }
+  .review :global(dd + dt) {
+    margin-top: 0.5rem;
+  }
+  @media (min-width: 640px) {
+    .review :global(dl) {
+      grid-template-columns: 200px minmax(0, 1fr);
+    }
+    .review :global(dd + dt) {
+      margin-top: 0;
+    }
+  }
+  .success {
+    padding: clamp(1.75rem, 5vw, 3rem);
+  }
+  .success-check {
+    width: 56px;
+    height: 56px;
+    fill: none;
+    stroke: var(--blue-strong);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .success-check circle {
+    stroke-dasharray: 151;
+    animation: draw-circle 600ms var(--ease) both;
+  }
+  .success-check path {
+    stroke-dasharray: 36;
+    animation: draw-tick 400ms 450ms var(--ease) both;
+  }
+  @keyframes draw-circle {
+    from {
+      stroke-dashoffset: 151;
+    }
+  }
+  @keyframes draw-tick {
+    from {
+      stroke-dashoffset: 36;
+    }
+  }
   .num {
     display: inline-grid;
     place-items: center;
@@ -459,144 +676,5 @@ const req = '<span class="req" aria-hidden="true">*</span>';
 </style>
 
 <script>
-  import { applySchema, fieldErrors } from '../lib/apply';
-
-  const GENERIC = 'Something went wrong sending your application. Please try again.';
-  const form = document.querySelector<HTMLFormElement>('#apply-form')!;
-  const status = document.querySelector<HTMLElement>('#form-status')!;
-  const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
-  const started = Date.now();
-
-  // States: search filter + removable chips.
-  const search = form.querySelector<HTMLInputElement>('[data-state-search]')!;
-  const chips = form.querySelector<HTMLElement>('[data-chips]')!;
-  const boxes = [...form.querySelectorAll<HTMLInputElement>('input[name=states]')];
-  search.addEventListener('input', () => {
-    const q = search.value.trim().toLowerCase();
-    form.querySelectorAll<HTMLElement>('[data-state-name]').forEach((el) => {
-      el.hidden = !el.dataset.stateName!.includes(q);
-    });
-  });
-  search.addEventListener('keydown', (e) => e.key === 'Enter' && e.preventDefault());
-  const renderChips = () => {
-    chips.replaceChildren(
-      ...boxes
-        .filter((b) => b.checked)
-        .map((b) => {
-          const li = document.createElement('li');
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.textContent = `${b.dataset.label} ×`;
-          btn.setAttribute('aria-label', `Remove ${b.dataset.label}`);
-          btn.addEventListener('click', () => {
-            b.checked = false;
-            renderChips();
-            search.focus();
-          });
-          li.append(btn);
-          return li;
-        }),
-    );
-  };
-  boxes.forEach((b) => b.addEventListener('change', renderChips));
-
-  const collect = () => {
-    const fd = new FormData(form);
-    const str = (k: string) => (fd.get(k) as string | null) ?? undefined;
-    return {
-      agency: str('agency'),
-      name: str('name'),
-      email: str('email'),
-      phone: str('phone'),
-      states: fd.getAll('states'),
-      agents: str('agents'),
-      verticals: fd.getAll('verticals'),
-      program: str('program'),
-      takeCalls: str('takeCalls'),
-      callsPerDay: str('callsPerDay'),
-      hoursFrom: str('hoursFrom'),
-      hoursTo: str('hoursTo'),
-      timezone: str('timezone'),
-      notes: str('notes'),
-      consent: fd.get('consent') === 'on',
-    };
-  };
-
-  const controls = (key: string) =>
-    form.querySelectorAll<HTMLElement>(
-      key === 'hours' ? 'select' : `[name="${key}"]:not([type=checkbox][name=states])`,
-    );
-
-  const clearErrors = () => {
-    form.querySelectorAll<HTMLElement>('.error').forEach((el) => {
-      el.hidden = true;
-      el.textContent = '';
-    });
-    form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
-    status.replaceChildren();
-  };
-
-  const showErrors = (errors: Record<string, string>) => {
-    let first: HTMLElement | null = null;
-    for (const [key, message] of Object.entries(errors)) {
-      const el = form.querySelector<HTMLElement>(`#err-${key}`);
-      if (!el) continue;
-      el.textContent = message;
-      el.hidden = false;
-      const ctrls = key === 'states' ? [search] : [...controls(key)];
-      ctrls.forEach((c) => c.setAttribute('aria-invalid', 'true'));
-      first ??= ctrls[0] ?? null;
-    }
-    first?.focus();
-  };
-
-  const showStatus = (message: string) => {
-    const p = document.createElement('p');
-    p.className = 'form-alert';
-    p.textContent = message;
-    status.replaceChildren(p);
-  };
-
-  const busy = (on: boolean) => {
-    button.disabled = on;
-    button.querySelector<HTMLElement>('.spinner')!.hidden = !on;
-    button.querySelector<HTMLElement>('[data-label]')!.textContent = on
-      ? 'Sending…'
-      : 'Send application';
-  };
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    clearErrors();
-    const data = collect();
-    const result = applySchema.safeParse(data);
-    if (!result.success) return showErrors(fieldErrors(result.error));
-
-    busy(true);
-    try {
-      const res = await fetch('/api/apply', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...data,
-          company_website: (form.elements.namedItem('company_website') as HTMLInputElement).value,
-          started,
-        }),
-      });
-      if (res.ok) {
-        form.remove();
-        const done = document.querySelector<HTMLElement>('#apply-success')!;
-        done.hidden = false;
-        done.focus();
-        return;
-      }
-      const body = await res.json().catch(() => ({}));
-      if (body.errors) showErrors(body.errors);
-      else showStatus(res.status === 502 ? GENERIC : (body.error ?? GENERIC));
-    } catch {
-      showStatus(GENERIC);
-    } finally {
-      busy(false);
-    }
-  });
+  import '../scripts/apply-form';
 </script>

@@ -4,7 +4,7 @@ import { pages } from './pages';
 const noHorizontalScroll = (page: Page) =>
   page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
 
-for (const width of [360, 1440]) {
+for (const width of [360, 390, 768, 1024, 1440, 1920]) {
   for (const [name, path] of pages) {
     test(`${name} renders at ${width}px`, async ({ page }) => {
       const errors: string[] = [];

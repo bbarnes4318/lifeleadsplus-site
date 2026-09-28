@@ -1,16 +1,39 @@
 ---
 import { Image } from 'astro:assets';
 import wordmark from '../assets/brand/wordmark.png';
+import wordmarkOnDark from '../assets/brand/wordmark-on-dark.png';
 import Icon from './Icon.astro';
 import { nav, loginHref, phone, telHref } from '../lib/site';
 
+interface Props {
+  /** Starts transparent over a navy hero; turns white after 16px of scroll. */
+  dark?: boolean;
+}
+const { dark = false } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '');
 ---
 
-<header class="site-header" data-header>
-  <div class="container flex h-16 items-center gap-6 lg:h-[72px]">
-    <a href="/" class="shrink-0" aria-label="Life Leads Plus home">
-      <Image src={wordmark} alt="Life Leads Plus" height={36} densities={[1, 2, 3]} class="logo" />
+<header class:list={['site-header', { solid: !dark }]} data-header data-dark={dark || undefined}>
+  <div class="container flex h-(--header-h) items-center gap-6">
+    <a href="/" class="logo-link shrink-0" aria-label="Life Leads Plus home">
+      <Image
+        src={wordmark}
+        alt="Life Leads Plus"
+        height={36}
+        densities={[1, 2, 3]}
+        class="logo logo-light"
+        loading="eager"
+      />
+      {dark && (
+        <Image
+          src={wordmarkOnDark}
+          alt=""
+          height={36}
+          densities={[1, 2, 3]}
+          class="logo logo-dark"
+          loading="eager"
+        />
+      )}
     </a>
 
     <nav aria-label="Main" class="ml-4 hidden lg:block">
@@ -37,10 +60,12 @@ const path = Astro.url.pathname.replace(/\/$/, '');
         </a>
       )}
       <a href={loginHref} class="nav-link">
-        Client login
+        {' '}
+        Client login{' '}
       </a>
-      <a href="/get-started" class="btn btn-primary">
-        Get started
+      <a href="/get-started" class="btn btn-primary header-cta">
+        {' '}
+        Get started{' '}
       </a>
     </div>
 
@@ -87,12 +112,14 @@ const path = Astro.url.pathname.replace(/\/$/, '');
         ))}
         <li class="border-rule border-b">
           <a href={loginHref} class="sheet-link">
-            Client login
+            {' '}
+            Client login{' '}
           </a>
         </li>
       </ul>
       <a href="/get-started" class="btn btn-primary mt-6 w-full">
-        Get started
+        {' '}
+        Get started{' '}
       </a>
       {phone && (
         <a href={telHref} class="sheet-link mt-2 flex items-center gap-2">
@@ -109,12 +136,23 @@ const path = Astro.url.pathname.replace(/\/$/, '');
     position: sticky;
     top: 0;
     z-index: 50;
-    background: var(--surface);
+    background: transparent;
     border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
+    transition:
+      background-color 0.2s,
+      border-color 0.2s;
   }
-  .site-header.scrolled {
+  .site-header.solid {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(1.4) blur(12px);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
     border-bottom-color: var(--rule);
+  }
+  .logo-link {
+    display: grid;
+  }
+  .logo-link > :global(*) {
+    grid-area: 1 / 1;
   }
   .logo {
     height: 30px;
@@ -126,6 +164,7 @@ const path = Astro.url.pathname.replace(/\/$/, '');
     }
   }
   .nav-link {
+    position: relative;
     color: var(--ink-2);
     font-weight: 550;
     font-size: 0.9875rem;
@@ -136,20 +175,50 @@ const path = Astro.url.pathname.replace(/\/$/, '');
   .nav-link[aria-current='page'] {
     color: var(--navy);
   }
-  .nav-link[aria-current='page'] {
-    text-decoration: underline;
-    text-decoration-color: var(--blue);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 8px;
+  .nav-link[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--blue);
   }
   .menu-btn {
     place-items: center;
     width: 44px;
     height: 44px;
     margin-right: -10px;
-    border-radius: 6px;
+    border-radius: 10px;
     color: var(--navy);
   }
+
+  /* Transparent state over a navy hero */
+  .site-header:not(.solid) .logo-light {
+    visibility: hidden;
+  }
+  .site-header.solid .logo-dark {
+    visibility: hidden;
+  }
+  .site-header:not(.solid) :is(.nav-link, .menu-btn) {
+    color: #fff;
+  }
+  .site-header:not(.solid) .nav-link[aria-current='page']::after {
+    background: var(--on-navy-accent);
+  }
+  .site-header:not(.solid) .header-cta {
+    background: #fff;
+    color: var(--navy);
+    box-shadow: none;
+  }
+  .site-header:not(.solid) .header-cta:hover {
+    background: var(--blue-tint);
+  }
+  .site-header:not(.solid) :focus-visible {
+    outline-color: #fff;
+  }
+
   .sheet {
     width: 100%;
     max-width: 100%;
@@ -162,6 +231,12 @@ const path = Astro.url.pathname.replace(/\/$/, '');
   }
   .sheet::backdrop {
     background: rgba(11, 35, 80, 0.4);
+  }
+  .sheet .menu-btn {
+    color: var(--navy);
+  }
+  .sheet :focus-visible {
+    outline-color: var(--blue-strong);
   }
   .sheet-link {
     display: block;
@@ -178,9 +253,11 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 
 <script>
   const header = document.querySelector<HTMLElement>('[data-header]')!;
-  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 4);
-  onScroll();
-  addEventListener('scroll', onScroll, { passive: true });
+  if (header.dataset.dark !== undefined) {
+    const onScroll = () => header.classList.toggle('solid', window.scrollY > 16);
+    onScroll();
+    addEventListener('scroll', onScroll, { passive: true });
+  }
 
   // Native modal <dialog>: traps focus and closes on Esc.
   const dialog = document.querySelector<HTMLDialogElement>('#mobile-menu')!;

@@ -1,17 +1,22 @@
 ---
 import '@fontsource-variable/inter';
+import '@fontsource-variable/plus-jakarta-sans';
 import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import jakartaLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import MobileCta from '../components/MobileCta.astro';
 import { siteUrl } from '../lib/site';
 
 interface Props {
   title: string;
   description: string;
   jsonLd?: object;
+  /** The page opens with a navy hero: the header starts transparent over it. */
+  dark?: boolean;
 }
-const { title, description, jsonLd } = Astro.props;
+const { title, description, jsonLd, dark = false } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const canonical = siteUrl + (path === '/' ? '/' : path);
 const ogImage = `${siteUrl}/og.png`;
@@ -28,6 +33,10 @@ const ogImage = `${siteUrl}/og.png`;
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={jakartaLatin} as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
     <meta name="theme-color" content="#0B2350" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Life Leads Plus" />
@@ -40,15 +49,16 @@ const ogImage = `${siteUrl}/og.png`;
     <meta name="twitter:card" content="summary_large_image" />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
-  <body>
+  <body class:list={{ 'has-dark-hero': dark }}>
     <a href="#main" class="skip-link">
       Skip to content
     </a>
-    <Header />
+    <Header dark={dark} />
     <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
+    {path !== '/get-started' && <MobileCta />}
   </body>
 </html>
 
@@ -70,4 +80,12 @@ const ogImage = `${siteUrl}/og.png`;
   main:focus {
     outline: none;
   }
+  /* Pull the page up under the transparent header; the hero pads itself back down. */
+  .has-dark-hero main {
+    margin-top: calc(-1 * var(--header-h));
+  }
 </style>
+
+<script>
+  import '../scripts/site';
+</script>
