@@ -1,0 +1,122 @@
+---
+import Icon from './Icon.astro';
+
+type IconName = Parameters<typeof Icon>[0]['name'];
+interface Props {
+  items: { title: string; body?: string; icon?: IconName }[];
+  /** Screen-reader prefix for each item, e.g. "Step". */
+  label?: string;
+}
+const { items, label = 'Step' } = Astro.props;
+---
+
+<ol class="flow" style={`--n:${items.length}`} data-reveal-group>
+  <li class="flow-track" aria-hidden="true">
+    <span class="flow-fill" data-reveal></span>
+  </li>
+  {items.map((item, i) => (
+    <li class="flow-node" data-reveal>
+      <span class="flow-dot" aria-hidden="true">
+        {item.icon ? <Icon name={item.icon} size={20} /> : i + 1}
+      </span>
+      <div class="flow-text">
+        <h3 class="text-lg">
+          <span class="sr-only">
+            {label} {i + 1}:{' '}
+          </span>
+          {item.title}
+        </h3>
+        {item.body && <p class="text-ink-2 mt-2">{item.body}</p>}
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .flow {
+    position: relative;
+    display: grid;
+    gap: 2rem;
+  }
+  .flow-node {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+  }
+  .flow-dot {
+    position: relative;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 750;
+    box-shadow: 0 0 0 6px var(--flow-bg, #fff);
+  }
+  .flow-text {
+    padding-top: 0.5rem;
+  }
+  /* Vertical track through the dots (mobile) */
+  .flow-track {
+    position: absolute;
+    left: 21px;
+    top: 22px;
+    bottom: 22px;
+    width: 2px;
+    background: var(--rule);
+  }
+  .flow-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--blue);
+    transform-origin: top;
+  }
+  @media (min-width: 768px) {
+    .flow {
+      grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+      gap: 0;
+    }
+    .flow-node {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-inline: 0.75rem;
+    }
+    .flow-text p {
+      margin-inline: auto;
+    }
+    .flow-track {
+      left: calc(100% / var(--n) / 2);
+      right: calc(100% / var(--n) / 2);
+      top: 21px;
+      bottom: auto;
+      width: auto;
+      height: 2px;
+    }
+    .flow-fill {
+      transform-origin: left;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .flow-fill[data-reveal] {
+      opacity: 1;
+      transform: scaleY(0);
+      transition: transform 1200ms var(--ease);
+    }
+    :global(.js) .flow-node[data-reveal] {
+      transition-delay: calc((var(--i) - 1) * 200ms);
+    }
+    @media (min-width: 768px) {
+      :global(.js) .flow-fill[data-reveal] {
+        transform: scaleX(0);
+      }
+    }
+    :global(.js) .flow-fill[data-reveal].is-in {
+      transform: none;
+    }
+  }
+</style>

@@ -2,79 +2,156 @@
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
 import FaqStrip from '../components/FaqStrip.astro';
+import Flow from '../components/Flow.astro';
 import Icon from '../components/Icon.astro';
 
 const intro =
   'You pay for calls that last past the buffer time on your agreement. Shorter calls don’t count.';
+const BUFFER = 90;
+const START = 70;
+const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 ---
 
 <Base
   title="Pay Per Call Insurance Leads | Life Leads Plus"
   description="Live Final Expense and Medicare calls. You pay for calls that last past the buffer time on your agreement. Shorter calls don’t count."
+  dark
 >
-  <PageIntro eyebrow="Pay Per Call" title="Pay per call, with a buffer." intro={intro} />
+  <PageIntro eyebrow="Pay Per Call" title="Pay per call, with a buffer." intro={intro} dark />
 
   <section class="section" aria-labelledby="billing-title">
-    <div class="container">
-      <h2 id="billing-title">How billing works</h2>
-      <div class="prose-block mt-4">
-        <p class="text-ink-2">
-          Every call has a buffer, agreed before your first call. A call that ends inside the buffer
-          isn’t billable. A call that passes it is billed once, from your prepaid balance.
+    <div class="container grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:items-center">
+      <div data-reveal>
+        <h2 id="billing-title">How billing works</h2>
+        <div class="prose-block mt-4">
+          <p class="text-ink-2">
+            Every call has a buffer, agreed before your first call. A call that ends inside the
+            buffer isn’t billable. A call that passes it is billed once, from your prepaid balance.
+          </p>
+          <p class="text-ink-2">
+            You can see each call’s length and whether it was billable in your call log.
+          </p>
+        </div>
+      </div>
+
+      <div class="card buffer" data-reveal data-buffer={BUFFER}>
+        <h3 class="text-lg">See how the buffer works</h3>
+        <p class="readout mt-2" aria-live="polite" data-readout>
+          Call length: {fmt(START)} — Not billable
         </p>
-        <p class="text-ink-2">
-          You can see each call’s length and whether it was billable in your call log.
-        </p>
+        <div class="timeline mt-8" style={`--v:${START / 180};--b:${BUFFER / 180}`}>
+          <div class="track" aria-hidden="true">
+            <span class="fill"></span>
+            <span class="marker">
+              <span>Your buffer</span>
+            </span>
+          </div>
+          <label for="call-length" class="sr-only">
+            Call length
+          </label>
+          <input
+            id="call-length"
+            type="range"
+            min="0"
+            max="180"
+            step="5"
+            value={START}
+            aria-valuetext="1 minute 10 seconds, not billable"
+            data-slider
+          />
+          <div class="ticks-row" aria-hidden="true">
+            <span>0:00</span>
+            <span>1:00</span>
+            <span>2:00</span>
+            <span>3:00</span>
+          </div>
+        </div>
+        <p class="text-ink-3 mt-6 text-sm">Example only. Your buffer is set on your agreement.</p>
       </div>
     </div>
   </section>
 
   <section class="section bg-paper" aria-labelledby="ways-title">
     <div class="container">
-      <h2 id="ways-title">Two ways to take calls</h2>
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        <article class="card p-7 md:p-8">
-          <span class="icon-tile">
-            <Icon name="phone-incoming" size={22} />
+      <h2 id="ways-title" data-reveal>
+        Two ways to take calls
+      </h2>
+      <div class="lanes mt-12" data-reveal>
+        <div class="caller">
+          <span class="caller-icon">
+            <Icon name="phone-incoming" size={26} />
           </span>
-          <h3 class="mt-5 text-2xl">On your phones or dialer</h3>
-          <p class="text-ink-2 mt-3">
-            We transfer each call to the number you give us. You still get the portal for your call
-            log, recordings, spend and statements.
-          </p>
-        </article>
-        <article class="card p-7 md:p-8">
-          <span class="icon-tile">
-            <Icon name="monitor" size={22} />
-          </span>
-          <h3 class="mt-5 text-2xl">In the portal</h3>
-          <p class="text-ink-2 mt-3">
-            Your agents take calls in their browser, with a CRM and application logging built in.
-          </p>
-        </article>
+          <span class="caller-label">Caller</span>
+        </div>
+        <svg class="fork" viewBox="0 0 120 240" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 120 H40 C70 120 70 50 100 50 H116" />
+          <path d="M40 120 C70 120 70 190 100 190 H116" />
+          <path d="M108 42 116 50 108 58 M108 182 116 190 108 198" />
+        </svg>
+        <svg class="fork-v" viewBox="0 0 24 40" aria-hidden="true">
+          <path d="M12 0 V36 M5 29 12 36 19 29" />
+        </svg>
+        <div class="lane-list">
+          <article class="card lane">
+            <span class="icon-tile">
+              <Icon name="phone" size={22} />
+            </span>
+            <div>
+              <h3 class="text-xl">Your phones or dialer</h3>
+              <p class="text-ink-2 mt-2">
+                We transfer each call to the number you give us. You still get the portal for your
+                call log, recordings, spend and statements.
+              </p>
+            </div>
+          </article>
+          <article class="card lane">
+            <span class="icon-tile">
+              <Icon name="monitor" size={22} />
+            </span>
+            <div>
+              <h3 class="text-xl">Your agents in the portal</h3>
+              <p class="text-ink-2 mt-2">
+                Your agents take calls in their browser, with a CRM and application logging built
+                in.
+              </p>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section" aria-labelledby="returns-title">
-    <div class="container grid gap-12 md:grid-cols-2">
+    <div class="container grid gap-12 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
       <div>
-        <h2 id="returns-title">Returns</h2>
-        <p class="text-ink-2 mt-4">
-          If a call doesn’t meet the criteria on your agreement, you can request a return from your
-          call log. Each request is reviewed and the decision shows in your portal.
-        </p>
+        <div data-reveal>
+          <h2 id="returns-title">Returns</h2>
+          <p class="text-ink-2 mt-4">
+            If a call doesn’t meet the criteria on your agreement, you can request a return from
+            your call log. Each request is reviewed and the decision shows in your portal.
+          </p>
+        </div>
+        <div class="mt-10">
+          <Flow
+            items={[
+              { title: 'Request from your call log', icon: 'undo-2' },
+              { title: 'Reviewed', icon: 'eye' },
+              { title: 'Decision shows in your portal', icon: 'check' },
+            ]}
+          />
+        </div>
       </div>
-      <div class="card flex flex-col items-start gap-5 p-8">
+      <div class="card pricing self-start" data-reveal>
         <h2 class="text-2xl" id="pricing-title">
           Pricing
         </h2>
-        <p class="text-ink-2">
+        <p class="text-ink-2 mt-3">
           Your per-call price depends on vertical, states, buffer and volume. Tell us about your
           agency and we’ll send your rate.
         </p>
-        <a href="/get-started" class="btn btn-primary">
+        <a href="/get-started" class="btn btn-primary mt-6">
           Get started
+          <Icon name="arrow-right" size={18} />
         </a>
       </div>
     </div>
@@ -91,3 +168,216 @@ const intro =
     ]}
   />
 </Base>
+
+<style>
+  .pricing {
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    border-top: 3px solid var(--blue-strong);
+  }
+
+  .buffer {
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+  }
+  .readout {
+    color: var(--navy);
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .readout.billable {
+    color: var(--blue-strong);
+  }
+  .timeline {
+    position: relative;
+    padding-top: 1.75rem;
+  }
+  .track {
+    position: relative;
+    height: 12px;
+    border-radius: 999px;
+    background: var(--rule);
+  }
+  /* Grey up to the buffer, blue past it. */
+  .fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: calc(var(--v) * 100%);
+    border-radius: inherit;
+    background: linear-gradient(
+      to right,
+      var(--ink-3) 0 calc(var(--b) / var(--v) * 100%),
+      var(--blue-strong) 0
+    );
+  }
+  .marker {
+    position: absolute;
+    left: calc(var(--b) * 100%);
+    top: -8px;
+    bottom: -8px;
+    width: 2px;
+    background: var(--navy);
+  }
+  .marker span {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    color: var(--navy);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+  /* The native range sits on the track as its thumb. */
+  input[type='range'] {
+    position: absolute;
+    left: -11px;
+    right: -11px;
+    top: calc(1.75rem - 16px);
+    width: calc(100% + 22px);
+    height: 44px;
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+  }
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 44px;
+    background: transparent;
+  }
+  input[type='range']::-moz-range-track {
+    background: transparent;
+  }
+  input[type='range']::-webkit-slider-thumb {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 11px;
+    border-radius: 999px;
+    background: #fff;
+    border: 3px solid var(--navy);
+    box-shadow: var(--shadow-raised);
+  }
+  input[type='range']::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: #fff;
+    border: 3px solid var(--navy);
+  }
+  input[type='range']:focus-visible {
+    outline: none;
+  }
+  input[type='range']:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid var(--blue-strong);
+    outline-offset: 2px;
+  }
+  input[type='range']:focus-visible::-moz-range-thumb {
+    outline: 2px solid var(--blue-strong);
+    outline-offset: 2px;
+  }
+  .ticks-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+    color: var(--ink-3);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .lanes {
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+  }
+  .caller {
+    display: grid;
+    justify-items: center;
+    gap: 0.5rem;
+  }
+  .caller-icon {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    background: var(--navy);
+    color: #fff;
+  }
+  .caller-label {
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .fork,
+  .fork-v {
+    fill: none;
+    stroke: var(--blue-strong);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .fork {
+    display: none;
+  }
+  .fork-v {
+    width: 24px;
+    height: 40px;
+  }
+  .lane-list {
+    display: grid;
+    gap: 1.25rem;
+    width: 100%;
+  }
+  .lane {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+  .lane .icon-tile {
+    flex-shrink: 0;
+  }
+  @media (min-width: 900px) {
+    .lanes {
+      grid-template-columns: auto 120px minmax(0, 1fr);
+      align-items: center;
+      gap: 0;
+    }
+    .fork {
+      display: block;
+      width: 120px;
+      height: 100%;
+      min-height: 240px;
+    }
+    .fork path {
+      vector-effect: non-scaling-stroke;
+    }
+    .fork-v {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const card = document.querySelector<HTMLElement>('[data-buffer]')!;
+  const buffer = Number(card.dataset.buffer);
+  const slider = card.querySelector<HTMLInputElement>('[data-slider]')!;
+  const readout = card.querySelector<HTMLElement>('[data-readout]')!;
+  const timeline = card.querySelector<HTMLElement>('.timeline')!;
+  const plural = (n: number, w: string) => `${n} ${w}${n === 1 ? '' : 's'}`;
+
+  const update = () => {
+    const v = Number(slider.value);
+    const billable = v > buffer;
+    const m = Math.floor(v / 60);
+    const s = v % 60;
+    const status = billable ? 'Billable' : 'Not billable';
+    readout.textContent = `Call length: ${m}:${String(s).padStart(2, '0')} — ${status}`;
+    readout.classList.toggle('billable', billable);
+    const spoken = [m && plural(m, 'minute'), (s || !m) && plural(s, 'second')]
+      .filter(Boolean)
+      .join(' ');
+    slider.setAttribute('aria-valuetext', `${spoken}, ${status.toLowerCase()}`);
+    timeline.style.setProperty('--v', String(Math.max(v, 0.001) / 180));
+  };
+  slider.addEventListener('input', update);
+  update();
+</script>

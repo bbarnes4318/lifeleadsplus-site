@@ -1,46 +1,85 @@
 ---
 import Base from '../layouts/Base.astro';
-import Frame from '../components/Frame.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
+import CallJourney from '../components/CallJourney.astro';
+import Flow from '../components/Flow.astro';
+import Shot from '../components/Shot.astro';
+import { features } from '../lib/features';
 import { loginHref, siteUrl } from '../lib/site';
+
+const proof = [
+  ['mic', 'Every call recorded'],
+  ['wallet', 'Prepaid — no invoices'],
+  ['sliders-horizontal', 'Your states, hours and daily cap'],
+  ['file-text', 'Monthly statements'],
+] as const;
 
 const programs = [
   {
+    id: 'ppa',
+    tab: 'Pay per application',
     href: '/pay-per-application',
-    icon: 'file-check',
-    title: 'Pay Per Application',
-    body: 'You pay for submitted applications, not for calls. Your agents take calls in the Life Leads Plus portal and log each application before they hang up.',
+    summary:
+      'You pay for submitted applications, not for calls. Your agents take calls in the Life Leads Plus portal and log each application before they hang up.',
+    rows: [
+      ['You pay for', 'Submitted applications your agents log on the call'],
+      ['Calls reach you', 'In the portal, in your agents’ browsers'],
+      ['Best for', 'Agencies that want cost tied to production'],
+      ['Billing', 'Prepaid balance, one charge per application'],
+    ],
   },
   {
+    id: 'ppc',
+    tab: 'Pay per call',
     href: '/pay-per-call',
-    icon: 'phone-incoming',
-    title: 'Pay Per Call',
-    body: 'You pay for each call that passes the buffer time on your agreement. Take calls on your own phones or dialer, or in the portal.',
+    summary:
+      'You pay for each call that passes the buffer time on your agreement. Take calls on your own phones or dialer, or in the portal.',
+    rows: [
+      ['You pay for', 'Calls that pass your buffer'],
+      ['Calls reach you', 'Your phones, your dialer, or the portal'],
+      ['Best for', 'Agencies with their own phone system or dialer'],
+      ['Billing', 'Prepaid balance, one charge per billable call'],
+    ],
   },
-] as const;
+];
 
 const steps = [
-  ['Apply', 'Tell us your licensed states, how many agents you have and the volume you want.'],
-  [
-    'Set up',
-    'Sign your agreement, fund your prepaid balance, and set your delivery hours, states and daily caps.',
-  ],
-  ['Take calls', 'Callers transfer live to your agents, in the portal or to your own number.'],
-  [
-    'Track everything',
-    'Calls, recordings, applications, spend and monthly statements, all in your portal.',
-  ],
+  {
+    title: 'Apply',
+    body: 'Tell us your licensed states, how many agents you have and the volume you want.',
+  },
+  {
+    title: 'Set up',
+    body: 'Sign your agreement, fund your prepaid balance, and set your delivery hours, states and daily caps.',
+  },
+  {
+    title: 'Take calls',
+    body: 'Callers transfer live to your agents, in the portal or to your own number.',
+  },
+  {
+    title: 'Track everything',
+    body: 'Calls, recordings, applications, spend and monthly statements, all in your portal.',
+  },
 ];
 
 const controls = [
-  ['map-pin', 'Your states', "Calls only come from the states you're licensed in."],
-  ['clock', 'Your hours', 'Calls only arrive during the delivery hours you set.'],
-  ['gauge', 'Your daily cap', 'Set how many calls a day you want, and change it any time.'],
-  ['headphones', 'Every recording', 'Listen to any call from your call log.'],
-  ['wallet', 'Prepaid balance', 'You fund a balance up front. No surprise invoices.'],
-  ['file-text', 'Monthly statements', 'Download a statement for any month.'],
+  ['states', 'Your states', "Calls only come from the states you're licensed in."],
+  ['hours', 'Your hours', 'Calls only arrive during the delivery hours you set.'],
+  ['cap', 'Your daily cap', 'Set how many calls a day you want, and change it any time.'],
+  ['rec', 'Every recording', 'Listen to any call from your call log.'],
+  ['balance', 'Prepaid balance', 'You fund a balance up front. No surprise invoices.'],
+  ['statements', 'Monthly statements', 'Download a statement for any month.'],
 ] as const;
+const states = ['TX', 'FL', 'GA', 'NC', 'OH', 'TN', 'PA', 'AZ', 'MI', 'IN'];
+// Deterministic "waveform": 40 bar heights between 20% and 100%.
+const wave = Array.from({ length: 40 }, (_, i) =>
+  Math.round(20 + 80 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.45))),
+);
+
+const showcase = ['agents', 'applications', 'customers', 'statements'].map((id) =>
+  features.find((f) => f.id === id)!,
+);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -55,33 +94,13 @@ const jsonLd = {
   title="Live Final Expense and Medicare Calls | Life Leads Plus"
   description="Live Final Expense and Medicare calls transferred to your licensed agents. Pay per submitted application or pay per call, with every call, recording and dollar in your own portal."
   jsonLd={jsonLd}
+  dark
 >
-  <section class="hero">
+  <section class="hero navy glow">
     <div class="container hero-grid">
       <div>
         <p class="eyebrow">Final Expense · Medicare</p>
-        <h1 class="mt-4">
-          Live insurance calls,{' '}
-          <span class="underline-stroke">
-            priced the way
-            <svg
-              viewBox="0 0 300 16"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path
-                d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4"
-                fill="none"
-                stroke="var(--red)"
-                stroke-width="3"
-                stroke-linecap="round"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-          </span>{' '}
-          your agency sells.
-        </h1>
+        <h1 class="mt-4">Live insurance calls, priced the way your agency sells.</h1>
         <p class="lead mt-6">
           Callers transferred live to your licensed agents. Pay per submitted application or pay per
           call — and see every call, recording and dollar in your own portal.
@@ -89,116 +108,232 @@ const jsonLd = {
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/get-started" class="btn btn-primary">
             Get started
+            <Icon name="arrow-right" size={18} />
           </a>
-          <a href={loginHref} class="btn btn-secondary">
-            Client login
+          <a href={loginHref} class="btn btn-ghost">
+            {' '}
+            Client login{' '}
           </a>
         </div>
       </div>
-      <Frame
-        shot="agents-floor"
-        alt="The Life Leads Plus portal showing agents who are ready, on a call, and their calls and applications today"
-        sizes="(min-width: 1248px) 660px, (min-width: 900px) 54vw, 390px"
-        hero
-      />
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="programs-title">
-    <div class="container">
-      <h2 id="programs-title">Two programs</h2>
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        {programs.map((p) => (
-          <article class="card flex flex-col p-7 md:p-8">
-            <span class="icon-tile">
-              <Icon name={p.icon} size={22} />
-            </span>
-            <h3 class="mt-5 text-2xl">{p.title}</h3>
-            <p class="text-ink-2 mt-3">{p.body}</p>
-            <a href={p.href} class="link-arrow mt-auto pt-6">
-              Learn more<span class="sr-only"> about {p.title}</span>
-              <Icon name="arrow-right" size={18} />
-            </a>
-          </article>
-        ))}
+      <div class="flex justify-center lg:justify-end">
+        <CallJourney />
       </div>
     </div>
   </section>
 
-  <section class="section bg-paper" aria-labelledby="how-title">
+  <section class="proof" aria-label="What every client gets">
+    <ul class="container proof-list">
+      {proof.map(([icon, text]) => (
+        <li>
+          <Icon name={icon} size={20} class="text-blue-strong shrink-0" />
+          {text}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section bg-paper" aria-labelledby="programs-title">
     <div class="container">
-      <h2 id="how-title">How it works</h2>
-      <ol class="mt-10 grid gap-8 md:grid-cols-4 md:gap-6">
-        {steps.map(([title, body], i) => (
-          <li class="step">
-            <span class="step-num" aria-hidden="true">
-              {i + 1}
-            </span>
-            <h3 class="mt-4">
-              <span class="sr-only">Step {i + 1}: </span>
-              {title}
-            </h3>
-            <p class="text-ink-2 mt-2">{body}</p>
-          </li>
-        ))}
-      </ol>
+      <div data-reveal>
+        <h2 id="programs-title">Two ways to pay.</h2>
+        <div class="segmented mt-8" role="tablist" aria-label="Programs" data-tabs>
+          {programs.map((p, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${p.id}`}
+              aria-controls={`panel-${p.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+            >
+              {p.tab}
+            </button>
+          ))}
+        </div>
+      </div>
+      {programs.map((p, i) => (
+        <div
+          class="card program-panel mt-6"
+          role="tabpanel"
+          id={`panel-${p.id}`}
+          aria-labelledby={`tab-${p.id}`}
+          hidden={i !== 0}
+        >
+          <p class="program-summary">{p.summary}</p>
+          <dl class="program-rows">
+            {p.rows.map(([k, v]) => (
+              <div>
+                <dt>{k}</dt>
+                <dd>{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <a href={p.href} class="btn btn-primary mt-8">
+            Learn more<span class="sr-only"> about {p.tab}</span>
+            <Icon name="arrow-right" size={18} />
+          </a>
+        </div>
+      ))}
+      <p class="text-ink-2 mt-6 text-[0.9375rem]">
+        Not sure? Choose ‘Not sure yet’ on the <a href="/get-started">application</a> and we’ll
+        recommend one.
+      </p>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="control-title">
+  <section class="section" aria-labelledby="how-title">
     <div class="container">
-      <h2 id="control-title">What you control</h2>
-      <ul class="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-        {controls.map(([icon, title, body]) => (
-          <li class="flex gap-4">
-            <span class="icon-tile shrink-0">
-              <Icon name={icon} size={22} />
-            </span>
-            <div>
-              <h3 class="text-lg">{title}</h3>
-              <p class="text-ink-2 mt-1">{body}</p>
+      <h2 id="how-title" data-reveal>
+        How it works
+      </h2>
+      <div class="mt-12">
+        <Flow items={steps} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-paper" aria-labelledby="control-title">
+    <div class="container">
+      <h2 id="control-title" data-reveal>
+        You’re in control.
+      </h2>
+      <ul class="bento mt-10" data-reveal-group>
+        {controls.map(([kind, title, body]) => (
+          <li class={`card tile tile-${kind}`} data-reveal>
+            <div class="tile-visual" aria-hidden="true">
+              {kind === 'states' && (
+                <div class="chips">
+                  {states.map((s, i) => (
+                    <span class:list={['chip', { on: i < 6 }]}>{s}</span>
+                  ))}
+                </div>
+              )}
+              {kind === 'hours' && (
+                <div class="hours">
+                  <div class="hours-bar">
+                    <span class="hours-window" />
+                  </div>
+                  <div class="hours-ticks">
+                    <span>12a</span>
+                    <span>6a</span>
+                    <span>12p</span>
+                    <span>6p</span>
+                  </div>
+                </div>
+              )}
+              {kind === 'cap' && (
+                <div class="stepper">
+                  <span class="stepper-btn">
+                    <Icon name="minus" size={16} />
+                  </span>
+                  <span class="stepper-value">Daily cap: 40</span>
+                  <span class="stepper-btn">
+                    <Icon name="plus" size={16} />
+                  </span>
+                </div>
+              )}
+              {kind === 'rec' && (
+                <div class="rec">
+                  <span class="rec-play">
+                    <Icon name="play" size={14} />
+                  </span>
+                  <span class="wave">
+                    {wave.map((h) => (
+                      <span style={`height:${h}%`} />
+                    ))}
+                  </span>
+                </div>
+              )}
+              {kind === 'balance' && (
+                <div class="meter">
+                  <span class="meter-label">Balance</span>
+                  <span class="meter-bar">
+                    <span />
+                  </span>
+                </div>
+              )}
+              {kind === 'statements' && (
+                <div class="docs">
+                  {['Aug 2026', 'Jul 2026', 'Jun 2026'].map((m) => (
+                    <span class="doc">
+                      <Icon name="file-text" size={14} />
+                      {m} · PDF
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
+            <h3 class="mt-6 text-lg">{title}</h3>
+            <p class="text-ink-2 mt-1">{body}</p>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section class="pb-16 md:pb-24" aria-label="Verticals">
-    <div class="container grid gap-6 md:grid-cols-2">
-      <div class="vertical">
-        <h2 class="text-2xl">Final Expense</h2>
-        <p class="text-ink-2 mt-2">Seniors looking for coverage for funeral and final costs.</p>
-      </div>
-      <div class="vertical">
-        <h2 class="text-2xl">Medicare</h2>
-        <p class="text-ink-2 mt-2">Beneficiaries looking at their Medicare options.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section bg-paper" aria-labelledby="portal-title">
+  <section class="section navy" aria-labelledby="portal-title">
     <div class="container">
-      <h2 id="portal-title">Everything in one portal</h2>
-      <p class="lead mt-4">
-        Your calls, your agents and your spend in one place, from any browser.
-      </p>
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        <Frame
-          shot="buyer-billing"
-          alt="Billing page with transactions, top-ups and monthly statements"
-          sizes="(min-width: 1248px) 588px, (min-width: 768px) 48vw, 100vw"
-        />
-        <Frame
-          shot="crm-agent"
-          alt="An agent's own customers list with prospects and submitted applications"
-          sizes="(min-width: 1248px) 588px, (min-width: 768px) 48vw, 100vw"
-        />
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <div>
+          <h2 id="portal-title">Everything in one portal.</h2>
+          <p class="lead mt-4">
+            Your calls, your agents and your spend in one place, from any browser.
+          </p>
+        </div>
+        <div class="segmented" role="tablist" aria-label="Portal features" data-tabs>
+          {showcase.map((f, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`stab-${f.id}`}
+              aria-controls={`spanel-${f.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+            >
+              {f.tab}
+            </button>
+          ))}
+        </div>
       </div>
-      <a href="/platform" class="link-arrow mt-8">
+      {showcase.map((f, i) => (
+        <div
+          class="showcase-panel"
+          role="tabpanel"
+          id={`spanel-${f.id}`}
+          aria-labelledby={`stab-${f.id}`}
+          hidden={i !== 0}
+        >
+          <Shot shot={f.shot} alt={f.alt} />
+          <div>
+            <h3>{f.title}</h3>
+            <ul class="ticks mt-4">
+              {f.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+      <a href="/platform" class="link-arrow mt-10">
         See the portal
         <Icon name="arrow-right" size={18} />
       </a>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Verticals">
+    <div class="container grid gap-6 md:grid-cols-2" data-reveal-group>
+      <div class="vertical" data-reveal>
+        <Icon name="shield-heart" size={48} class="vertical-icon" />
+        <h3 class="mt-6 text-2xl">Final Expense</h3>
+        <p class="text-ink-2 mt-2">Seniors looking for coverage for funeral and final costs.</p>
+      </div>
+      <div class="vertical" data-reveal>
+        <Icon name="stethoscope" size={48} class="vertical-icon" />
+        <h3 class="mt-6 text-2xl">Medicare</h3>
+        <p class="text-ink-2 mt-2">Beneficiaries looking at their Medicare options.</p>
+      </div>
     </div>
   </section>
 
@@ -207,58 +342,290 @@ const jsonLd = {
 
 <style>
   .hero {
-    padding-block: clamp(2.5rem, 6vw, 5rem);
+    display: flex;
+    align-items: center;
+    padding-top: calc(var(--header-h) + 2.5rem);
+    padding-bottom: 4rem;
+  }
+  @media (min-width: 1024px) {
+    .hero {
+      min-height: 88vh;
+      padding-bottom: 5rem;
+    }
   }
   .hero-grid {
     display: grid;
     gap: 3rem;
     align-items: center;
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1024px) {
     .hero-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     }
   }
-  .underline-stroke {
-    position: relative;
-    white-space: nowrap;
+
+  .proof {
+    border-bottom: 1px solid var(--rule);
   }
-  .underline-stroke svg {
-    position: absolute;
-    left: -2%;
-    bottom: -0.16em;
-    width: 104%;
-    height: 0.3em;
-    overflow: visible;
+  .proof-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding-block: 1.5rem;
   }
-  .step {
-    position: relative;
+  .proof-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.35;
   }
-  .step-num {
-    display: inline-grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
+  @media (min-width: 900px) {
+    .proof-list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+    }
+    .proof-list li {
+      justify-content: center;
+      padding-inline: 1rem;
+    }
+    .proof-list li + li {
+      border-left: 1px solid var(--rule);
+    }
+  }
+
+  .program-panel {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .program-summary {
+    font-size: 1.125rem;
+    color: var(--ink);
+  }
+  .program-rows {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .program-rows > div {
+    display: grid;
+    gap: 0.25rem;
+    padding-block: 0.875rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .program-rows dt {
+    color: var(--ink-3);
+    font-size: 0.875rem;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .program-rows dd {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  @media (min-width: 640px) {
+    .program-rows > div {
+      grid-template-columns: 200px 1fr;
+      align-items: baseline;
+    }
+  }
+
+  .bento {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .bento {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .bento {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    /* 1 and 4 span two columns; 6 too, so the last row has no hole. */
+    .tile:nth-child(1),
+    .tile:nth-child(4),
+    .tile:nth-child(6) {
+      grid-column: span 2;
+    }
+  }
+  .tile {
+    padding: 1.75rem;
+  }
+  .tile-visual {
+    display: flex;
+    align-items: center;
+    min-height: 88px;
+    padding: 1rem;
+    border-radius: 10px;
+    background: var(--paper);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+  .chip {
+    padding: 0.25rem 0.625rem;
     border-radius: 999px;
-    background: var(--navy);
-    color: #fff;
-    font-weight: 750;
+    border: 1px solid var(--blue-strong);
+    color: var(--blue-strong);
+    font-size: 0.8125rem;
+    font-weight: 700;
   }
-  @media (min-width: 768px) {
-    .step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      top: 20px;
-      left: 52px;
-      right: -12px;
-      height: 1px;
-      background: var(--rule);
+  .chip.on {
+    background: var(--blue-strong);
+    color: #fff;
+  }
+  .hours {
+    width: 100%;
+  }
+  .hours-bar {
+    position: relative;
+    height: 14px;
+    border-radius: 999px;
+    background: var(--rule);
+  }
+  .hours-window {
+    position: absolute;
+    left: calc(9 / 24 * 100%);
+    width: calc(10 / 24 * 100%);
+    top: 0;
+    bottom: 0;
+    border-radius: 999px;
+    background: var(--blue-strong);
+  }
+  .hours-ticks {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 0.5rem;
+    color: var(--ink-3);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .stepper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .stepper-btn {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+    background: #fff;
+    color: var(--navy);
+  }
+  .stepper-value {
+    min-width: 7.5rem;
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .rec {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    width: 100%;
+  }
+  .rec-play {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: var(--blue-strong);
+    color: #fff;
+  }
+  .wave {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex: 1;
+    height: 40px;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .wave span {
+    flex: 1;
+    min-width: 2px;
+    border-radius: 2px;
+    background: var(--blue-strong);
+    opacity: 0.8;
+  }
+  .wave span:nth-child(n + 15) {
+    background: #b7c2d2;
+  }
+  .meter {
+    display: grid;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .meter-label {
+    color: var(--ink-3);
+    font-size: 0.8125rem;
+    font-weight: 650;
+  }
+  .meter-bar {
+    height: 12px;
+    border-radius: 999px;
+    background: var(--rule);
+  }
+  .meter-bar span {
+    display: block;
+    width: 70%;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--blue-strong);
+  }
+  .docs {
+    display: grid;
+    gap: 0.375rem;
+  }
+  .doc {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+    background: #fff;
+    color: var(--navy);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .showcase-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    align-items: center;
+    margin-top: 2.5rem;
+  }
+  @media (min-width: 1024px) {
+    .showcase-panel {
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 3rem;
     }
   }
+
   .vertical {
+    padding: clamp(1.75rem, 4vw, 2.5rem);
     border: 1px solid var(--rule);
-    border-left: 4px solid var(--blue);
-    border-radius: 8px;
-    padding: 1.75rem 2rem;
+    border-radius: 12px;
+    transition: background-color 150ms;
+  }
+  .vertical:hover {
+    background: var(--blue-tint);
+  }
+  .vertical :global(.vertical-icon) {
+    color: var(--blue-strong);
+    stroke-width: 1.5;
   }
 </style>

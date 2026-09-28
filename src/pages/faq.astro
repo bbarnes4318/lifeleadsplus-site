@@ -4,34 +4,41 @@ import PageIntro from '../components/PageIntro.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
 
-const faqs: [string, string][] = [
-  ['What verticals do you offer?', 'Final Expense and Medicare.'],
+type Category = 'Programs' | 'Billing' | 'Portal';
+const faqs: [string, string, Category][] = [
+  ['What verticals do you offer?', 'Final Expense and Medicare.', 'Programs'],
   [
     'What’s the difference between pay per application and pay per call?',
     'Pay per application charges for submitted applications your agents log in the portal. Pay per call charges for calls that pass the buffer on your agreement.',
+    'Programs',
   ],
   [
     'Do I have to use the portal?',
     'For pay per application, yes: your agents take calls and log applications there. For pay per call, you can take calls on your own phones or dialer and use the portal for your call log, recordings, spend and statements.',
+    'Portal',
   ],
   [
     'How do I pay?',
     'Programs are prepaid. You fund a balance and calls or applications draw from it.',
+    'Billing',
   ],
   [
     'Can I choose my states and hours?',
     'Yes. Calls only come from your licensed states, during your delivery hours, up to your daily cap.',
+    'Programs',
   ],
-  ['Can I listen to my calls?', 'Yes. Every call in your call log has its recording.'],
+  ['Can I listen to my calls?', 'Yes. Every call in your call log has its recording.', 'Portal'],
   [
     'Can I get a statement for my accountant?',
     'Yes. Download a statement for any month from your portal.',
+    'Billing',
   ],
   [
     'How fast can I start?',
     'Once your agreement is signed and your balance is funded, we schedule your first delivery day.',
+    'Programs',
   ],
-  ['How do I log in?', 'Use Client login at the top of this page.'],
+  ['How do I log in?', 'Use Client login at the top of this page.', 'Portal'],
 ];
 
 const jsonLd = {
@@ -58,9 +65,22 @@ const jsonLd = {
 
   <section class="section" aria-label="Questions">
     <div class="container max-w-[880px]">
-      <div class="faq-list">
-        {faqs.map(([q, a]) => (
-          <details>
+      <div class="filters" role="group" aria-label="Filter questions">
+        {['All', 'Programs', 'Billing', 'Portal'].map((c, i) => (
+          <button
+            type="button"
+            class="filter"
+            aria-pressed={i === 0 ? 'true' : 'false'}
+            data-filter={c}
+          >
+            {c}
+          </button>
+        ))}
+      </div>
+      <p class="sr-only" role="status" data-filter-status></p>
+      <div class="faq-list mt-8">
+        {faqs.map(([q, a, c]) => (
+          <details data-category={c}>
             <summary>
               <span>{q}</span>
               <Icon name="chevron-down" size={20} class="chev" />
@@ -109,4 +129,60 @@ const jsonLd = {
     padding-bottom: 1.25rem;
     color: var(--ink-2);
   }
+  /* Smooth open/close where ::details-content is supported; instant elsewhere. */
+  details::details-content {
+    height: 0;
+    overflow: clip;
+    transition:
+      height 250ms var(--ease),
+      content-visibility 250ms allow-discrete;
+  }
+  details[open]::details-content {
+    height: auto;
+  }
+  details[hidden] {
+    display: none;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .filter {
+    min-height: 44px;
+    padding: 0.5rem 1.125rem;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: #fff;
+    color: var(--ink-2);
+    font-weight: 650;
+    cursor: pointer;
+    transition:
+      background-color 150ms,
+      color 150ms;
+  }
+  .filter:hover {
+    border-color: var(--blue-strong);
+    color: var(--navy);
+  }
+  .filter[aria-pressed='true'] {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
 </style>
+
+<script>
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+  const items = [...document.querySelectorAll<HTMLDetailsElement>('[data-category]')];
+  const status = document.querySelector<HTMLElement>('[data-filter-status]')!;
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter!;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      items.forEach((d) => (d.hidden = f !== 'All' && d.dataset.category !== f));
+      const n = items.filter((d) => !d.hidden).length;
+      status.textContent = `Showing ${n} questions`;
+    }),
+  );
+</script>

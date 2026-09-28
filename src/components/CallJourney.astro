@@ -1,0 +1,256 @@
+---
+import Icon from './Icon.astro';
+
+const steps = [
+  ['Incoming call', 'Final Expense · Texas'],
+  ['Checked', 'Your licensed states and delivery hours'],
+  ['Connected', 'To your agent, Ext 1202'],
+  ['Application logged', 'Level · $15,000 face'],
+];
+---
+
+<div class="journey" data-journey>
+  <div class="journey-head">
+    <span class="live">
+      <span class="live-dot" aria-hidden="true"></span>LIVE
+    </span>
+    <p class="journey-title">How a call reaches your agents</p>
+    <button type="button" class="journey-toggle" data-journey-toggle hidden>
+      <Icon name="pause" size={14} class="i-pause" />
+      <Icon name="play" size={14} class="i-play" />
+      <span class="sr-only" data-journey-label>
+        Pause animation
+      </span>
+    </button>
+  </div>
+  <ol class="journey-steps">
+    {steps.map(([title, detail], i) => (
+      <li class="done" data-step={i}>
+        <span class="journey-dot" aria-hidden="true">
+          <Icon name="check" size={14} />
+        </span>
+        <div>
+          <p class="journey-step-title">
+            {title}
+            {i === 2 && (
+              <span class="timer" aria-hidden="true" data-timer>
+                00:00
+              </span>
+            )}
+          </p>
+          <p class="journey-step-detail">{detail}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+  <p class="journey-caption">Example call.</p>
+</div>
+
+<style>
+  .journey {
+    width: 100%;
+    max-width: 420px;
+    padding: 1.5rem;
+    border-radius: 16px;
+    background: var(--navy-2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 30px 60px -20px rgba(0, 0, 0, 0.5),
+      0 0 80px -10px rgba(0, 129, 241, 0.35);
+  }
+  .journey-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #fff;
+  }
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--red);
+    box-shadow: 0 0 0 0 rgba(224, 0, 0, 0.6);
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse {
+    70% {
+      box-shadow: 0 0 0 8px rgba(224, 0, 0, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(224, 0, 0, 0);
+    }
+  }
+  .journey.paused .live-dot {
+    animation: none;
+  }
+  .journey-title {
+    color: #fff;
+    font-weight: 650;
+    font-size: 0.9375rem;
+  }
+  .journey-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    margin-left: auto;
+    border-radius: 8px;
+    color: var(--on-navy);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .journey-toggle[hidden] {
+    display: none;
+  }
+  .journey-toggle:hover {
+    color: #fff;
+  }
+  .journey-toggle:focus-visible {
+    outline: 2px solid #fff;
+  }
+  .journey:not(.paused) :global(.i-play),
+  .journey.paused :global(.i-pause) {
+    display: none;
+  }
+  .journey-steps {
+    display: grid;
+    gap: 1.25rem;
+    padding-top: 1.25rem;
+  }
+  .journey-steps li {
+    position: relative;
+    display: flex;
+    gap: 0.875rem;
+    transition: opacity 300ms;
+  }
+  /* Connector to the next dot; fills blue once this step is done. */
+  .journey-steps li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 30px;
+    bottom: -1.25rem;
+    width: 2px;
+    background:
+      linear-gradient(var(--blue), var(--blue)) top / 100% var(--fill, 100%) no-repeat,
+      rgba(255, 255, 255, 0.12);
+    transition: background-size 600ms var(--ease);
+  }
+  .journey-steps li:not(.done)::after {
+    --fill: 0%;
+  }
+  .journey-dot {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: transparent;
+    transition:
+      background-color 300ms,
+      border-color 300ms,
+      color 300ms;
+  }
+  .done .journey-dot {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+  .current .journey-dot {
+    border-color: #fff;
+    box-shadow: 0 0 0 4px rgba(0, 129, 241, 0.35);
+  }
+  .journey-steps li.upcoming {
+    opacity: 0.5;
+  }
+  .journey-step-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    font-weight: 650;
+    line-height: 1.4;
+  }
+  .journey-step-detail {
+    color: var(--on-navy);
+    font-size: 0.9375rem;
+  }
+  .timer {
+    padding: 0.0625rem 0.375rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--on-navy-accent);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .timer:empty,
+  li:not(.current) .timer {
+    display: none;
+  }
+  .journey-caption {
+    margin-top: 1.25rem;
+    color: var(--on-navy);
+    font-size: 0.8125rem;
+  }
+</style>
+
+<script>
+  // Loops the example call one step every 2.8s. Without JS or with reduced motion,
+  // the server-rendered "all done" state stays. A button pauses it (WCAG 2.2.2).
+  const card = document.querySelector<HTMLElement>('[data-journey]');
+  if (card && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const items = [...card.querySelectorAll<HTMLElement>('[data-step]')];
+    const timer = card.querySelector<HTMLElement>('[data-timer]')!;
+    const toggle = card.querySelector<HTMLButtonElement>('[data-journey-toggle]')!;
+    const label = card.querySelector<HTMLElement>('[data-journey-label]')!;
+    const STEP = 2800;
+    let step = 0;
+    let startedAt = 0;
+    let stepTimer = 0;
+    let clock = 0;
+
+    const render = () => {
+      items.forEach((li, i) => {
+        li.classList.toggle('done', i < step);
+        li.classList.toggle('current', i === step);
+        li.classList.toggle('upcoming', i > step);
+      });
+      if (step === 2) startedAt = Date.now();
+    };
+    const tick = () => {
+      const s = Math.floor((Date.now() - startedAt) / 1000);
+      timer.textContent = `00:${String(s).padStart(2, '0')}`;
+    };
+    const play = () => {
+      stepTimer = window.setInterval(() => {
+        step = (step + 1) % items.length;
+        render();
+      }, STEP);
+      clock = window.setInterval(tick, 250);
+      card.classList.remove('paused');
+      label.textContent = 'Pause animation';
+    };
+    const pause = () => {
+      clearInterval(stepTimer);
+      clearInterval(clock);
+      card.classList.add('paused');
+      label.textContent = 'Play animation';
+    };
+
+    render();
+    play();
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => (card.classList.contains('paused') ? play() : pause()));
+  }
+</script>
