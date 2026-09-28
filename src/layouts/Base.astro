@@ -2,6 +2,7 @@
 import '@fontsource-variable/inter';
 import '@fontsource-variable/plus-jakarta-sans';
 import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import jakartaPunct from '../assets/fonts/jakarta-punct.woff2?url';
 import jakartaLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
@@ -34,6 +35,7 @@ const ogImage = `${siteUrl}/og.png`;
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={jakartaLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={jakartaPunct} as="font" type="font/woff2" crossorigin />
     <script is:inline>
       document.documentElement.classList.add('js');
     </script>

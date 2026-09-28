@@ -129,12 +129,20 @@ async function strokeCheck(page: Page) {
   const spanBottom = span.y + span.height - clip.y;
   let gap = Infinity;
   let touching = 0;
+  const where: string[] = [];
+  const bounds = { inkLeft: Infinity, inkRight: -1, redLeft: Infinity, redRight: -1 };
   for (let x = 0; x < width; x++) {
     let inkBottom = -1;
     let redTop = -1;
     for (let y = 0; y < height; y++) {
-      if (y < spanBottom + 10 && isInk(own, x, y)) inkBottom = y;
+      if (y < spanBottom + 10 && isInk(own, x, y)) {
+        inkBottom = y;
+        bounds.inkLeft = Math.min(bounds.inkLeft, x);
+        bounds.inkRight = Math.max(bounds.inkRight, x);
+      }
       if (!isRed(x, y)) continue;
+      bounds.redLeft = Math.min(bounds.redLeft, x);
+      bounds.redRight = Math.max(bounds.redRight, x);
       if (redTop < 0) redTop = y;
       for (const [dx, dy] of [
         [0, 0],
@@ -143,20 +151,48 @@ async function strokeCheck(page: Page) {
         [0, 1],
         [0, -1],
       ])
-        if (isInk(all, x + dx, y + dy)) touching++;
+        if (isInk(all, x + dx, y + dy)) {
+          touching++;
+          if (where.length < 6)
+            where.push([x / width, y / height].map((n) => n.toFixed(2)).join(','));
+        }
     }
     if (inkBottom >= 0 && redTop >= 0) gap = Math.min(gap, redTop - inkBottom);
   }
-  return { gap, touching };
+  return { gap, touching, where, ...bounds };
 }
 
-for (const width of [360, 768, 1440]) {
+for (const width of [360, 390, 768, 1024, 1440]) {
   test(`hero underline clears "priced the way" at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
-    const { gap, touching } = await strokeCheck(page);
+    const { gap, touching, where, inkLeft, inkRight, redLeft, redRight } = await strokeCheck(page);
     expect(gap).toBeGreaterThanOrEqual(1);
     expect(gap).toBeLessThan(Infinity);
-    expect(touching).toBe(0);
+    expect(touching, `stroke touches ink at (x,y fractions of the H1) ${where}`).toBe(0);
+    // The stroke starts and ends within "priced the way": not in the gutter or past "y".
+    expect(redLeft).toBeGreaterThanOrEqual(inkLeft);
+    expect(redRight).toBeLessThanOrEqual(inkRight);
   });
 }
+
+test('hero H1 punctuation sits against its word', async ({ page }) => {
+  await page.goto('/');
+  const runs = await page.locator('.hero h1').evaluate((h1) => {
+    const texts: string[] = [];
+    const walker = document.createTreeWalker(h1, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) texts.push(walker.currentNode.textContent!);
+    return texts;
+  });
+  const text = runs.join('');
+  // No space or &nbsp; before the punctuation, and each mark in the same text node as its word.
+  expect(text).not.toMatch(/\s[,.]/); // JS \s includes U+00A0 (&nbsp;)
+  expect(runs.some((t) => t.includes('calls,'))).toBe(true);
+  expect(runs.some((t) => t.includes('sells.'))).toBe(true);
+  // The tight-bearing comma/period font is what renders them.
+  await page.evaluate(() => document.fonts.ready);
+  const loaded = await page.evaluate(() =>
+    [...document.fonts].some((f) => f.family.includes('Jakarta Punct') && f.status === 'loaded'),
+  );
+  expect(loaded).toBe(true);
+});

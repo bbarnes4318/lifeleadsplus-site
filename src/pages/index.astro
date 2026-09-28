@@ -92,27 +92,10 @@ const jsonLd = {
     <div class="container hero-grid">
       <div>
         <p class="eyebrow">Final Expense · Medicare</p>
+        <!-- No whitespace inside the span: a trailing space would widen it past "way". -->
+        <!-- prettier-ignore -->
         <h1 class="mt-4">
-          Live insurance calls,{' '}
-          <span class="underline-stroke">
-            priced the way
-            <svg
-              viewBox="0 0 300 16"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path
-                d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4"
-                fill="none"
-                stroke="var(--red)"
-                stroke-width="3"
-                stroke-linecap="round"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-          </span>{' '}
-          your agency sells.
+          Live insurance calls, <span class="underline-stroke">priced the way<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span> your agency sells.
         </h1>
         <p class="lead mt-6">
           Callers transferred live to your licensed agents. Pay per submitted application or pay per
@@ -361,19 +344,26 @@ const jsonLd = {
       font-size: clamp(2.5rem, 3.4vw, 3.125rem);
     }
   }
+  /* A little more line-height than other headings, so the underline has room between the
+     descenders above it and the ascenders of the next line. */
+  .hero h1 {
+    line-height: 1.1;
+  }
   .underline-stroke {
     position: relative;
     white-space: nowrap;
   }
   /* The span's box ends at the font's descent (baseline + 0.217em in Plus Jakarta Sans), but the
-     "p" and "y" ink reaches baseline + 0.233em. Start the SVG at baseline + 0.08em + 2px: the curve's
-     low ends (under "p" and "y") then run about 0.28em below the baseline, clear of both descenders,
-     and its middle arch sits about 0.16em below. Checked by a test at 360, 768 and 1440px. */
+     "p" and "y" ink reaches baseline + 0.233em. The SVG starts at baseline + 0.107em + 1px, so the
+     curve's low ends (under "p" and "y") run about 0.32em below the baseline, clear of both
+     descenders, and its middle arch (about 0.18em below) stays above the next line's ascenders.
+     It is inset 0.05em each side to stay within the ink of "priced the way". Pixel-tested at 360,
+     390, 768, 1024 and 1440px. */
   .underline-stroke svg {
     position: absolute;
-    left: -2%;
-    top: calc(100% - 0.137em + 2px);
-    width: 104%;
+    left: 0.05em;
+    top: calc(100% - 0.11em + 1px);
+    width: calc(100% - 0.1em);
     height: 0.3em;
     overflow: visible;
   }

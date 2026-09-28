@@ -115,11 +115,15 @@ Builds outside Vercel (no `VERCEL_ENV`) are treated as production.
 - `public/brand/` — favicon, apple-touch icon, and `wordmark.png` (JSON-LD logo, email header).
 - `src/assets/brand/` — wordmarks for the header/footer (optimized at build) and `mark.png`
   (OG image only).
-- `src/assets/screens/` — the only portal images on the site: four crops (`floor-cards`,
+- `src/assets/screens/` — the only portal images on the site: five crops (`agents-floor` for the
+  home hero from 640px up, `floor-cards` for the hero on phones and the portal showcase,
   `applications`, `customers`, `statements`) with no sidebar, header, toasts or per-call amounts.
   They are cut from the full 1440×900 captures in `src/assets/screens/source/` (never imported)
   by `node scripts/crop-screens.mjs`; rerun it after replacing a capture. `Shot.astro` renders them
   as WebP/AVIF at no more than their native width. A test fails if any other screenshot is
   referenced.
+- `src/assets/fonts/jakarta-punct.woff2` — Plus Jakarta Sans's comma and period with a tighter
+  left side bearing, used ahead of it in headings so "calls," doesn't read "calls ,". Rebuild with
+  `python scripts/tight-punct.py` (needs `pip install fonttools brotli`).
 - The site uses no analytics, cookies, third-party scripts or external font CDN (Inter and Plus
   Jakarta Sans are self-hosted via `@fontsource-variable/*`).

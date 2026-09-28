@@ -1,5 +1,15 @@
 @import 'tailwindcss';
 
+/* Plus Jakarta Sans's comma and period with a tighter left side bearing, so headings don't read
+   "calls ," (scripts/tight-punct.py). unicode-range keeps it to those two characters. */
+@font-face {
+  font-family: 'Jakarta Punct';
+  src: url('../assets/fonts/jakarta-punct.woff2') format('woff2');
+  font-weight: 200 800;
+  font-display: swap;
+  unicode-range: U+002C, U+002E;
+}
+
 :root {
   --navy: #0b2350;
   --navy-2: #0f2d63;
@@ -32,7 +42,8 @@
 
 @theme inline {
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Plus Jakarta Sans Variable', 'Inter Variable', ui-sans-serif, sans-serif;
+  --font-display:
+    'Jakarta Punct', 'Plus Jakarta Sans Variable', 'Inter Variable', ui-sans-serif, sans-serif;
   --color-navy: var(--navy);
   --color-navy-2: var(--navy-2);
   --color-blue: var(--blue);
