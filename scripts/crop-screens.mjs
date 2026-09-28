@@ -4,6 +4,8 @@ import sharp from 'sharp';
 
 const dir = 'src/assets/screens';
 const crops = {
+  // Home hero (≥640px): agent tiles and cards, without the owner sidebar, page header or KPI strip.
+  'agents-floor': ['agents-floor-1440', 248, 128, 1192, 640],
   'floor-cards': ['agents-floor-1440', 280, 380, 556, 182],
   applications: ['applications-1440', 280, 226, 1128, 470],
   customers: ['crm-agent-1440', 278, 211, 1130, 520],

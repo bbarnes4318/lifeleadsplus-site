@@ -1,0 +1,83 @@
+---
+import { getImage } from 'astro:assets';
+import agentsFloor from '../assets/screens/agents-floor.png';
+import floorCards from '../assets/screens/floor-cards.png';
+
+// Home hero only. Crops from scripts/crop-screens.mjs, none showing the owner sidebar: the agent
+// tiles and cards from 640px up, and just the two "On a call" cards on phones so they're readable.
+const shots = { 'agents-floor': { src: agentsFloor, phone: floorCards } };
+
+interface Props {
+  shot: keyof typeof shots;
+  alt: string;
+  sizes: string;
+  /** Hero: eager and high priority. */
+  hero?: boolean;
+  class?: string;
+}
+const { shot, alt, sizes, hero = false, class: className } = Astro.props;
+const { src, phone } = shots[shot];
+const img = await getImage({ src, widths: [596, src.width], format: 'webp', quality: 82 });
+const small = await getImage({
+  src: phone,
+  widths: [phone.width / 2, phone.width],
+  format: 'webp',
+  quality: 82,
+});
+---
+
+<figure class:list={['frame', className]}>
+  <div class="frame-bar" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <picture>
+    <source
+      media="(max-width: 639px)"
+      srcset={small.srcSet.attribute}
+      sizes="calc(100vw - 32px)"
+      width={phone.width}
+      height={phone.height}
+    />
+    <img
+      src={img.src}
+      srcset={img.srcSet.attribute}
+      sizes={sizes}
+      alt={alt}
+      width={src.width}
+      height={src.height}
+      loading={hero ? 'eager' : 'lazy'}
+      decoding={hero ? 'sync' : 'async'}
+      fetchpriority={hero ? 'high' : 'auto'}
+    />
+  </picture>
+</figure>
+
+<style>
+  .frame {
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: var(--shadow-raised);
+    overflow: hidden;
+  }
+  .frame-bar {
+    display: flex;
+    gap: 6px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .frame-bar span {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: #cbd3de;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>
