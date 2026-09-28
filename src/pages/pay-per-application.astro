@@ -12,34 +12,26 @@ import FaqStrip from '../components/FaqStrip.astro';
 import CtaBand from '../components/CtaBand.astro';
 
 const intro =
-  'You pay for the business your agents write — not for calls that don’t close. It works for agencies that want their cost tied directly to production.';
+  'Qualified callers transfer live to your agents. You’re charged for the applications they submit, not for the calls that don’t close. Your cost finally tracks your production.';
 
 const rate = [
-  [
-    'badge-dollar-sign',
-    'Starts at $199',
-    'Per submitted application, for Final Expense and Medicare.',
-  ],
+  ['badge-dollar-sign', 'From $199', 'Per submitted application, Final Expense or Medicare.'],
   [
     'sliders-horizontal',
-    'Moves with conversion',
-    'As your agents’ conversion changes, your rate moves up or down with it.',
+    'Tied to conversion',
+    'Your rate moves up or down as your agents’ conversion changes.',
   ],
-  ['receipt', 'Prepaid balance', 'You fund a balance up front and each application draws from it.'],
+  [
+    'receipt',
+    'Prepaid',
+    'Fund your balance up front. Each application draws from it. No invoices.',
+  ],
 ] as const;
 
 const needs = [
-  [
-    'users',
-    'Licensed agents in your states',
-    'Calls only come from the states you’re licensed in.',
-  ],
-  [
-    'headset',
-    'Agents taking calls in the portal — no phone system needed',
-    'Your agents answer in their browser and log applications on the call.',
-  ],
-  ['wallet', 'A prepaid balance', 'Fund your balance and top it up from the portal.'],
+  ['users', 'Licensed agents', 'Licensed in the states you want calls from.'],
+  ['headset', 'A browser', 'Your agents take calls and log applications right in the portal.'],
+  ['wallet', 'A prepaid balance', 'Fund it once and top it up from the portal whenever you need.'],
 ] as const;
 ---
 
@@ -50,7 +42,7 @@ const needs = [
 >
   <PageIntro
     eyebrow="Pay per application"
-    title="Pay per submitted application."
+    title="Pay only when your agents write business."
     intro={intro}
     cta="/get-started?program=ppa"
     secondary={{ label: 'How it’s counted', href: '#counted-title' }}
@@ -62,8 +54,8 @@ const needs = [
     <div class="container">
       <SectionHead
         eyebrow="How it’s counted"
-        title="You pay for applications, not calls."
-        lead="Your agents log each submitted application on the call, before they hang up, and that logged application is what you pay for."
+        title="No application, no charge."
+        lead="Your agent logs the application on the call, before they hang up. That logged application is the only thing you pay for."
         id="counted-title"
       />
       <div class="mt-12">
@@ -72,22 +64,22 @@ const needs = [
             {
               title: 'Call connects',
               icon: 'phone-incoming',
-              body: 'A qualified caller is transferred live to your agent in the portal.',
+              body: 'A qualified caller transfers live to your agent.',
             },
             {
-              title: 'Your agent takes it in the portal',
+              title: 'Your agent answers in the browser',
               icon: 'monitor',
-              body: 'Your agent answers in their browser. No phone system needed.',
+              body: 'No phone system and no dialer. Just a browser.',
             },
             {
-              title: 'Application logged before they hang up',
+              title: 'Application logged on the call',
               icon: 'clipboard-check',
-              body: 'When your agent submits an application, they log it on that call.',
+              body: 'Your agent logs it before they hang up.',
             },
             {
-              title: 'That’s what you pay for',
+              title: 'You pay for that application',
               icon: 'wallet',
-              body: 'Each logged application is charged once from your prepaid balance.',
+              body: 'One charge from your prepaid balance. Calls that don’t close cost nothing.',
             },
           ]}
         />
@@ -101,17 +93,17 @@ const needs = [
     <div class="container see-grid">
       <div>
         <SectionHead
-          eyebrow="What you see"
-          title="Every application, with its call."
-          lead="Every application you pay for is in your portal, next to the call it came from."
+          eyebrow="Full visibility"
+          title="See every application you paid for."
+          lead="Every application sits next to the call it came from, with the recording. You never pay for something you can’t see."
           id="see-title"
         />
         <CheckList
           class="mt-8"
           items={[
-            'Every application with carrier, face amount and premium',
-            'The call each application came from, with its recording',
-            'Your closing percentage by agent and by day',
+            'Carrier, face amount and premium on every application',
+            'The call and recording behind each one',
+            'Closing percentage by agent and by day',
           ]}
         />
       </div>
@@ -125,9 +117,9 @@ const needs = [
   <section class="section navy" aria-labelledby="rate-title">
     <div class="container">
       <SectionHead
-        eyebrow="How your rate works"
-        title="Your rate follows your conversion."
-        lead="Every program starts at $199 per submitted application for Final Expense and Medicare. As your agents' conversion changes, your rate moves with it."
+        eyebrow="Your rate"
+        title="Starts at $199. Moves with your conversion."
+        lead="Every program starts at $199 per submitted application for Final Expense and Medicare. Your rate follows your agents’ conversion, so what you pay reflects what your agents actually close."
         id="rate-title"
       />
       <div class="mt-12 grid gap-5 md:grid-cols-3" data-reveal-group>
@@ -146,8 +138,8 @@ const needs = [
     <div class="container">
       <SectionHead
         eyebrow="What you need"
-        title="Three things to start."
-        lead="If you have these, we can set up your program."
+        title="Three things and you’re ready."
+        lead="No dialer and no phone system required."
         id="need-title"
       />
       <div class="mt-12 grid gap-5 md:grid-cols-3" data-reveal-group>
@@ -163,14 +155,14 @@ const needs = [
   </section>
 
   <FaqStrip
-    lead="What agencies ask about pay per application."
+    lead="Common questions about pay per application."
     items={[
-      ['Do my agents need a dialer?', 'No. They take calls in the portal in their browser.'],
+      ['Do my agents need a dialer?', 'No. They take calls in the portal, in their browser.'],
       [
         'What if an agent forgets to log an application?',
-        'Agents log applications on the call; your portal shows every call and every application side by side, so gaps are easy to spot.',
+        'Every call and every application show side by side in your portal, so a call without an application stands out.',
       ],
-      ['Can I switch to pay per call later?', 'Yes. Talk to us and we’ll move your program.'],
+      ['Can I switch to pay per call later?', 'Yes. Tell us and we’ll move your program.'],
     ]}
   />
 

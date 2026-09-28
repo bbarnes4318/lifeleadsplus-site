@@ -21,7 +21,14 @@ const columns = [
       { href: loginHref, label: 'Client login' },
     ],
   },
-  { title: 'Legal', links: [{ href: '/privacy', label: 'Privacy' }] },
+  {
+    title: 'Legal',
+    links: [
+      { href: '/terms', label: 'Terms of Service' },
+      { href: '/privacy', label: 'Privacy Policy' },
+      { href: '/tcpa-compliance', label: 'TCPA & Compliance' },
+    ],
+  },
 ];
 ---
 
@@ -39,7 +46,7 @@ const columns = [
           />
         </a>
         <p class="max-w-[40ch] text-[0.9375rem]">
-          Live Final Expense and Medicare calls for licensed agencies.
+          Live, pre-qualified Final Expense and Medicare calls for licensed agencies.
         </p>
       </div>
       <a href="/get-started" class="btn btn-light" data-cta="footer">
@@ -91,6 +98,10 @@ const columns = [
     <p class="mt-12 max-w-none border-t border-white/10 pt-6 text-sm">
       © {new Date().getFullYear()}
       {legalName}. All rights reserved.
+      <span class="legal-links">
+        · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a> ·
+        <a href="/tcpa-compliance">TCPA &amp; Compliance</a>
+      </span>
     </p>
   </div>
 </footer>
@@ -132,6 +143,13 @@ const columns = [
     color: #fff;
     text-decoration: underline;
     text-underline-offset: 3px;
+  }
+  p .legal-links a {
+    color: inherit;
+    text-decoration: none;
+  }
+  p .legal-links a:hover {
+    text-decoration: underline;
   }
   a:focus-visible {
     outline-color: #fff;

@@ -10,6 +10,7 @@ import CheckList from '../components/CheckList.astro';
 import SectionHead from '../components/SectionHead.astro';
 import QualificationSection from '../components/QualificationSection.astro';
 import PricingSection from '../components/PricingSection.astro';
+import ClosedLoopSection from '../components/ClosedLoopSection.astro';
 import FaqStrip from '../components/FaqStrip.astro';
 import { features } from '../lib/features';
 import { pick } from '../lib/faqs';
@@ -19,22 +20,22 @@ const steps = [
   {
     title: 'Apply',
     icon: 'file-pen-line',
-    body: 'Tell us your licensed states, how many agents you have and the volume you want.',
+    body: 'Tell us your licensed states, how many agents you have and how many calls you want a day.',
   },
   {
     title: 'Set up',
     icon: 'sliders-horizontal',
-    body: 'Sign your agreement, fund your prepaid balance, and set your delivery hours, states and daily caps.',
+    body: 'Sign your agreement, fund your prepaid balance and set your states, hours and daily cap.',
   },
   {
     title: 'Take calls',
     icon: 'headset',
-    body: 'Callers transfer live to your agents, in the portal or to your own number.',
+    body: 'Qualified callers transfer live to your agents, in the portal or on your own number.',
   },
   {
     title: 'Track everything',
     icon: 'file-text',
-    body: 'Calls, recordings, applications, spend and monthly statements, all in your portal.',
+    body: 'Every call, recording, application and dollar in one login.',
   },
 ] as const;
 
@@ -46,12 +47,27 @@ const trust = [
 ] as const;
 
 const controls = [
-  ['states', 'map-pin', 'Your states', "Calls only come from the states you're licensed in."],
-  ['hours', 'clock', 'Your hours', 'Calls only arrive during the delivery hours you set.'],
-  ['cap', 'gauge', 'Your daily cap', 'Set how many calls a day you want, and change it any time.'],
-  ['rec', 'headphones', 'Every recording', 'Listen to any call from your call log.'],
-  ['balance', 'wallet', 'Prepaid balance', 'You fund a balance up front. No surprise invoices.'],
-  ['statements', 'file-text', 'Monthly statements', 'Download a statement for any month.'],
+  ['states', 'map-pin', 'Your states', 'Only callers in states where your agents are licensed.'],
+  ['hours', 'clock', 'Your hours', 'Calls only arrive while your agents are working.'],
+  [
+    'cap',
+    'gauge',
+    'Your daily cap',
+    'Set exactly how many calls you want a day. Change it anytime.',
+  ],
+  [
+    'rec',
+    'headphones',
+    'Every call recorded',
+    'Hear exactly what your agent said, and what the caller said.',
+  ],
+  ['balance', 'wallet', 'Prepaid balance', 'You fund it, you control it. No surprise invoices.'],
+  [
+    'statements',
+    'file-text',
+    'Monthly statements',
+    'A clean statement for every month, ready for your accountant.',
+  ],
 ] as const;
 const states = ['TX', 'FL', 'GA', 'NC', 'OH', 'TN', 'PA', 'AZ', 'MI', 'IN'];
 // Deterministic "waveform": 40 bar heights between 20% and 100%.
@@ -120,14 +136,16 @@ const jsonLd = {
 
   <QualificationSection />
 
+  <ClosedLoopSection />
+
   <PricingSection />
 
   <section class="section" aria-labelledby="how-title">
     <div class="container">
       <SectionHead
         eyebrow="How it works"
-        title="Live calls in four steps."
-        lead="From application to your first delivery day."
+        title="From application to live calls."
+        lead="No dialer to buy and no leads to chase. This is the whole process."
         id="how-title"
       />
       <div class="mt-12">
@@ -141,8 +159,8 @@ const jsonLd = {
       <div class="flex flex-wrap items-end justify-between gap-6">
         <SectionHead
           eyebrow="The portal"
-          title="Everything in one portal."
-          lead="Your calls, your agents and your spend in one place, from any browser."
+          title="See every call, agent and dollar."
+          lead="One login shows you exactly what you’re paying for and what it’s producing."
           id="portal-title"
         />
         <div class="segmented" role="tablist" aria-label="Portal features" data-tabs>
@@ -186,8 +204,8 @@ const jsonLd = {
     <div class="container">
       <SectionHead
         eyebrow="Your controls"
-        title="You’re in control."
-        lead="You decide where calls come from, when they arrive and how many you get."
+        title="You set the rules. We deliver inside them."
+        lead="Calls only come from your states, only during your hours, and never past your daily cap."
         id="control-title"
       />
       <ul class="bento mt-12" data-reveal-group>
@@ -270,8 +288,8 @@ const jsonLd = {
   <FaqStrip
     items={pick(
       'How are Final Expense callers qualified?',
+      'Who else handles my calls?',
       'How much does it cost?',
-      'Do I need a phone system or dialer?',
     )}
   />
 

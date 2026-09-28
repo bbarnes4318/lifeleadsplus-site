@@ -55,7 +55,12 @@ export const faqs: [string, string, Category][] = [
   ],
   [
     'Are these live calls or leads?',
-    'Live calls. The caller is transferred to your agent while still on the line.',
+    'Live calls. The caller is still on the line when they’re transferred to your agent. You never get a list to chase.',
+    'Qualification',
+  ],
+  [
+    'Who else handles my calls?',
+    'No outside vendors sit between the caller and your agent. Qualification, routing, transfer, recording and your portal all run in one closed system.',
     'Qualification',
   ],
   [
@@ -65,7 +70,7 @@ export const faqs: [string, string, Category][] = [
   ],
   [
     'What if a call doesn’t meet my agreement?',
-    'Request a return from your call log. Each request is reviewed and the decision shows in your portal.',
+    'Request a return from your call log within 30 days of the call. Every request is reviewed and the decision shows in your portal.',
     'Billing',
   ],
   [
@@ -84,7 +89,7 @@ export const faqs: [string, string, Category][] = [
     'Portal',
   ],
   ['Can I listen to my calls?', 'Yes. Every call in your call log has its recording.', 'Portal'],
-  ['How do I log in?', 'Use Client login at the top of this page.', 'Portal'],
+  ['How do I log in?', 'Use Client login at the top of any page.', 'Portal'],
 ];
 
 /** Question/answer pairs for a FaqStrip, looked up by question. */

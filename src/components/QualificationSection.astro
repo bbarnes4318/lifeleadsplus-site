@@ -15,7 +15,7 @@ const verticals = Object.entries(qualifications) as [
 const facts = [
   ['map-pin', 'Only from your licensed states'],
   ['calendar-clock', 'Only during your delivery hours'],
-  ['phone-forwarded', 'Live transfer, not a lead list'],
+  ['phone-forwarded', 'Live transfers, never a lead list'],
 ] as const;
 ---
 
@@ -24,8 +24,8 @@ const facts = [
     <div class="flex flex-wrap items-end justify-between gap-6">
       <SectionHead
         eyebrow="Caller qualification"
-        title="Every caller qualifies before your agent says hello."
-        lead="Callers answer these questions before they are transferred live to your licensed agents."
+        title="Your agents only talk to callers who already said yes."
+        lead="Every caller answers five screening questions before transfer. Anyone who doesn’t qualify never reaches your agents, so they spend the day selling instead of screening."
         id="qual-title"
       />
       <div class="segmented" role="tablist" aria-label="Verticals" data-qual-tabs>

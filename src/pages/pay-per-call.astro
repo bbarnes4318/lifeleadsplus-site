@@ -12,7 +12,7 @@ import Icon from '../components/Icon.astro';
 import { ppcFilters } from '../lib/offer';
 
 const intro =
-  'You pay for calls that last past the buffer time on your agreement. Shorter calls don’t count.';
+  'Every program has a buffer. Calls that end before it are free. You only pay for callers who stay on the line with your agent.';
 const BUFFER = 90;
 const START = 70;
 const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
@@ -34,7 +34,7 @@ const stateChips = [
 >
   <PageIntro
     eyebrow="Pay per call"
-    title="Pay per call, with a buffer."
+    title="Pay for real conversations, not hang-ups."
     intro={intro}
     cta="/get-started?program=ppc"
     secondary={{ label: 'How billing works', href: '#billing-title' }}
@@ -46,8 +46,8 @@ const stateChips = [
     <div class="container">
       <SectionHead
         eyebrow="Pricing"
-        title="Starts at $25. Your filters set the final price."
-        lead="Pay per call starts at $25 per billable call for Final Expense and Medicare. Your final price depends on three filters."
+        title="From $25 a call. You set what goes into it."
+        lead="Pay per call starts at $25 per billable call for Final Expense and Medicare. Three filters set your final price."
         id="filters-title"
       />
       <ul class="mt-12 grid gap-5 md:grid-cols-3" data-reveal-group data-ppc-filters>
@@ -110,21 +110,24 @@ const stateChips = [
       <div>
         <SectionHead
           eyebrow="How billing works"
-          title="Only calls past your buffer count."
-          lead="Every call has a buffer, agreed before your first call."
+          title="Short calls cost you nothing."
+          lead="Your buffer is agreed before your first call."
           id="billing-title"
         />
         <div class="text-ink-2 mt-6 grid gap-4" data-reveal>
           <p>
-            A call that ends inside the buffer isn’t billable. A call that passes it is billed once,
-            from your prepaid balance.
+            A call that ends inside your buffer is free. A call that passes it is billed once, from
+            your prepaid balance.
           </p>
-          <p>You can see each call’s length and whether it was billable in your call log.</p>
+          <p>
+            Your call log shows every call’s length and whether it was billable, so you never have
+            to guess.
+          </p>
         </div>
       </div>
 
       <div class="buffer" data-reveal data-buffer={BUFFER}>
-        <h3>See how the buffer works</h3>
+        <h3>Drag to see what you’d pay for</h3>
         <p class="readout mt-3" aria-live="polite">
           <span data-readout>Call length: {fmt(START)}</span>
           <span class="status" data-status>
@@ -170,8 +173,8 @@ const stateChips = [
     <div class="container">
       <SectionHead
         eyebrow="Taking calls"
-        title="Two ways to take calls"
-        lead="Transfer calls to your own phones or dialer, or have your agents take them in the portal."
+        title="Use your phones, or ours."
+        lead="Send calls to your existing phones or dialer, or let your agents take them in the portal. Either way, you get the full portal."
         id="ways-title"
       />
       <div class="lanes mt-12" data-reveal>
@@ -195,7 +198,7 @@ const stateChips = [
             <div>
               <h3>Your phones or dialer</h3>
               <p class="text-ink-2 mt-2">
-                We transfer each call to the number you give us. You still get the portal for your
+                We transfer every call to the number you give us. Keep your setup and still get the
                 call log, recordings, spend and statements.
               </p>
             </div>
@@ -205,8 +208,8 @@ const stateChips = [
             <div>
               <h3>Your agents in the portal</h3>
               <p class="text-ink-2 mt-2">
-                Your agents take calls in their browser, with a CRM and application logging built
-                in.
+                No phone system needed. Your agents answer in their browser, with a CRM and
+                application logging built in.
               </p>
             </div>
           </article>
@@ -219,8 +222,8 @@ const stateChips = [
     <div class="container">
       <SectionHead
         eyebrow="Returns"
-        title="A call that misses your agreement can be returned."
-        lead="If a call doesn’t meet the criteria on your agreement, you can request a return from your call log. Each request is reviewed and the decision shows in your portal."
+        title="Bad call? Request a return."
+        lead="If a call doesn’t meet the criteria on your agreement, request a return right from your call log within 30 days. Every request is reviewed and the decision shows in your portal."
         id="returns-title"
       />
       <div class="mt-12">
@@ -230,13 +233,13 @@ const stateChips = [
             {
               title: 'Request from your call log',
               icon: 'undo-2',
-              body: 'Pick the call and request a return.',
+              body: 'Pick the call and send the request.',
             },
-            { title: 'Reviewed', icon: 'eye', body: 'Each request is reviewed.' },
+            { title: 'Reviewed', icon: 'eye', body: 'Every request gets reviewed.' },
             {
               title: 'Decision shows in your portal',
               icon: 'check-circle',
-              body: 'See the decision next to the call.',
+              body: 'The decision appears next to the call.',
             },
           ]}
         />
@@ -245,14 +248,14 @@ const stateChips = [
   </section>
 
   <FaqStrip
-    lead="What agencies ask about pay per call."
+    lead="Common questions about pay per call."
     items={[
       [
         'What’s the buffer?',
-        'A number of seconds agreed on your agreement. A call has to pass it to be billable.',
+        'The number of seconds on your agreement a call has to pass before it’s billable. Anything shorter is free.',
       ],
       ['Can I pause calls?', 'Yes. Lower your daily cap or change your hours in the portal.'],
-      ['How do I add funds?', 'Request a top-up from the portal’s billing page.'],
+      ['How do I add funds?', 'Request a top-up from the billing page in your portal.'],
     ]}
   />
 

@@ -1,0 +1,689 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { LEGAL } from '../lib/legal';
+
+const sections = [
+  { id: 'acceptance-of-these-terms', title: '1. Acceptance of these Terms' },
+  { id: 'definitions', title: '2. Definitions' },
+  { id: 'eligibility-and-accounts', title: '3. Eligibility and accounts' },
+  { id: 'the-services', title: '4. The services' },
+  { id: 'fees-billing-and-payment', title: '5. Fees, billing and payment' },
+  { id: 'acceptable-use', title: '6. Acceptable use' },
+  { id: 'compliance-responsibilities', title: '7. Compliance responsibilities' },
+  { id: 'intellectual-property', title: '8. Intellectual property' },
+  { id: 'third-party-services', title: '9. Third-party services' },
+  { id: 'confidentiality', title: '10. Confidentiality' },
+  { id: 'term-suspension-and-termination', title: '11. Term, suspension and termination' },
+  { id: 'disclaimers', title: '12. Disclaimers' },
+  { id: 'limitation-of-liability', title: '13. Limitation of liability' },
+  { id: 'indemnification', title: '14. Indemnification' },
+  { id: 'dispute-resolution', title: '15. Dispute resolution' },
+  { id: 'changes-to-these-terms', title: '16. Changes to these Terms' },
+  { id: 'general-provisions', title: '17. General provisions' },
+  { id: 'contact-us', title: '18. Contact us' },
+];
+---
+
+<LegalPage
+  title="Terms of Service"
+  intro={
+    'The terms that govern your use of Life Leads Plus programs, the client portal and this website.'
+  }
+  description={
+    'Terms of Service for Life Leads Plus pay per application and pay per call programs for licensed Final Expense and Medicare agencies.'
+  }
+  sections={sections}
+>
+  <p>
+    These Terms govern your access to and use of Life Leads Plus, which delivers live, qualified
+    Final Expense and Medicare calls to licensed insurance agencies and bills either per submitted
+    application or per billable call from a prepaid balance. Please read them before you fund a
+    balance or accept a call.
+  </p>
+  <h2 id="acceptance-of-these-terms">1. Acceptance of these Terms</h2>
+  <p>
+    Life Leads Plus (the “Services”) is operated by {LEGAL.entity}, organized under the laws of the
+    State of {LEGAL.state} (“Life Leads Plus,” “we,” “us,” or “our”). These{' '}
+    <a href="/terms">Terms of Service</a> (the “Terms”) form a binding agreement between Life Leads
+    Plus and the person or entity that signs an Agreement with us, funds a Prepaid Balance, or uses
+    the Services (“you,” “Client,” or “Agency”).
+  </p>
+  <p>
+    By signing an Agreement, funding a Prepaid Balance, accepting a routed Call, or otherwise using
+    the Services, you agree to these Terms and to our <a href="/privacy">Privacy Policy</a> and{' '}
+    <a href="/tcpa-compliance">TCPA &amp; Compliance Policy</a>, each incorporated here by
+    reference. If you do not agree, do not use the Services.
+  </p>
+  <p>
+    If you accept these Terms on behalf of a business entity, you represent that you have authority
+    to bind that entity, and “you” refers to that entity.
+  </p>
+  <p>
+    <strong>
+      Section 15 contains a binding arbitration provision and a waiver of class actions.
+    </strong>{' '}
+    It affects how disputes between you and Life Leads Plus are resolved. You may opt out of
+    arbitration within 30 days of first accepting these Terms by following the instructions in
+    Section 15.6.
+  </p>
+  <h2 id="definitions">2. Definitions</h2>
+  <ul>
+    <li>
+      <strong>Agreement</strong> — the program agreement or order you sign with us that sets your
+      Pricing Model, Program, rate, states, caller ages, delivery hours, daily cap and, for pay per
+      call, your Buffer.
+    </li>
+    <li>
+      <strong>Application</strong> — an insurance application your agent completes and submits for a
+      Consumer arising from a Call, logged in the Portal with the carrier, plan, face amount,
+      premium and applicant details.
+    </li>
+    <li>
+      <strong>Billable Application</strong> — an Application that satisfies Section 5.5 and for
+      which a fee becomes due under pay per application.
+    </li>
+    <li>
+      <strong>Buffer</strong> — the number of seconds set in your Agreement that a Call must last
+      before it becomes a Billable Call.
+    </li>
+    <li>
+      <strong>Billable Call</strong> — under pay per call, a Call that lasts longer than your
+      Buffer.
+    </li>
+    <li>
+      <strong>Call</strong> — an inbound telephone call transferred to you through the Services.
+    </li>
+    <li>
+      <strong>Consumer</strong> — an individual who is connected to your agent through the Services.
+    </li>
+    <li>
+      <strong>Consumer Data</strong> — personal information relating to a Consumer that is
+      transmitted, generated, or recorded through the Services.
+    </li>
+    <li>
+      <strong>Portal</strong> — the Life Leads Plus client portal, including the browser softphone,
+      call log, recordings, customer records, application logging, reporting, billing and
+      statements.
+    </li>
+    <li>
+      <strong>Prepaid Balance</strong> — funds you deposit with us in advance, from which fees are
+      drawn.
+    </li>
+    <li>
+      <strong>Pricing Model</strong> — pay per application or pay per call, as set in your
+      Agreement.
+    </li>
+    <li>
+      <strong>Program</strong> — a product line for which Calls are delivered: Final Expense or
+      Medicare.
+    </li>
+  </ul>
+  <h2 id="eligibility-and-accounts">3. Eligibility and accounts</h2>
+  <h3>3.1 Licensing and authority are your responsibility</h3>
+  <p>
+    You select the states from which you want to receive Calls. That selection controls routing
+    only. It is not a representation by us that you or your agents are licensed or appointed in
+    those states, and we do not verify licensing or appointments.
+  </p>
+  <p>
+    You are solely responsible for holding and maintaining whatever licenses, appointments, and
+    authority applicable law requires for every agent who takes a Call and for the business you
+    conduct, in every state where you accept Calls or transact business. Soliciting or selling
+    insurance without the required authority may violate state law. Nothing in these Terms relieves
+    you of that obligation.
+  </p>
+  <h3>3.2 Registration and account security</h3>
+  <ul>
+    <li>You must be at least 18 years old and provide accurate, complete information.</li>
+    <li>
+      You are responsible for all activity under your account and under the logins of every team
+      member you invite, and for safeguarding credentials.
+    </li>
+    <li>Logins are for the named user only and may not be shared, sold, or transferred.</li>
+    <li>
+      You must notify us promptly using the details in Section 18 if you suspect unauthorized use.
+    </li>
+  </ul>
+  <h3>3.3 Agencies and team members</h3>
+  <p>
+    An Agency is responsible for its agents’ and team members’ compliance with these Terms, for
+    their licensure, and for all fees incurred under its account.
+  </p>
+  <h2 id="the-services">4. The services</h2>
+  <h3>4.1 What we provide</h3>
+  <p>
+    Subject to these Terms and your Agreement, we deliver Calls from Consumers who have answered the
+    qualification questions for your Program, route them only from the states you select, only
+    during your delivery hours and up to your daily cap, and provide the Portal with call records,
+    recordings, application logging, reporting, billing and statements. Under pay per call you may
+    receive Calls at a telephone number you designate or in the Portal. Under pay per application
+    your agents take Calls and log Applications in the Portal.
+  </p>
+  <h3>4.2 What we do not provide</h3>
+  <ul>
+    <li>
+      <strong>No volume guarantee.</strong> We do not guarantee any number of Calls, that your daily
+      cap will be reached, any conversion rate, any Application volume, or any level of commissions
+      or income.
+    </li>
+    <li>
+      <strong>No employment or agency relationship.</strong> You are an independent business.
+      Nothing here creates an employment, partnership, joint venture, or franchise relationship, and
+      neither party may bind the other.
+    </li>
+    <li>
+      <strong>No insurance, legal, tax, or compliance advice.</strong> We are not an insurer,
+      insurance producer, or law firm. Information in the Services is not legal or compliance
+      advice.
+    </li>
+    <li>
+      <strong>No carrier appointment.</strong> We do not appoint you with, or represent, any
+      insurance carrier.
+    </li>
+  </ul>
+  <h3>4.3 Availability and changes</h3>
+  <p>
+    We may modify, suspend, or discontinue any part of the Services at any time. We will make
+    reasonable efforts to give advance notice of material changes that adversely affect a funded
+    program. The Services are provided on an as-available basis and may be interrupted for
+    maintenance, upgrades, third-party outages, or events outside our control.
+  </p>
+  <h2 id="fees-billing-and-payment">5. Fees, billing and payment</h2>
+  <h3>5.1 Prepaid Balance</h3>
+  <p>
+    All programs are prepaid. You fund your Prepaid Balance before delivery begins, and each fee is
+    drawn from it when it becomes due. Delivery pauses when your Prepaid Balance cannot cover the
+    next fee and resumes when you top it up. You can see your Prepaid Balance, each charge, and each
+    top-up in the Portal.
+  </p>
+  <h3>5.2 Pay per application</h3>
+  <p>
+    Pay per application starts at $199 per Billable Application for Final Expense and for Medicare.
+    You are not charged for receiving a Call, for speaking with a Consumer, or for the length of a
+    conversation. Your agents must log every Application on the Call from which it arose, in the
+    Portal, before the Call ends. Your rate is set in your Agreement and moves up or down with your
+    agents’ conversion as described in your Agreement.
+  </p>
+  <h3>5.3 Pay per call</h3>
+  <p>
+    Pay per call starts at $25 per Billable Call for Final Expense and for Medicare. Your price
+    depends on the states, caller ages and Buffer in your Agreement. A Call that ends before your
+    Buffer is not billable. A Call that lasts beyond your Buffer is billed once, however long it
+    continues. Each Call’s duration and billable status are shown in your call log.
+  </p>
+  <h3>5.4 Your rate</h3>
+  <p>
+    The rate that applies to your account is the rate in your Agreement. Published starting rates
+    are subject to change. There is no subscription fee and no separate charge for Portal access.
+  </p>
+  <h3>5.5 Eligibility of an application</h3>
+  <p>
+    An Application is not billable where it duplicates an Application already logged for the same
+    Consumer and Program, was not generated from a Call delivered through the Services, or was
+    submitted for a Consumer who did not agree to the contact. An Application that is fabricated or
+    falsified, or that is logged, withheld, or deleted for the purpose of generating or avoiding a
+    charge, is a breach of these Terms, and we may charge the fee that would have applied.
+  </p>
+  <h3>5.6 Pay per call returns</h3>
+  <p>
+    If a Billable Call does not meet the criteria in your Agreement, you may request a return from
+    your call log within 30 days of the Call. Each request is reviewed against the recording and
+    call record. If a return is approved, the fee for that Call is credited to your Prepaid Balance.
+    The decision is shown next to the Call in the Portal. A return credit is not redeemable for
+    cash.
+  </p>
+  <h3>5.7 Payment</h3>
+  <p>
+    You fund your Prepaid Balance by the payment methods we accept. Payments may be processed by
+    third-party payment processors. We do not store full card numbers or full bank account numbers.
+    You authorize us and our payment processors to charge the payment method you provide for amounts
+    you authorize. You are responsible for any taxes other than taxes on our net income.
+  </p>
+  <h3>5.8 Refunds, disputes and non-payment</h3>
+  <ul>
+    <li>
+      Amounts drawn from your Prepaid Balance are non-refundable except as provided in Section 5.6,
+      where required by law, or where we agree in writing.
+    </li>
+    <li>
+      If you believe a charge was made in error, you must notify us within 30 days of the charge,
+      with the Call or Application details, so that we can investigate.
+    </li>
+    <li>
+      Initiating a chargeback without first contacting us is a breach of these Terms. We may suspend
+      delivery and recover related fees and costs.
+    </li>
+    <li>
+      We may suspend or terminate access for non-payment, and you remain liable for amounts already
+      incurred.
+    </li>
+  </ul>
+  <h2 id="acceptable-use">6. Acceptable use</h2>
+  <p>You agree that you will not, and will not permit any other person to:</p>
+  <ul>
+    <li>
+      Use the Services for any unlawful purpose, or in violation of the Telephone Consumer
+      Protection Act, state telemarketing or do-not-call laws, insurance regulations, CMS marketing
+      rules, or carrier requirements.
+    </li>
+    <li>
+      Resell, sublicense, redistribute, broker, or otherwise transfer Calls, Consumer Data, or
+      Portal access to any third party without our prior written consent.
+    </li>
+    <li>
+      Misrepresent your identity, licensure, appointments, or affiliation, or represent yourself as
+      acting for Life Leads Plus, a carrier, a government program, Medicare, or the Health Insurance
+      Marketplace.
+    </li>
+    <li>
+      Log false, duplicate, or inflated Applications, fail to log Applications, or otherwise
+      manipulate billing or reporting.
+    </li>
+    <li>
+      Contact a Consumer for any purpose other than the Program for which the Call was delivered, or
+      retain or reuse Consumer Data after your account is closed except as required by law or
+      carrier recordkeeping obligations.
+    </li>
+    <li>
+      Copy, scrape, crawl, harvest, frame, mirror, reverse engineer, decompile, or create derivative
+      works from the Services or their underlying software.
+    </li>
+    <li>
+      Probe, scan, or test the vulnerability of the Services, breach or circumvent authentication or
+      rate limits, or access data not intended for you, including another client’s data.
+    </li>
+    <li>
+      Introduce malware, or use the Services to transmit unsolicited or unlawful communications.
+    </li>
+    <li>
+      Use automated means to access the Services other than through interfaces we provide, or impose
+      an unreasonable load on our infrastructure.
+    </li>
+  </ul>
+  <p>
+    We may investigate suspected violations and may suspend access immediately where we reasonably
+    believe conduct threatens the Services, another client, a Consumer, or our legal or regulatory
+    position.
+  </p>
+  <h2 id="compliance-responsibilities">7. Compliance responsibilities</h2>
+  <h3>7.1 Your obligations</h3>
+  <p>
+    You act as an independent business and are solely responsible for the lawfulness of your own
+    conduct. Without limiting Section 6, you agree that you will:
+  </p>
+  <ul>
+    <li>
+      Hold and maintain whatever licenses, appointments, and authority applicable law requires for
+      every agent who takes a Call.
+    </li>
+    <li>
+      Comply with the TCPA, the Telemarketing Sales Rule, applicable state telemarketing statutes,
+      and our <a href="/tcpa-compliance">TCPA &amp; Compliance Policy</a>, including do-not-call and
+      consent-revocation obligations.
+    </li>
+    <li>
+      Comply with applicable federal and state rules governing the marketing and sale of the
+      products you sell, including CMS marketing and Scope of Appointment requirements where they
+      apply.
+    </li>
+    <li>
+      Obtain any consent required in the Consumer’s state before recording or monitoring a call.
+    </li>
+    <li>
+      Handle Consumer Data in accordance with applicable privacy and data security law, use it only
+      to service the Consumer’s inquiry, and protect it with reasonable safeguards.
+    </li>
+    <li>
+      Accurately represent products, carriers, premiums, and benefits, and submit Applications
+      truthfully.
+    </li>
+    <li>
+      Promptly forward to us any complaint, regulatory inquiry, demand, or litigation relating to a
+      Call or Consumer delivered through the Services.
+    </li>
+  </ul>
+  <h3>7.2 Allocation of TCPA and do-not-call responsibility</h3>
+  <p>
+    Responsibility for compliance with the Telephone Consumer Protection Act, the Telemarketing
+    Sales Rule, and federal and state do-not-call rules is allocated between the parties according
+    to <strong>which party controls the communication.</strong>
+  </p>
+  <p>
+    <strong>
+      Control passes to you at the moment a Call is connected to you, or Consumer Data is delivered
+      to your account.
+    </strong>{' '}
+    Everything before that moment is ours. Everything you originate after it is yours.
+  </p>
+  <h4>What we are responsible for</h4>
+  <p>
+    Life Leads Plus is responsible for its own compliance with those laws for conduct within our
+    control, which includes:
+  </p>
+  <ul>
+    <li>
+      the manner in which consent is obtained, disclosed, recorded, and retained for Consumer
+      inquiries we source;
+    </li>
+    <li>
+      our scrubbing of those records against the National Do Not Call Registry, applicable state
+      registries, and our internal do-not-call list;
+    </li>
+    <li>
+      calls, text messages, and other communications that we originate, whether to Consumers or to
+      clients;
+    </li>
+    <li>the dialing, routing, and messaging systems we operate; and</li>
+    <li>the acts and omissions of vendors acting on our behalf and under our direction.</li>
+  </ul>
+  <p>
+    Where a violation of the TCPA or of do-not-call rules arises out of that conduct,{' '}
+    <strong>Life Leads Plus accepts responsibility for it and will indemnify you</strong> on the
+    terms in Section 14.2.
+  </p>
+  <h4>What you are responsible for</h4>
+  <p>
+    Once a Call is connected to you or Consumer Data is delivered to your account, you are the
+    caller and the sender for every subsequent communication you make. We have no control over, and
+    no ability to supervise, whether, when, how often, by what technology, or with what content you
+    contact a Consumer. You are responsible for your own compliance from that point, including:
+  </p>
+  <ul>
+    <li>
+      any call, text message, voicemail, ringless voicemail, or email you originate, including any
+      recontact or follow-up campaign;
+    </li>
+    <li>
+      your use of any dialer, automatic telephone dialing system, prerecorded or artificial voice,
+      or AI-generated voice;
+    </li>
+    <li>
+      your handling of a revocation of consent that a Consumer communicates to you directly, by any
+      reasonable means;
+    </li>
+    <li>your maintenance of, and adherence to, your own internal do-not-call list;</li>
+    <li>your observance of permitted calling hours in the Consumer’s time zone; and</li>
+    <li>the caller identification you transmit.</li>
+  </ul>
+  <p>
+    Where a violation arises out of that conduct,{' '}
+    <strong>you accept responsibility for it and will indemnify Life Leads Plus</strong> on the
+    terms in Section 14.1.
+  </p>
+  <h4>Neither party answers for the other</h4>
+  <p>
+    Nothing in this Section makes either party liable for the acts or omissions of the other.
+    Delivering a Call or Consumer Data to you is not a representation that any contact you later
+    make is lawful, and your compliance obligations are independent of ours. Each party’s
+    responsibility is limited to conduct within its own control as described above.
+  </p>
+  <h2 id="intellectual-property">8. Intellectual property</h2>
+  <h3>8.1 Our rights</h3>
+  <p>
+    The Services, including the Portal, its software, source code, user interfaces, design, layout,
+    graphics, text, reports, documentation, databases, and the compilation and organization of the
+    foregoing, are owned by Life Leads Plus or its licensors and are protected by United States and
+    international copyright, trademark, trade secret, and other intellectual property laws. All
+    rights not expressly granted are reserved.
+  </p>
+  <p>
+    Life Leads Plus, the Life Leads Plus name and logo, and our other names, marks, and slogans are
+    our trademarks. You may not use them without our prior written permission, or in a manner likely
+    to cause confusion or to suggest sponsorship or endorsement.
+  </p>
+  <h3>8.2 Your license</h3>
+  <p>
+    Subject to your compliance with these Terms and payment of applicable fees, we grant you a
+    limited, revocable, non-exclusive, non-transferable, non-sublicensable license to access and use
+    the Services for the sole purpose of receiving Calls and submitting Applications in your own
+    insurance business. This license terminates automatically when your account is terminated.
+  </p>
+  <h3>8.3 Your content and feedback</h3>
+  <p>
+    You retain ownership of content you submit. You grant Life Leads Plus a non-exclusive,
+    worldwide, royalty-free license to host, store, process, transmit, and display that content as
+    necessary to operate the Services and comply with law. If you send us suggestions or feedback,
+    you grant us an unrestricted, perpetual, irrevocable, royalty-free right to use it without
+    obligation or compensation to you.
+  </p>
+  <h3>8.4 Copyright complaints</h3>
+  <p>
+    If you believe material in the Services infringes your copyright, send a notice with the
+    elements required by 17 U.S.C. § 512(c)(3) to the address in Section 18.
+  </p>
+  <h2 id="third-party-services">9. Third-party services</h2>
+  <p>
+    The Services depend on third parties, including payment processors, telephony and messaging
+    carriers, and cloud hosting providers. Your use of those services may be subject to their own
+    terms. We are not responsible for the acts, omissions, availability, or content of third
+    parties, and third-party outages may interrupt Calls, messaging, or billing. Links to
+    third-party sites are provided for convenience and are not endorsements.
+  </p>
+  <h2 id="confidentiality">10. Confidentiality</h2>
+  <p>
+    Each party may receive non-public information of the other, including pricing, routing logic,
+    reporting data, and Consumer Data. The receiving party will use such information only to perform
+    under these Terms, will protect it with at least reasonable care, and will not disclose it
+    except to personnel and advisors bound by comparable obligations or as required by law. This
+    section does not apply to information that is or becomes public through no fault of the
+    receiving party, was already lawfully known, or is independently developed. Consumer Data is
+    also governed by the <a href="/privacy">Privacy Policy</a> and applicable law.
+  </p>
+  <h2 id="term-suspension-and-termination">11. Term, suspension and termination</h2>
+  <p>
+    These Terms apply from your first use of the Services until terminated. You may terminate at any
+    time by giving us notice and ceasing use. We may suspend or terminate your access, with or
+    without notice, for breach of these Terms, non-payment, suspected fraud, regulatory or carrier
+    requirement, or risk to the Services or to Consumers.
+  </p>
+  <p>
+    On termination: your license under Section 8.2 ends; you must stop using the Services; unpaid
+    fees become immediately due; and any remaining Prepaid Balance is handled as set out in your
+    Agreement or, if your Agreement is silent, is forfeited unless we agree otherwise in writing or
+    law requires otherwise. Sections 5.8, 6, 7, 8, 10, and 12 through 17 survive termination.
+  </p>
+  <h2 id="disclaimers">12. Disclaimers</h2>
+  <p class="caps">
+    THE SERVICES AND ALL CALLS, DATA, AND MATERIALS ARE PROVIDED “AS IS” AND “AS AVAILABLE,” WITHOUT
+    WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW, LIFE LEADS
+    PLUS DISCLAIMS ALL IMPLIED WARRANTIES, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR
+    PURPOSE, TITLE, AND NON-INFRINGEMENT.
+  </p>
+  <p class="caps">
+    LIFE LEADS PLUS DOES NOT WARRANT THAT THE SERVICES WILL BE UNINTERRUPTED, TIMELY, SECURE, OR
+    ERROR-FREE, THAT ANY CALL WILL RESULT IN AN APPLICATION OR SALE, OR THAT ANY CONSUMER
+    INFORMATION IS ACCURATE, COMPLETE, OR CURRENT. LIFE LEADS PLUS MAKES NO REPRESENTATION THAT THE
+    SERVICES ARE APPROPRIATE OR AVAILABLE FOR USE IN ANY PARTICULAR JURISDICTION.
+  </p>
+  <p class="caps">
+    NO ADVICE OR INFORMATION OBTAINED FROM LIFE LEADS PLUS CREATES ANY WARRANTY NOT EXPRESSLY STATED
+    HERE. SOME JURISDICTIONS DO NOT ALLOW CERTAIN EXCLUSIONS, SO SOME OF THE ABOVE MAY NOT APPLY TO
+    YOU.
+  </p>
+  <h2 id="limitation-of-liability">13. Limitation of liability</h2>
+  <p class="caps">
+    TO THE FULLEST EXTENT PERMITTED BY LAW, LIFE LEADS PLUS AND ITS OWNERS, MANAGERS, OFFICERS,
+    EMPLOYEES, AND AGENTS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL,
+    EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, COMMISSIONS, BUSINESS,
+    GOODWILL, OR DATA, ARISING OUT OF OR RELATING TO THESE TERMS OR THE SERVICES, WHETHER IN
+    CONTRACT, TORT, OR ANY OTHER THEORY, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+  </p>
+  <p class="caps">
+    LIFE LEADS PLUS’S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATING TO THESE TERMS OR THE
+    SERVICES WILL NOT EXCEED THE GREATER OF (A) THE TOTAL FEES DRAWN FROM YOUR PREPAID BALANCE IN
+    THE SIX (6) MONTHS IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO THE CLAIM, OR (B) ONE HUNDRED
+    U.S. DOLLARS ($100).
+  </p>
+  <p class="caps">
+    THESE LIMITATIONS APPLY EVEN IF A REMEDY FAILS OF ITS ESSENTIAL PURPOSE. SOME JURISDICTIONS DO
+    NOT ALLOW THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES, SO SOME OF THE ABOVE MAY NOT APPLY TO
+    YOU. NOTHING HERE LIMITS LIABILITY THAT CANNOT BE LIMITED UNDER APPLICABLE LAW.
+  </p>
+  <p>
+    The caps and exclusions in this Section do not apply to either party’s indemnification
+    obligations under Section 14. A cap would otherwise make the responsibility each party accepts
+    in Section 7.2 meaningless, and the carve-out applies equally in both directions.
+  </p>
+  <h2 id="indemnification">14. Indemnification</h2>
+  <h3>14.1 Your indemnity to us</h3>
+  <p>
+    You will defend, indemnify, and hold harmless Life Leads Plus and its owners, managers,
+    officers, employees, and agents from and against any claim, demand, action, proceeding, loss,
+    liability, damage, fine, penalty, settlement, cost, or expense (including reasonable attorneys’
+    fees) arising out of or relating to:
+  </p>
+  <ul>
+    <li>your use of the Services or any Call or Consumer Data you receive;</li>
+    <li>your breach of these Terms or of any representation you make in them;</li>
+    <li>
+      your violation of any law or regulation, including the TCPA, state telemarketing or
+      do-not-call law, insurance regulation, or CMS marketing rules;
+    </li>
+    <li>your recording or monitoring of any call;</li>
+    <li>any Application you submit, or any product you sell or attempt to sell; or</li>
+    <li>your violation of the rights of any third party, including any Consumer.</li>
+  </ul>
+  <h3>14.2 Our indemnity to you</h3>
+  <p>
+    Life Leads Plus will defend, indemnify, and hold harmless you and your officers, employees, and
+    agents from and against any third-party claim, demand, action, proceeding, loss, liability,
+    damage, fine, penalty, settlement, cost, or expense (including reasonable attorneys’ fees) to
+    the extent it arises out of Life Leads Plus’s own violation of the TCPA, the Telemarketing Sales
+    Rule, or federal or state do-not-call rules in connection with conduct within our control as
+    described in Section 7.2.
+  </p>
+  <p>This obligation does not apply to the extent a claim arises out of:</p>
+  <ul>
+    <li>
+      any communication you originated, or the manner, timing, frequency, content, or technology of
+      your outreach;
+    </li>
+    <li>your use or retention of Consumer Data after it was delivered to you;</li>
+    <li>your breach of these Terms, including Section 7.1; or</li>
+    <li>your own act or omission, or that of anyone acting on your behalf.</li>
+  </ul>
+  <p>
+    Where a claim arises partly from each party’s conduct, each party is responsible for the portion
+    attributable to its own conduct.
+  </p>
+  <h3>14.3 Procedure</h3>
+  <p>
+    A party seeking indemnity must notify the other promptly in writing, must not prejudice the
+    defense, and must cooperate reasonably at the indemnifying party’s expense. The indemnifying
+    party controls the defense and settlement with counsel of its choosing, and the other party may
+    participate with its own counsel at its own expense. Neither party may settle a claim in a way
+    that imposes an obligation, admission, or payment on the other without that party’s prior
+    written consent, which will not be unreasonably withheld.
+  </p>
+  <h2 id="dispute-resolution">15. Dispute resolution</h2>
+  <h3>15.1 Governing law</h3>
+  <p>
+    These Terms are governed by the laws of the State of Colorado, without regard to its
+    conflict-of-laws rules, and by applicable federal law including the Federal Arbitration Act.
+  </p>
+  <h3>15.2 Informal resolution first</h3>
+  <p>
+    Before filing a claim, you agree to contact us at the address or telephone number in Section 18
+    and describe the dispute, and to allow <strong>30 days</strong> for the parties to attempt a
+    good-faith resolution. This step is a condition precedent to commencing arbitration.
+  </p>
+  <h3>15.3 Binding arbitration</h3>
+  <p>
+    Except as stated in Sections 15.5 and 15.6, any dispute arising out of or relating to these
+    Terms or the Services will be resolved by final and binding arbitration administered by the
+    American Arbitration Association under its Commercial Arbitration Rules. Arbitration will take
+    place in Denver County, Colorado, or by videoconference or on documents at the parties’
+    election. The arbitrator has exclusive authority to resolve threshold questions of
+    arbitrability. Judgment on the award may be entered in any court of competent jurisdiction.
+  </p>
+  <h3>15.4 Class action waiver</h3>
+  <p>
+    <strong>Disputes will be resolved only on an individual basis.</strong> You and Life Leads Plus
+    each waive any right to bring or participate in a class, collective, consolidated, or
+    representative action. The arbitrator may not consolidate claims or preside over any form of
+    representative proceeding. If this paragraph is found unenforceable as to a particular claim,
+    that claim will be severed and heard in court, and the remainder of Section 15 will continue to
+    apply.
+  </p>
+  <h3>15.5 Exceptions</h3>
+  <p>
+    Either party may bring an individual action in small claims court, and either party may seek
+    injunctive or equitable relief in a court of competent jurisdiction to protect intellectual
+    property or confidential information. For any claim not subject to arbitration, the parties
+    consent to exclusive jurisdiction and venue in the state or federal courts located in Denver
+    County, Colorado.
+  </p>
+  <h3>15.6 Your right to opt out of arbitration</h3>
+  <p>
+    You may opt out of Sections 15.3 and 15.4 by sending written notice,{' '}
+    <strong>within 30 days</strong> of first accepting these Terms, to Life Leads Plus at the
+    address in Section 18. The notice must include your name, your account email or telephone
+    number, and a clear statement that you opt out of arbitration. Opting out does not affect any
+    other part of these Terms.
+  </p>
+  <h3>15.7 Time limit</h3>
+  <p>
+    To the extent permitted by law, any claim must be filed within one (1) year after it arises, or
+    it is permanently barred.
+  </p>
+  <h2 id="changes-to-these-terms">16. Changes to these Terms</h2>
+  <p>
+    We may revise these Terms from time to time. The “Last updated” date at the top reflects the
+    most recent revision. For material changes we will provide reasonable notice, such as a notice
+    in the Portal or a message to the contact details on your account, before they take effect.
+    Continued use after the effective date constitutes acceptance. If you do not agree, stop using
+    the Services and close your account.
+  </p>
+  <h2 id="general-provisions">17. General provisions</h2>
+  <ul>
+    <li>
+      <strong>Entire agreement.</strong> These Terms, your Agreement, the{' '}
+      <a href="/privacy">Privacy Policy</a> and the{' '}
+      <a href="/tcpa-compliance">TCPA &amp; Compliance Policy</a> are the entire agreement between
+      the parties on this subject and supersede prior agreements and understandings. If these Terms
+      conflict with your Agreement, your Agreement controls for the matters it covers.
+    </li>
+    <li>
+      <strong>Assignment.</strong> You may not assign these Terms without our prior written consent.
+      We may assign them in connection with a merger, acquisition, reorganization, or sale of
+      assets.
+    </li>
+    <li>
+      <strong>Severability.</strong> If a provision is held unenforceable, it will be modified to
+      the minimum extent necessary, and the remaining provisions remain in effect.
+    </li>
+    <li>
+      <strong>No waiver.</strong> A failure to enforce a provision is not a waiver of it.
+    </li>
+    <li>
+      <strong>Force majeure.</strong> Neither party is liable for delay or failure caused by events
+      beyond its reasonable control, including carrier outages, network failures, natural disasters,
+      and government action.
+    </li>
+    <li>
+      <strong>Notices.</strong> We may give notice in the Portal or by using the contact details on
+      your account. Notices to us must be sent to the address in Section 18.
+    </li>
+    <li>
+      <strong>Electronic communications.</strong> You consent to receive communications from us
+      electronically and agree that electronic records and signatures satisfy any legal writing
+      requirement.
+    </li>
+    <li>
+      <strong>Headings.</strong> Headings are for convenience only and do not affect interpretation.
+    </li>
+  </ul>
+  <h2 id="contact-us">18. Contact us</h2>
+  <p>Questions about these Terms, billing disputes, and legal notices should be directed to:</p>
+  <p>
+    {LEGAL.entity}
+    <br />
+    {LEGAL.street}
+    <br />
+    {LEGAL.cityLine}
+    <br />
+    {LEGAL.country}
+    <br />
+    <a href={`tel:${LEGAL.tel}`}>{LEGAL.phone}</a>
+  </p>
+</LegalPage>

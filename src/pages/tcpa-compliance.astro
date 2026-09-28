@@ -1,0 +1,429 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { LEGAL } from '../lib/legal';
+
+const sections = [
+  { id: 'how-to-stop-contact', title: '1. How to stop contact' },
+  { id: 'our-commitment', title: '2. Our commitment' },
+  { id: 'scope-of-this-policy', title: '3. Scope of this policy' },
+  { id: 'prior-express-written-consent', title: '4. Prior express written consent' },
+  { id: 'the-disclosure-we-require', title: '5. The disclosure we require' },
+  { id: 'automated-technology-and-ai-voice', title: '6. Automated technology and AI voice' },
+  { id: 'sms-and-mms-program-terms', title: '7. SMS and MMS program terms' },
+  { id: 'do-not-call-practices', title: '8. Do-not-call practices' },
+  { id: 'revoking-consent', title: '9. Revoking consent' },
+  { id: 'call-recording-and-monitoring', title: '10. Call recording and monitoring' },
+  { id: 'obligations-of-client-agencies', title: '11. Obligations of client agencies' },
+  { id: 'marketing-partner-diligence', title: '12. Marketing partner diligence' },
+  { id: 'compliance-records', title: '13. Compliance records' },
+  { id: 'complaints-and-escalation', title: '14. Complaints and escalation' },
+  { id: 'contact-us', title: '15. Contact us' },
+];
+---
+
+<LegalPage
+  title="TCPA & Compliance"
+  intro={
+    'How Life Leads Plus handles consent, do-not-call requests and revocation, what we require of the agencies we deliver calls to, and how to stop contact from us.'
+  }
+  description={
+    'Life Leads Plus TCPA and compliance policy: prior express written consent, do-not-call practices, consent revocation, call recording and client obligations.'
+  }
+  sections={sections}
+>
+  <p>
+    This policy describes the consent, do-not-call, and revocation practices that govern calls and
+    text messages made through Life Leads Plus, and the obligations of the licensed agencies that
+    receive calls from us. It also explains, in plain terms, how to stop receiving contact from us.
+  </p>
+  <h2 id="how-to-stop-contact">1. How to stop contact</h2>
+  <p>
+    <strong>Text messages.</strong> Reply <strong>STOP</strong> to any message from us. You will
+    receive one confirmation, and nothing further. Reply <strong>HELP</strong> for assistance.
+  </p>
+  <p>
+    <strong>Telephone calls.</strong> Tell the caller you want to be added to the do-not-call list,
+    or call us at <a href={`tel:${LEGAL.tel}`}>{LEGAL.phone}</a>.
+  </p>
+  <p>
+    <strong>In writing.</strong> Write to {LEGAL.entity}, {LEGAL.street}, {LEGAL.cityLine}, marked{' '}
+    <strong>“Attn: Do Not Call.”</strong>
+  </p>
+  <p>
+    A request made through any of these channels is honored for all channels. You do not need to use
+    particular words, and you do not need to explain why.
+  </p>
+  <h2 id="our-commitment">2. Our commitment</h2>
+  <p>
+    Life Leads Plus (“Life Leads Plus,” “we”) is committed to conducting outreach in compliance with
+    the Telephone Consumer Protection Act (47 U.S.C. § 227) and its implementing rules (47 C.F.R. §
+    64.1200), the Federal Trade Commission’s Telemarketing Sales Rule (16 C.F.R. Part 310),
+    applicable state telemarketing and do-not-call statutes, and industry messaging standards
+    including the CTIA Messaging Principles and Best Practices.
+  </p>
+  <p>
+    We treat consent as something to be evidenced, not assumed, and we treat a revocation as
+    immediate and permanent unless the consumer later gives new consent.
+  </p>
+  <p>
+    Qualification, routing, transfer, recording, and client reporting run in one closed system, so
+    the consent record, the call recording, and the call record for every transferred call are kept
+    together and can be produced on request.
+  </p>
+  <h2 id="scope-of-this-policy">3. Scope of this policy</h2>
+  <p>
+    This policy addresses two different kinds of contact, and it is important not to confuse them:
+  </p>
+  <ul>
+    <li>
+      <strong>Our own outreach.</strong> Calls and messages Life Leads Plus sends, including
+      messages to insurance agencies about our programs and messages sent to consumers in connection
+      with an inquiry they submitted.
+    </li>
+    <li>
+      <strong>Outreach by client agencies.</strong> Calls and messages a client’s agents make after
+      a consumer is connected to them. The client is the caller for those communications and is
+      independently responsible for compliance, as described in Section 11.
+    </li>
+  </ul>
+  <p>
+    Nothing in this policy is legal advice, and it does not create a defense for any third party.
+    Clients must obtain their own counsel.
+  </p>
+  <h2 id="prior-express-written-consent">4. Prior express written consent</h2>
+  <p>
+    We do not make a telemarketing call or send a marketing text using an automatic telephone
+    dialing system, an artificial or prerecorded voice, or an AI-generated voice to a wireless
+    number without <strong>prior express written consent</strong>, or another basis permitted by law
+    such as an established business relationship where that basis is legally sufficient for the type
+    of call.
+  </p>
+  <p>To qualify as prior express written consent, the agreement must:</p>
+  <ul>
+    <li>
+      be a written agreement, which may be electronic and signed under the E-SIGN Act, bearing the
+      signature of the person called;
+    </li>
+    <li>
+      clearly authorize the seller to deliver advertisements or telemarketing messages using an
+      automatic telephone dialing system or an artificial or prerecorded voice;
+    </li>
+    <li>
+      include the specific telephone number to which the person authorizes the messages to be
+      delivered;
+    </li>
+    <li>
+      <strong>clearly and conspicuously identify the specific seller or sellers</strong> authorized
+      to contact the consumer; and
+    </li>
+    <li>
+      state clearly that the person is not required to sign the agreement, directly or indirectly,
+      as a condition of purchasing any property, goods, or services.
+    </li>
+  </ul>
+  <p>
+    Consent must be obtained through a mechanism the consumer affirmatively completes. We do not
+    accept pre-checked boxes, consent bundled invisibly into other terms, consent obtained through a
+    list purchase where no evidencing record exists, or consent given to one seller and repurposed
+    for another.
+  </p>
+  <p>
+    <strong>One-to-one consent.</strong> Consent identifies the seller or sellers who may contact
+    the consumer. A consent record that authorizes an undisclosed or open-ended list of “marketing
+    partners” is not a basis on which we will contact anyone, and it is not a basis on which a
+    client may contact anyone they receive from us.
+  </p>
+  <h3>4.1 What we record</h3>
+  <p>For each consent we rely on, we retain a record that includes:</p>
+  <ul>
+    <li>the exact consent language displayed to the consumer;</li>
+    <li>the URL of the page or form where consent was given, and a copy or reproduction of it;</li>
+    <li>the date and time of the submission;</li>
+    <li>the IP address and browser user agent of the submitting device;</li>
+    <li>the telephone number and the other field values submitted; and</li>
+    <li>the identity of the marketing partner, where the consent was obtained by one.</li>
+  </ul>
+  <h2 id="the-disclosure-we-require">5. The disclosure we require</h2>
+  <p>
+    The following is the form of disclosure we require on any web form used to generate inquiries
+    directed to Life Leads Plus. It must appear adjacent to the submit control, in a legible size
+    and contrast, and must not be pre-checked or hidden behind a link alone.
+  </p>
+  <div class="callout" role="note">
+    <p class="callout-title">Required consent disclosure</p>
+    <p>
+      “By providing my telephone number and clicking “Submit,” I give my prior express written
+      consent to receive marketing calls and text messages, including those made using an automatic
+      telephone dialing system or an artificial, prerecorded, or AI-generated voice, from Life Leads
+      Plus at the telephone number I provided, regarding insurance products and related offers.
+    </p>
+    <p>
+      I understand that <strong>consent is not a condition of purchase</strong>, that message and
+      data rates may apply, that message frequency varies, and that I may revoke consent at any time
+      by replying STOP to a text message, by telling a caller to place me on the do-not-call list,
+      or by contacting Life Leads Plus directly. I have read and agree to the{' '}
+      <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Service</a>.”
+    </p>
+  </div>
+  <p>
+    When a marketing partner uses this disclosure, the seller named in it must be the specific,
+    named entity that will place the calls. It may not be a generic reference to partners,
+    affiliates, or marketing networks.
+  </p>
+  <h2 id="automated-technology-and-ai-voice">6. Automated technology and AI voice</h2>
+  <p>
+    Where we use an automatic telephone dialing system, an artificial or prerecorded voice, or an
+    AI-generated voice for a call subject to the TCPA, we do so only with consent of the type
+    required for that call, and:
+  </p>
+  <ul>
+    <li>we identify the entity responsible for initiating the call at the start of the message;</li>
+    <li>we state a telephone number that can be used to reach that entity;</li>
+    <li>
+      prerecorded telemarketing calls include an automated interactive opt-out mechanism announced
+      at the outset and available throughout the call; and
+    </li>
+    <li>
+      we do not use AI-generated voice in a manner intended to impersonate a specific real person or
+      to mislead a consumer about who is calling.
+    </li>
+  </ul>
+  <h2 id="sms-and-mms-program-terms">7. SMS and MMS program terms</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Disclosure</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Program sponsor</td>
+          <td>Life Leads Plus</td>
+        </tr>
+        <tr>
+          <td>Program purpose</td>
+          <td>
+            Insurance inquiry follow-up, coverage-related messages, and account and service
+            notifications for client agencies
+          </td>
+        </tr>
+        <tr>
+          <td>Message frequency</td>
+          <td>
+            Varies; recurring messages may be sent in response to your inquiry or account activity
+          </td>
+        </tr>
+        <tr>
+          <td>Cost</td>
+          <td>
+            Message and data rates may apply. We do not charge for messages; your carrier may.
+          </td>
+        </tr>
+        <tr>
+          <td>Opt out</td>
+          <td>Reply STOP to any message. Also accepted: END, CANCEL, UNSUBSCRIBE, QUIT.</td>
+        </tr>
+        <tr>
+          <td>Help</td>
+          <td>
+            Reply HELP, or call <a href={`tel:${LEGAL.tel}`}>{LEGAL.phone}</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Carrier liability</td>
+          <td>Wireless carriers are not liable for delayed or undelivered messages</td>
+        </tr>
+        <tr>
+          <td>Supported carriers</td>
+          <td>Major U.S. carriers; delivery is not guaranteed on every network</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Replying STOP ends messages from the program that sent the message. We send a single
+    confirmation of the opt-out and then stop. We do not require you to reply to that confirmation,
+    and we do not send further messages asking you to reconsider. We will not re-enroll a number
+    that has opted out unless the consumer provides new consent.
+  </p>
+  <p>
+    We do not send messages containing content prohibited by carrier and industry rules, and we do
+    not use number rotation, snowshoeing, or similar techniques to evade carrier filtering or
+    opt-out handling.
+  </p>
+  <h2 id="do-not-call-practices">8. Do-not-call practices</h2>
+  <h3>8.1 Internal do-not-call list</h3>
+  <p>
+    We maintain an internal do-not-call list. A number is added promptly upon request and remains on
+    it indefinitely. Personnel who place or arrange calls are trained on the list and on this policy
+    before contacting consumers, and the list is available to them at the time of contact. A written
+    copy of this policy is available on demand, free of charge, using the contact details in Section
+    15.
+  </p>
+  <h3>8.2 National and state registries</h3>
+  <p>
+    We scrub against the National Do Not Call Registry maintained by the Federal Trade Commission
+    and against applicable state do-not-call registries before conducting telemarketing outreach,
+    except where an exemption applies, such as calls made with prior express written consent or
+    within an established business relationship permitted by the relevant rule. Registry data is
+    refreshed on the schedule required by the applicable rule.
+  </p>
+  <h3>8.3 Calling practices</h3>
+  <ul>
+    <li>
+      Telemarketing calls are placed only between 8:00 a.m. and 9:00 p.m. in the{' '}
+      <strong>called party’s</strong> local time zone.
+    </li>
+    <li>
+      We transmit accurate caller identification, including a name and a telephone number that can
+      be called back and that is answered during regular business hours.
+    </li>
+    <li>We do not use spoofed, misleading, or unassigned caller identification.</li>
+    <li>We identify ourselves and the purpose of the call promptly.</li>
+    <li>
+      We honor reassigned number data where available and cease contacting numbers identified as
+      reassigned.
+    </li>
+  </ul>
+  <h2 id="revoking-consent">9. Revoking consent</h2>
+  <p>
+    A consumer may revoke consent <strong>at any time, through any reasonable means.</strong> We do
+    not require a specific word, form, or channel. A revocation communicated by text reply, by
+    telling a caller, by voicemail, by email, or by letter is effective.
+  </p>
+  <p>
+    We treat a revocation as applying to all marketing calls and texts from us, on every channel and
+    for every program, not only to the channel or program through which it was received. We process
+    revocations promptly and in any event within the period required by law, which for automated
+    calls and texts is no more than <strong>ten business days</strong> from receipt.
+  </p>
+  <p>
+    After revocation we may still send messages that are not advertising or telemarketing where the
+    law permits, such as a one-time confirmation of the opt-out or a transactional notice about an
+    existing account. A revocation record is retained indefinitely so that the number is not
+    contacted again in error.
+  </p>
+  <h2 id="call-recording-and-monitoring">10. Call recording and monitoring</h2>
+  <p>
+    Calls made or received through the Services may be recorded or monitored for quality assurance,
+    training, return review, dispute resolution, and compliance. Recording laws vary: some states
+    require the consent of all parties. Where a call may be recorded, notice must be given at the
+    outset and the required consent obtained before recording begins. Clients are responsible for
+    meeting the requirements of every state in which their agents speak with consumers. Recordings
+    are handled as described in our <a href="/privacy">Privacy Policy</a>.
+  </p>
+  <h2 id="obligations-of-client-agencies">11. Obligations of client agencies</h2>
+  <p>
+    A client that receives a call or consumer information through Life Leads Plus is an independent
+    business and is the caller for any later outreach its agents make. We do not verify licensing;
+    each client is responsible for ensuring every agent holds whatever authority the law requires.
+  </p>
+  <p>
+    Responsibility between Life Leads Plus and a client is allocated by control: what happens before
+    a call is connected or consumer data is delivered is ours, and what a client originates
+    afterwards is the client’s. That allocation, and the indemnities that follow from it, are set
+    out in Section 7.2 of the <a href="/terms">Terms of Service</a>.
+  </p>
+  <p>As a condition of using the Services, each client agrees to:</p>
+  <ul>
+    <li>
+      comply with the TCPA, the Telemarketing Sales Rule, state telemarketing and do-not-call law,
+      applicable insurance and CMS marketing rules, and any licensing requirement that applies to it
+      and its agents;
+    </li>
+    <li>
+      maintain its own internal do-not-call list and honor every request received directly or
+      relayed by us;
+    </li>
+    <li>
+      contact a consumer only about the program for which the call was delivered, and not use
+      consumer information for unrelated marketing;
+    </li>
+    <li>
+      not sell, transfer, broker, or re-market consumer information received through the Services;
+    </li>
+    <li>
+      obtain its own consent before initiating automated calls or texts, and not rely on a consent
+      record naming a different seller;
+    </li>
+    <li>respect calling-time restrictions in the consumer’s local time zone;</li>
+    <li>obtain any recording consent required in the consumer’s state; and</li>
+    <li>
+      notify us promptly of any complaint, regulatory inquiry, demand, or litigation relating to a
+      consumer delivered through the Services.
+    </li>
+  </ul>
+  <p>
+    We may suspend or terminate delivery to a client who does not meet these obligations. Suspension
+    is not a finding of liability, and it does not limit any other remedy.
+  </p>
+  <h2 id="marketing-partner-diligence">12. Marketing partner diligence</h2>
+  <p>
+    Where a consumer inquiry reaches us through a marketing partner, we require that partner to
+    represent that consent was obtained in the form described in Section 4, to supply the consent
+    record on request, and to permit audit of consent documentation. We may suspend or terminate a
+    partner that cannot produce records, that supplies numbers on a do-not-call registry without a
+    valid basis, or that generates a pattern of complaints. We do not knowingly accept inquiries
+    generated by misrepresentation about the identity of the seller, the purpose of the form, or an
+    affiliation with a government program, Medicare, or the Health Insurance Marketplace.
+  </p>
+  <h2 id="compliance-records">13. Compliance records</h2>
+  <p>
+    We retain consent records for at least <strong>five years</strong> from the date of consent or
+    the last contact, whichever is later, which exceeds the four-year federal limitations period for
+    TCPA claims. Do-not-call and revocation records are retained indefinitely. Call detail records
+    and messaging metadata are retained as described in our <a href="/privacy">Privacy Policy</a>.
+    Records subject to a legal hold are preserved until the hold is released.
+  </p>
+  <h2 id="complaints-and-escalation">14. Complaints and escalation</h2>
+  <p>
+    If you believe you received a call or message in error, or that this policy was not followed,
+    contact us using the details in Section 15. Tell us the telephone number that was contacted, the
+    date and approximate time, and anything you remember about the caller. We will:
+  </p>
+  <ol class="legal-ol">
+    <li>add the number to our internal do-not-call list immediately;</li>
+    <li>identify the source of the contact and the consent record relied on, if any;</li>
+    <li>tell you what we found and what we did; and</li>
+    <li>suspend the partner or client responsible where the facts warrant it.</li>
+  </ol>
+  <p>
+    You may also file a complaint with the Federal Communications Commission at{' '}
+    <a href="https://consumercomplaints.fcc.gov" rel="noopener" target="_blank">
+      consumercomplaints.fcc.gov
+    </a>
+    , with the Federal Trade Commission at{' '}
+    <a href="https://reportfraud.ftc.gov" rel="noopener" target="_blank">
+      reportfraud.ftc.gov
+    </a>
+    , or with your state attorney general. You can register your number on the National Do Not Call
+    Registry at{' '}
+    <a href="https://donotcall.gov" rel="noopener" target="_blank">
+      donotcall.gov
+    </a>
+    .
+  </p>
+  <h2 id="contact-us">15. Contact us</h2>
+  <p>
+    For do-not-call requests, consent record requests, complaints, or a free written copy of this
+    policy:
+  </p>
+  <p>
+    {LEGAL.entity}
+    <br />
+    {LEGAL.street}
+    <br />
+    {LEGAL.cityLine}
+    <br />
+    {LEGAL.country}
+    <br />
+    <a href={`tel:${LEGAL.tel}`}>{LEGAL.phone}</a>
+  </p>
+  <p>
+    Mark written requests <strong>“Attn: Compliance”</strong> and include the telephone number
+    concerned. Telephone requests are honored immediately; we do not require you to put a
+    do-not-call request in writing.
+  </p>
+</LegalPage>
