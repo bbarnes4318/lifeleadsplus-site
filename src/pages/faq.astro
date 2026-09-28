@@ -1,45 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
+import SectionHead from '../components/SectionHead.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
-
-type Category = 'Programs' | 'Billing' | 'Portal';
-const faqs: [string, string, Category][] = [
-  ['What verticals do you offer?', 'Final Expense and Medicare.', 'Programs'],
-  [
-    'What’s the difference between pay per application and pay per call?',
-    'Pay per application charges for submitted applications your agents log in the portal. Pay per call charges for calls that pass the buffer on your agreement.',
-    'Programs',
-  ],
-  [
-    'Do I have to use the portal?',
-    'For pay per application, yes: your agents take calls and log applications there. For pay per call, you can take calls on your own phones or dialer and use the portal for your call log, recordings, spend and statements.',
-    'Portal',
-  ],
-  [
-    'How do I pay?',
-    'Programs are prepaid. You fund a balance and calls or applications draw from it.',
-    'Billing',
-  ],
-  [
-    'Can I choose my states and hours?',
-    'Yes. Calls only come from your licensed states, during your delivery hours, up to your daily cap.',
-    'Programs',
-  ],
-  ['Can I listen to my calls?', 'Yes. Every call in your call log has its recording.', 'Portal'],
-  [
-    'Can I get a statement for my accountant?',
-    'Yes. Download a statement for any month from your portal.',
-    'Billing',
-  ],
-  [
-    'How fast can I start?',
-    'Once your agreement is signed and your balance is funded, we schedule your first delivery day.',
-    'Programs',
-  ],
-  ['How do I log in?', 'Use Client login at the top of this page.', 'Portal'],
-];
+import { faqs, CATEGORIES } from '../lib/faqs';
+import { phone, telHref } from '../lib/site';
+import { pricing } from '../lib/offer';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -54,36 +21,67 @@ const jsonLd = {
 
 <Base
   title="FAQ | Life Leads Plus"
-  description="Answers about Life Leads Plus pay per application and pay per call programs: verticals, the portal, prepaid billing, states, hours, recordings and statements."
+  description="Answers about Life Leads Plus pay per application and pay per call programs: pricing from $199 and $25, caller qualification, prepaid billing and the portal."
   jsonLd={jsonLd}
+  dark
 >
   <PageIntro
     eyebrow="FAQ"
     title="Questions from agencies."
-    intro="How our programs, billing and portal work."
+    intro="How our programs, pricing, caller qualification, billing and portal work."
+    secondary={{ label: 'See pricing', href: '/#pricing-title' }}
   />
 
-  <section class="section" aria-label="Questions">
-    <div class="container max-w-[880px]">
-      <div class="filters" role="group" aria-label="Filter questions">
-        {['All', 'Programs', 'Billing', 'Portal'].map((c, i) => (
-          <button
-            type="button"
-            class="filter"
-            aria-pressed={i === 0 ? 'true' : 'false'}
-            data-filter={c}
-          >
-            {c}
-          </button>
-        ))}
-      </div>
-      <p class="sr-only" role="status" data-filter-status></p>
-      <div class="faq-list mt-8">
+  <section class="section" aria-labelledby="questions-title">
+    <div class="container faq-grid">
+      <aside class="faq-side">
+        <SectionHead
+          eyebrow="Browse"
+          title="All questions"
+          lead="Filter by topic."
+          id="questions-title"
+        />
+        <div class="filters mt-6" role="group" aria-label="Filter questions">
+          {['All', ...CATEGORIES].map((c, i) => (
+            <button
+              type="button"
+              class="filter"
+              aria-pressed={i === 0 ? 'true' : 'false'}
+              data-filter={c}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+        <p class="sr-only" role="status" data-filter-status></p>
+        <div class="card card-pad still mt-8">
+          <p class="price-note">
+            {`Pay per application from $${pricing.ppa.rows[0].from} · Pay per call from $${pricing.ppc.rows[0].from}`}
+          </p>
+          <h3 class="mt-4 text-[1.1875rem]">Still have a question?</h3>
+          <p class="text-ink-2 mt-2 text-[0.9375rem]">
+            Send us your details and we reply with your program, rate and agreement.
+          </p>
+          <a href="/get-started" class="btn btn-primary mt-5 w-full" data-cta="faq">
+            Get your rate
+          </a>
+          {phone && (
+            <a href={telHref} class="link-arrow mt-4">
+              <Icon name="phone" size={16} />
+              {phone}
+            </a>
+          )}
+        </div>
+      </aside>
+
+      <div class="faq-list">
         {faqs.map(([q, a, c]) => (
           <details data-category={c}>
             <summary>
               <span>{q}</span>
-              <Icon name="chevron-down" size={20} class="chev" />
+              <span class="chev" aria-hidden="true">
+                <Icon name="chevron-down" size={18} />
+              </span>
             </summary>
             <p>{a}</p>
           </details>
@@ -92,41 +90,93 @@ const jsonLd = {
     </div>
   </section>
 
-  <CtaBand />
+  <CtaBand bg="paper" />
 </Base>
 
 <style>
+  .faq-grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 1024px) {
+    .faq-grid {
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 4rem;
+      align-items: start;
+    }
+    .faq-side {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+    }
+    .filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .filter {
+      text-align: left;
+    }
+  }
+  .faq-side :global(h2) {
+    font-size: 1.75rem;
+  }
+  .price-note {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--blue-tint);
+    color: var(--blue-strong);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
   .faq-list {
-    border-top: 1px solid var(--rule);
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
   }
   details {
-    border-bottom: 1px solid var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-card);
+    background: #fff;
+    transition:
+      background-color 150ms,
+      border-color 150ms;
+  }
+  details[open] {
+    background: var(--paper);
+    border-left: 3px solid var(--blue-strong);
   }
   summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 1.25rem 0;
+    padding: 1.125rem 1.25rem 1.125rem 1.5rem;
+    border-radius: inherit;
     cursor: pointer;
     list-style: none;
     color: var(--navy);
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
     font-weight: 650;
   }
   summary::-webkit-details-marker {
     display: none;
   }
-  summary :global(.chev) {
+  .chev {
+    display: grid;
+    place-items: center;
     flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: var(--blue-tint);
     color: var(--blue-strong);
     transition: transform 0.2s;
   }
-  details[open] summary :global(.chev) {
+  details[open] .chev {
     transform: rotate(180deg);
   }
   details p {
-    padding-bottom: 1.25rem;
+    padding: 0 1.5rem 1.25rem;
     color: var(--ink-2);
   }
   /* Smooth open/close where ::details-content is supported; instant elsewhere. */

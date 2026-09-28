@@ -17,7 +17,7 @@ const columns = [
     links: [
       { href: '/platform', label: 'The Portal' },
       { href: '/faq', label: 'FAQ' },
-      { href: '/get-started', label: 'Get started' },
+      { href: '/get-started', label: 'Get your rate' },
       { href: loginHref, label: 'Client login' },
     ],
   },
@@ -27,8 +27,8 @@ const columns = [
 
 <footer class="site-footer">
   <div class="container py-14">
-    <div class="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
-      <div>
+    <div class="footer-top">
+      <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
         <a href="/" aria-label="Life Leads Plus home" class="inline-block">
           <Image
             src={wordmarkOnDark}
@@ -38,11 +38,20 @@ const columns = [
             class="h-14 w-auto"
           />
         </a>
-        <p class="mt-4 max-w-[34ch] text-[0.9375rem]">
+        <p class="max-w-[40ch] text-[0.9375rem]">
           Live Final Expense and Medicare calls for licensed agencies.
         </p>
-        {(phone || email) && (
-          <ul class="mt-5 grid gap-2 text-[0.9375rem]">
+      </div>
+      <a href="/get-started" class="btn btn-light" data-cta="footer">
+        Get your rate
+        <Icon name="arrow-right" size={18} />
+      </a>
+    </div>
+    <div class="grid gap-10 pt-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+      <div>
+        <h2 class="footer-title">Contact</h2>
+        {phone || email ? (
+          <ul class="mt-3 grid gap-1.5 text-[0.9375rem]">
             {phone && (
               <li>
                 <a href={telHref} class="flex items-center gap-2">
@@ -60,12 +69,16 @@ const columns = [
               </li>
             )}
           </ul>
+        ) : (
+          <p class="mt-3 text-[0.9375rem]">
+            Send us your details through the <a href="/get-started">application</a>.
+          </p>
         )}
       </div>
       {columns.map((col) => (
         <nav aria-label={col.title}>
           <h2 class="footer-title">{col.title}</h2>
-          <ul class="mt-3 grid gap-2 text-[0.9375rem]">
+          <ul class="mt-3 grid gap-1.5 text-[0.9375rem]">
             {col.links.map((l) => (
               <li>
                 <a href={l.href}>{l.label}</a>
@@ -75,7 +88,7 @@ const columns = [
         </nav>
       ))}
     </div>
-    <p class="mt-12 max-w-none border-t border-white/15 pt-6 text-sm">
+    <p class="mt-12 max-w-none border-t border-white/10 pt-6 text-sm">
       © {new Date().getFullYear()}
       {legalName}. All rights reserved.
     </p>
@@ -84,8 +97,21 @@ const columns = [
 
 <style>
   .site-footer {
-    background: var(--navy);
+    background: var(--navy-3);
     color: #c8d3e6;
+  }
+  .footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .footer-top .btn {
+    color: var(--navy);
+    text-decoration: none;
   }
   .footer-title {
     color: #fff;
@@ -97,6 +123,10 @@ const columns = [
   a {
     color: #e6ecf6;
     text-decoration: none;
+  }
+  p a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
   a:hover {
     color: #fff;

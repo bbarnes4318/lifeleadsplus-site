@@ -1,0 +1,52 @@
+---
+interface Props {
+  amount: number;
+  unit: string;
+  note?: string;
+  label?: string;
+  class?: string;
+}
+const { amount, unit, note, label = 'Starts at', class: className } = Astro.props;
+---
+
+<div class:list={['price-tag', className]}>
+  <p class="price-label">{label}</p>
+  <p class="price-line">
+    <span class="price-figure">${amount}</span>
+    <span class="price-unit">{unit}</span>
+  </p>
+  {note && <p class="price-note">{note}</p>}
+</div>
+
+<style>
+  .price-label {
+    color: var(--ink-3);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .price-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.5rem;
+  }
+  .price-figure {
+    color: var(--navy);
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  .price-unit {
+    color: var(--ink-2);
+    font-size: 1rem;
+  }
+  .price-note {
+    margin-top: 0.25rem;
+    color: var(--ink-3);
+    font-size: 0.9375rem;
+  }
+</style>

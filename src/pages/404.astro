@@ -1,21 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import CtaBand from '../components/CtaBand.astro';
 ---
 
-<Base title="Page not found | Life Leads Plus" description="This page doesn’t exist.">
-  <section class="section">
-    <div class="container py-10 text-center">
-      <p class="eyebrow">404</p>
-      <h1 class="mt-4">This page doesn’t exist.</h1>
-      <p class="lead mx-auto mt-5">The link may be old, or the address may have a typo.</p>
-      <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a href="/" class="btn btn-secondary">
-          Go home
-        </a>
-        <a href="/get-started" class="btn btn-primary">
-          Get started
-        </a>
-      </div>
-    </div>
-  </section>
+<Base title="Page not found | Life Leads Plus" description="This page doesn’t exist." dark>
+  <PageIntro
+    eyebrow="404"
+    title="This page doesn’t exist."
+    intro="The link may be old, or the address may have a typo."
+    cta="/"
+    ctaLabel="Go home"
+    secondary={{ label: 'Get your rate', href: '/get-started' }}
+  />
+  <CtaBand />
 </Base>

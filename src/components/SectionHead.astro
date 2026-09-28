@@ -1,0 +1,19 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  /** id for the heading, used by aria-labelledby and in-page links. */
+  id?: string;
+  center?: boolean;
+  as?: 'h1' | 'h2';
+  class?: string;
+}
+const { eyebrow, title, lead, id, center = false, as: Tag = 'h2', class: className } = Astro.props;
+---
+
+<div class:list={['section-head', { 'section-head--center': center }, className]} data-reveal>
+  <p class="pill">{eyebrow}</p>
+  <Tag id={id}>{title}</Tag>
+  {lead && <p class="lead">{lead}</p>}
+</div>

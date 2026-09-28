@@ -1,0 +1,25 @@
+---
+interface Props {
+  as?: 'div' | 'article' | 'li' | 'section';
+  /** Hover lift for cards that invite interaction. */
+  interactive?: boolean;
+  /** Skip the default 28/32px padding. */
+  flush?: boolean;
+  class?: string;
+  [attr: string]: unknown;
+}
+const {
+  as: Tag = 'div',
+  interactive = false,
+  flush = false,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<Tag
+  class:list={['card', { 'card-pad': !flush, 'card-interactive': interactive }, className]}
+  {...rest}
+>
+  <slot />
+</Tag>

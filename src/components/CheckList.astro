@@ -1,0 +1,14 @@
+---
+interface Props {
+  items: readonly string[];
+  dark?: boolean;
+  class?: string;
+}
+const { items, dark = false, class: className } = Astro.props;
+---
+
+<ul class:list={['checklist', { dark }, className]}>
+  {items.map((item) => (
+    <li>{item}</li>
+  ))}
+</ul>

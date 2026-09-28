@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
-import { legalName, email } from '../lib/site';
+import CtaBand from '../components/CtaBand.astro';
+import { legalName, email, analyticsTools } from '../lib/site';
 
 const updated = new Date().toLocaleDateString('en-US', {
   year: 'numeric',
@@ -13,12 +14,15 @@ const updated = new Date().toLocaleDateString('en-US', {
 <Base
   title="Privacy | Life Leads Plus"
   description={`How ${legalName} handles information submitted through this website.`}
+  dark
 >
   <PageIntro
+    eyebrow="Legal"
     title="Privacy"
     intro={`This notice covers this website only. It explains what ${legalName} collects here and how we use it.`}
+    secondary={{ label: 'Read the FAQ', href: '/faq' }}
   >
-    <p class="text-ink-3 mt-4 text-sm">Last updated {updated}</p>
+    <p class="mt-4 text-sm">Last updated {updated}</p>
   </PageIntro>
 
   <section class="section">
@@ -27,7 +31,10 @@ const updated = new Date().toLocaleDateString('en-US', {
       <p>
         When you send the Get Started form, we collect what you enter: your agency name, your name,
         email address, mobile phone number, licensed states, number of agents, verticals, program
-        and call preferences, delivery hours and any message you add.
+        and call preferences, delivery hours and any message you add. If you finish the first step
+        of the form, we receive what you entered there even if you don’t send the rest. We also
+        record how you reached this site: the page you landed on, the referring site and any
+        campaign tags in the link.
       </p>
       <h2>How we use it</h2>
       <p>
@@ -39,7 +46,11 @@ const updated = new Date().toLocaleDateString('en-US', {
       <h2>How long we keep it</h2>
       <p>We keep it as long as we need it for our business relationship with you.</p>
       <h2>Cookies and analytics</h2>
-      <p>This website sets no cookies and uses no analytics or third-party tracking.</p>
+      <p>
+        {analyticsTools.length
+          ? `This website uses ${new Intl.ListFormat('en', { type: 'conjunction' }).format(analyticsTools)} to measure visits and ad performance. These tools may set cookies in your browser.`
+          : 'This website sets no cookies and uses no analytics or third-party tracking.'}
+      </p>
       <h2>Contact</h2>
       <p>
         {email ? (
@@ -55,11 +66,16 @@ const updated = new Date().toLocaleDateString('en-US', {
       </p>
     </div>
   </section>
+
+  <CtaBand bg="paper" />
 </Base>
 
 <style>
+  .legal {
+    max-width: 760px;
+  }
   .legal h2 {
-    font-size: 1.375rem;
+    font-size: 1.5rem;
     margin-top: 2.25rem;
   }
   .legal h2:first-child {

@@ -1,99 +1,169 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
-import Shot from '../components/Shot.astro';
+import IntroPriceCard from '../components/IntroPriceCard.astro';
+import SectionHead from '../components/SectionHead.astro';
 import Flow from '../components/Flow.astro';
+import QualificationSection from '../components/QualificationSection.astro';
+import BrowserFrame from '../components/BrowserFrame.astro';
+import CheckList from '../components/CheckList.astro';
+import IconBadge from '../components/IconBadge.astro';
 import FaqStrip from '../components/FaqStrip.astro';
-import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
 
 const intro =
   'You pay for the business your agents write — not for calls that don’t close. It works for agencies that want their cost tied directly to production.';
+
+const rate = [
+  [
+    'badge-dollar-sign',
+    'Starts at $199',
+    'Per submitted application, for Final Expense and Medicare.',
+  ],
+  [
+    'sliders-horizontal',
+    'Moves with conversion',
+    'As your agents’ conversion changes, your rate moves up or down with it.',
+  ],
+  ['receipt', 'Prepaid balance', 'You fund a balance up front and each application draws from it.'],
+] as const;
+
+const needs = [
+  [
+    'users',
+    'Licensed agents in your states',
+    'Calls only come from the states you’re licensed in.',
+  ],
+  [
+    'headset',
+    'Agents taking calls in the portal — no phone system needed',
+    'Your agents answer in their browser and log applications on the call.',
+  ],
+  ['wallet', 'A prepaid balance', 'Fund your balance and top it up from the portal.'],
+] as const;
 ---
 
 <Base
   title="Pay Per Application Insurance Leads | Life Leads Plus"
-  description="Pay for the business your agents write, not for calls that don’t close. Live Final Expense and Medicare calls with cost tied directly to production."
+  description="Pay per submitted application, from $199 for Final Expense and Medicare. Live calls to your licensed agents, with your cost tied directly to production."
   dark
 >
   <PageIntro
-    eyebrow="Pay Per Application"
+    eyebrow="Pay per application"
     title="Pay per submitted application."
     intro={intro}
-    dark
-  />
+    cta="/get-started?program=ppa"
+    secondary={{ label: 'How it’s counted', href: '#counted-title' }}
+  >
+    <IntroPriceCard program="ppa" slot="aside" />
+  </PageIntro>
 
   <section class="section" aria-labelledby="counted-title">
     <div class="container">
-      <div class="prose-block" data-reveal>
-        <h2 id="counted-title">How it’s counted</h2>
-        <p class="text-ink-2 mt-4">
-          Your agents take calls inside the Life Leads Plus portal. When they submit an application,
-          they log it on that call, before they hang up.
-        </p>
-        <p class="text-ink-2">
-          That logged application is what you pay for, and you can see every one of them, with the
-          call it came from, in your portal.
-        </p>
-      </div>
+      <SectionHead
+        eyebrow="How it’s counted"
+        title="You pay for applications, not calls."
+        lead="Your agents log each submitted application on the call, before they hang up, and that logged application is what you pay for."
+        id="counted-title"
+      />
       <div class="mt-12">
         <Flow
           items={[
-            { title: 'Call connects', icon: 'phone-incoming' },
-            { title: 'Your agent takes it in the portal', icon: 'monitor' },
-            { title: 'Application logged before they hang up', icon: 'clipboard-check' },
-            { title: 'That’s what you pay for', icon: 'wallet' },
+            {
+              title: 'Call connects',
+              icon: 'phone-incoming',
+              body: 'A qualified caller is transferred live to your agent in the portal.',
+            },
+            {
+              title: 'Your agent takes it in the portal',
+              icon: 'monitor',
+              body: 'Your agent answers in their browser. No phone system needed.',
+            },
+            {
+              title: 'Application logged before they hang up',
+              icon: 'clipboard-check',
+              body: 'When your agent submits an application, they log it on that call.',
+            },
+            {
+              title: 'That’s what you pay for',
+              icon: 'wallet',
+              body: 'Each logged application is charged once from your prepaid balance.',
+            },
           ]}
         />
       </div>
     </div>
   </section>
 
-  <section class="section bg-paper" aria-labelledby="see-title">
-    <div class="container grid grid-cols-1 items-center gap-10 xl:grid-cols-[minmax(0,1fr)_320px]">
-      <div data-reveal>
-        <Shot
-          shot="applications"
-          alt="Applications page listing carrier, plan, face amount, premium and agent for each application"
+  <QualificationSection bg="paper" />
+
+  <section class="section" aria-labelledby="see-title">
+    <div class="container see-grid">
+      <div>
+        <SectionHead
+          eyebrow="What you see"
+          title="Every application, with its call."
+          lead="Every application you pay for is in your portal, next to the call it came from."
+          id="see-title"
+        />
+        <CheckList
+          class="mt-8"
+          items={[
+            'Every application with carrier, face amount and premium',
+            'The call each application came from, with its recording',
+            'Your closing percentage by agent and by day',
+          ]}
         />
       </div>
-      <div data-reveal>
-        <h2 id="see-title">What you see</h2>
-        <ul class="ticks mt-5">
-          <li>Every application with carrier, face amount and premium</li>
-          <li>The call each application came from, with its recording</li>
-          <li>Your closing percentage by agent and by day</li>
-        </ul>
+      <BrowserFrame
+        shot="applications"
+        alt="Applications page listing carrier, plan, face amount, premium and agent for each application"
+      />
+    </div>
+  </section>
+
+  <section class="section navy" aria-labelledby="rate-title">
+    <div class="container">
+      <SectionHead
+        eyebrow="How your rate works"
+        title="Your rate follows your conversion."
+        lead="Every program starts at $199 per submitted application for Final Expense and Medicare. As your agents' conversion changes, your rate moves with it."
+        id="rate-title"
+      />
+      <div class="mt-12 grid gap-5 md:grid-cols-3" data-reveal-group>
+        {rate.map(([icon, title, body]) => (
+          <div class="card card-pad" data-reveal>
+            <IconBadge name={icon} dark />
+            <h3 class="mt-5">{title}</h3>
+            <p class="mt-2">{body}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
   <section class="section" aria-labelledby="need-title">
-    <div class="container grid gap-10 md:grid-cols-2" data-reveal-group>
-      <div data-reveal>
-        <h2 id="need-title">What you need</h2>
-        <ul class="ticks mt-5">
-          <li>Licensed agents in the states you want calls from</li>
-          <li>Your agents taking calls in the portal (in the browser; no phone system needed)</li>
-          <li>A prepaid balance</li>
-        </ul>
-      </div>
-      <div class="card pricing" data-reveal>
-        <h2 id="pricing-title" class="text-2xl">
-          Pricing
-        </h2>
-        <p class="text-ink-2 mt-3">
-          Your rate depends on vertical, states and volume. Tell us about your agency and we’ll send
-          your rate.
-        </p>
-        <a href="/get-started" class="btn btn-primary mt-6">
-          Get started
-          <Icon name="arrow-right" size={18} />
-        </a>
+    <div class="container">
+      <SectionHead
+        eyebrow="What you need"
+        title="Three things to start."
+        lead="If you have these, we can set up your program."
+        id="need-title"
+      />
+      <div class="mt-12 grid gap-5 md:grid-cols-3" data-reveal-group>
+        {needs.map(([icon, title, body]) => (
+          <div class="card card-pad card-interactive" data-reveal>
+            <IconBadge name={icon} />
+            <h3 class="mt-5">{title}</h3>
+            <p class="text-ink-2 mt-2">{body}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
   <FaqStrip
+    lead="What agencies ask about pay per application."
     items={[
       ['Do my agents need a dialer?', 'No. They take calls in the portal in their browser.'],
       [
@@ -103,11 +173,19 @@ const intro =
       ['Can I switch to pay per call later?', 'Yes. Talk to us and we’ll move your program.'],
     ]}
   />
+
+  <CtaBand />
 </Base>
 
 <style>
-  .pricing {
-    padding: clamp(1.75rem, 4vw, 2.5rem);
-    border-top: 3px solid var(--blue-strong);
+  .see-grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .see-grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    }
   }
 </style>

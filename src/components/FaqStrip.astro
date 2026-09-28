@@ -1,23 +1,30 @@
 ---
+import SectionHead from './SectionHead.astro';
+import IconBadge from './IconBadge.astro';
+import Icon from './Icon.astro';
+
 interface Props {
   items: [string, string][];
+  lead?: string;
 }
-const { items } = Astro.props;
+const { items, lead = 'Short answers to what agencies ask us most.' } = Astro.props;
 ---
 
 <section class="section bg-paper" aria-labelledby="faq-strip-title">
   <div class="container">
-    <h2 id="faq-strip-title">Questions</h2>
-    <div class="mt-8 grid gap-5 md:grid-cols-3">
+    <SectionHead eyebrow="FAQ" title="Questions" id="faq-strip-title" lead={lead} />
+    <div class="mt-12 grid gap-5 md:grid-cols-3" data-reveal-group>
       {items.map(([q, a]) => (
-        <div class="card p-6">
-          <h3 class="text-lg">{q}</h3>
+        <div class="card card-pad" data-reveal>
+          <IconBadge name="circle-help" />
+          <h3 class="mt-5 text-[1.1875rem]">{q}</h3>
           <p class="text-ink-2 mt-2">{a}</p>
         </div>
       ))}
     </div>
-    <a href="/faq" class="link-arrow mt-8">
+    <a href="/faq" class="link-arrow mt-10">
       All questions
+      <Icon name="arrow-right" size={18} />
     </a>
   </div>
 </section>
