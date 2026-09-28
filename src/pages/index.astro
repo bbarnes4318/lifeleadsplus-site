@@ -2,18 +2,11 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
-import CallJourney from '../components/CallJourney.astro';
+import Frame from '../components/Frame.astro';
 import Flow from '../components/Flow.astro';
 import Shot from '../components/Shot.astro';
 import { features } from '../lib/features';
 import { loginHref, siteUrl } from '../lib/site';
-
-const proof = [
-  ['mic', 'Every call recorded'],
-  ['wallet', 'Prepaid — no invoices'],
-  ['sliders-horizontal', 'Your states, hours and daily cap'],
-  ['file-text', 'Monthly statements'],
-] as const;
 
 const programs = [
   {
@@ -94,13 +87,33 @@ const jsonLd = {
   title="Live Final Expense and Medicare Calls | Life Leads Plus"
   description="Live Final Expense and Medicare calls transferred to your licensed agents. Pay per submitted application or pay per call, with every call, recording and dollar in your own portal."
   jsonLd={jsonLd}
-  dark
 >
-  <section class="hero navy glow">
+  <section class="hero">
     <div class="container hero-grid">
       <div>
         <p class="eyebrow">Final Expense · Medicare</p>
-        <h1 class="mt-4">Live insurance calls, priced the way your agency sells.</h1>
+        <h1 class="mt-4">
+          Live insurance calls,{' '}
+          <span class="underline-stroke">
+            priced the way
+            <svg
+              viewBox="0 0 300 16"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4"
+                fill="none"
+                stroke="var(--red)"
+                stroke-width="3"
+                stroke-linecap="round"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
+          </span>{' '}
+          your agency sells.
+        </h1>
         <p class="lead mt-6">
           Callers transferred live to your licensed agents. Pay per submitted application or pay per
           call — and see every call, recording and dollar in your own portal.
@@ -108,29 +121,19 @@ const jsonLd = {
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/get-started" class="btn btn-primary">
             Get started
-            <Icon name="arrow-right" size={18} />
           </a>
-          <a href={loginHref} class="btn btn-ghost">
-            {' '}
-            Client login{' '}
+          <a href={loginHref} class="btn btn-secondary">
+            Client login
           </a>
         </div>
       </div>
-      <div class="flex justify-center lg:justify-end">
-        <CallJourney />
-      </div>
+      <Frame
+        shot="agents-floor"
+        alt="The Life Leads Plus portal showing agents who are ready, on a call, and their calls and applications today"
+        sizes="(min-width: 1248px) 672px, (min-width: 1024px) calc((100vw - 96px) * 7 / 12), calc(100vw - 32px)"
+        hero
+      />
     </div>
-  </section>
-
-  <section class="proof" aria-label="What every client gets">
-    <ul class="container proof-list">
-      {proof.map(([icon, text]) => (
-        <li>
-          <Icon name={icon} size={20} class="text-blue-strong shrink-0" />
-          {text}
-        </li>
-      ))}
-    </ul>
   </section>
 
   <section class="section bg-paper" aria-labelledby="programs-title">
@@ -342,58 +345,37 @@ const jsonLd = {
 
 <style>
   .hero {
-    display: flex;
-    align-items: center;
-    padding-top: calc(var(--header-h) + 2.5rem);
-    padding-bottom: 4rem;
-  }
-  @media (min-width: 1024px) {
-    .hero {
-      min-height: 88vh;
-      padding-bottom: 5rem;
-    }
+    padding-block: clamp(2.5rem, 6vw, 5rem);
   }
   .hero-grid {
     display: grid;
-    gap: 3rem;
+    gap: 48px;
     align-items: center;
   }
   @media (min-width: 1024px) {
     .hero-grid {
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+    /* Fit "Live insurance calls," on one line of the narrower 5fr column. */
+    .hero h1 {
+      font-size: clamp(2.5rem, 3.4vw, 3.125rem);
     }
   }
-
-  .proof {
-    border-bottom: 1px solid var(--rule);
+  .underline-stroke {
+    position: relative;
+    white-space: nowrap;
   }
-  .proof-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-    padding-block: 1.5rem;
-  }
-  .proof-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    color: var(--navy);
-    font-weight: 600;
-    font-size: 0.9375rem;
-    line-height: 1.35;
-  }
-  @media (min-width: 900px) {
-    .proof-list {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0;
-    }
-    .proof-list li {
-      justify-content: center;
-      padding-inline: 1rem;
-    }
-    .proof-list li + li {
-      border-left: 1px solid var(--rule);
-    }
+  /* The span's box ends at the font's descent (baseline + 0.217em in Plus Jakarta Sans), but the
+     "p" and "y" ink reaches baseline + 0.233em. Start the SVG at baseline + 0.08em + 2px: the curve's
+     low ends (under "p" and "y") then run about 0.28em below the baseline, clear of both descenders,
+     and its middle arch sits about 0.16em below. Checked by a test at 360, 768 and 1440px. */
+  .underline-stroke svg {
+    position: absolute;
+    left: -2%;
+    top: calc(100% - 0.137em + 2px);
+    width: 104%;
+    height: 0.3em;
+    overflow: visible;
   }
 
   .program-panel {

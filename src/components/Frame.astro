@@ -1,0 +1,67 @@
+---
+import { getImage } from 'astro:assets';
+import agentsFloor from '../assets/screens/agents-floor.png';
+
+// Home hero only: the Agents page cropped to drop the owner sidebar (scripts/crop-screens.mjs).
+// The same crop is used at every width, scaled to fit.
+const shots = { 'agents-floor': agentsFloor };
+
+interface Props {
+  shot: keyof typeof shots;
+  alt: string;
+  sizes: string;
+  /** Hero: eager and high priority. */
+  hero?: boolean;
+  class?: string;
+}
+const { shot, alt, sizes, hero = false, class: className } = Astro.props;
+const src = shots[shot];
+const img = await getImage({ src, widths: [596, src.width], format: 'webp', quality: 82 });
+---
+
+<figure class:list={['frame', className]}>
+  <div class="frame-bar" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <img
+    src={img.src}
+    srcset={img.srcSet.attribute}
+    sizes={sizes}
+    alt={alt}
+    width={src.width}
+    height={src.height}
+    loading={hero ? 'eager' : 'lazy'}
+    decoding={hero ? 'sync' : 'async'}
+    fetchpriority={hero ? 'high' : 'auto'}
+  />
+</figure>
+
+<style>
+  .frame {
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: var(--shadow-raised);
+    overflow: hidden;
+  }
+  .frame-bar {
+    display: flex;
+    gap: 6px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .frame-bar span {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: #cbd3de;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

@@ -4,6 +4,8 @@ import sharp from 'sharp';
 
 const dir = 'src/assets/screens';
 const crops = {
+  // Home hero: the whole Agents page minus the owner sidebar.
+  'agents-floor': ['agents-floor-1440', 248, 0, 1192, 900],
   'floor-cards': ['agents-floor-1440', 280, 380, 556, 182],
   applications: ['applications-1440', 280, 226, 1128, 470],
   customers: ['crm-agent-1440', 278, 211, 1130, 520],

@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
+import sharp from 'sharp';
 import { pages } from './pages';
 
 test('program chooser switches panels by click and arrow keys', async ({ page }) => {
@@ -67,15 +68,15 @@ test('FAQ filter hides and shows questions', async ({ page }) => {
   await expect(questions.filter({ visible: true })).toHaveCount(9);
 });
 
-// The full-frame captures show the owner sidebar and billing amounts; only the four crops may ship.
-const CROPS = /\/(floor-cards|applications|customers|statements)\.png/;
+// The full-frame captures show the owner sidebar and billing amounts; only the crops may ship.
+const CROPS = /\/(agents-floor|floor-cards|applications|customers|statements)\.png/;
 for (const [name, path] of pages) {
-  test(`${name} only references the four safe screenshot crops`, async ({ page }) => {
+  test(`${name} only references the safe screenshot crops`, async ({ page }) => {
     await page.goto(path);
     const html = (await page.content()).replace(/%([0-9a-f]{2})/gi, (_, h) =>
       String.fromCharCode(parseInt(h, 16)),
     );
-    expect(html).not.toMatch(/agents-floor|buyer-billing|crm-agent|-1440/);
+    expect(html).not.toMatch(/agents-floor-(1440|390)|buyer-billing|crm-agent|-1440/);
     const urls = await page.evaluate(() =>
       [...document.querySelectorAll('img, source')].flatMap((el) =>
         [el.getAttribute('src'), el.getAttribute('srcset')]
@@ -90,19 +91,72 @@ for (const [name, path] of pages) {
   });
 }
 
-test('hero call card loops, and shows all steps done with reduced motion', async ({ browser }) => {
-  const moving = await browser.newPage();
-  await moving.goto('/');
-  await expect(moving.locator('[data-step="0"]')).toHaveClass(/current/);
-  await expect(moving.locator('[data-step="1"]')).toHaveClass(/current/, { timeout: 4000 });
-  await moving.getByRole('button', { name: 'Pause animation' }).click();
-  await expect(moving.getByRole('button', { name: 'Play animation' })).toBeVisible();
-  await moving.close();
+// Pixel checks on the hero underline, from two renders: the H1 text alone and the red stroke alone.
+// `gap`: in each column, the stroke starts below the lowest ink of "priced the way" (descenders).
+// `touching`: stroke pixels that land on, or next to, any ink of the whole H1 (e.g. the next line).
+async function strokeCheck(page: Page) {
+  await page.evaluate(() => document.fonts.ready);
+  const h1 = (await page.locator('.hero h1').boundingBox())!;
+  const span = (await page.locator('.underline-stroke').boundingBox())!;
+  const clip = { x: h1.x - 20, y: h1.y, width: h1.width + 40, height: h1.height + 20 };
+  const shoot = async (css: string) => {
+    const style = await page.addStyleTag({ content: '.hero * { visibility: hidden } ' + css });
+    const png = await page.screenshot({ clip });
+    await style.evaluate((el) => (el as Element).remove());
+    return sharp(png).raw().toBuffer({ resolveWithObject: true });
+  };
+  const text =
+    '.hero h1, .hero h1 * { visibility: visible } .underline-stroke svg { visibility: hidden }';
+  const all = await shoot(text);
+  const own = await shoot(
+    text + ' .hero h1 { color: transparent } .underline-stroke { color: var(--navy) }',
+  );
+  const red = await shoot('.underline-stroke svg, .underline-stroke svg * { visibility: visible }');
+  const { width, height, channels } = all.info;
+  const at = (img: typeof all, x: number, y: number) => {
+    const i = (y * width + x) * channels;
+    return [img.data[i], img.data[i + 1], img.data[i + 2]];
+  };
+  const isInk = (img: typeof all, x: number, y: number) => {
+    if (x < 0 || y < 0 || x >= width || y >= height) return false;
+    const [r, g, b] = at(img, x, y);
+    return r < 160 && g < 170 && b < 200;
+  };
+  const isRed = (x: number, y: number) => {
+    const [r, g, b] = at(red, x, y);
+    return r > 170 && g < 120 && b < 120;
+  };
+  const spanBottom = span.y + span.height - clip.y;
+  let gap = Infinity;
+  let touching = 0;
+  for (let x = 0; x < width; x++) {
+    let inkBottom = -1;
+    let redTop = -1;
+    for (let y = 0; y < height; y++) {
+      if (y < spanBottom + 10 && isInk(own, x, y)) inkBottom = y;
+      if (!isRed(x, y)) continue;
+      if (redTop < 0) redTop = y;
+      for (const [dx, dy] of [
+        [0, 0],
+        [1, 0],
+        [-1, 0],
+        [0, 1],
+        [0, -1],
+      ])
+        if (isInk(all, x + dx, y + dy)) touching++;
+    }
+    if (inkBottom >= 0 && redTop >= 0) gap = Math.min(gap, redTop - inkBottom);
+  }
+  return { gap, touching };
+}
 
-  const ctx = await browser.newContext({ reducedMotion: 'reduce' });
-  const still = await ctx.newPage();
-  await still.goto(test.info().project.use.baseURL + '/');
-  await expect(still.locator('[data-step].done')).toHaveCount(4);
-  await expect(still.locator('[data-journey-toggle]')).toBeHidden();
-  await ctx.close();
-});
+for (const width of [360, 768, 1440]) {
+  test(`hero underline clears "priced the way" at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    const { gap, touching } = await strokeCheck(page);
+    expect(gap).toBeGreaterThanOrEqual(1);
+    expect(gap).toBeLessThan(Infinity);
+    expect(touching).toBe(0);
+  });
+}
