@@ -1,0 +1,72 @@
+---
+import PriceTag from './PriceTag.astro';
+import Icon from './Icon.astro';
+import { pricing } from '../lib/offer';
+
+interface Props {
+  program: keyof typeof pricing;
+}
+const p = pricing[Astro.props.program];
+---
+
+<!-- White card on a navy intro: resets the .navy colors. -->
+<div class="price-card">
+  <PriceTag amount={p.rows[0].from} unit={p.unit} />
+  <ul class="rows">
+    {p.rows.map((r) => (
+      <li>
+        <span>{r.vertical}</span>
+        <span class="from">from ${r.from}</span>
+      </li>
+    ))}
+  </ul>
+  <p class="note">{p.note}</p>
+  <a href={p.apply} class="btn btn-primary mt-6 w-full" data-cta="intro_price_card">
+    Get your {p.name.toLowerCase()} rate
+    <Icon name="arrow-right" size={18} />
+  </a>
+</div>
+
+<style>
+  .price-card {
+    padding: 32px;
+    border-radius: var(--radius-panel);
+    background: #fff;
+    box-shadow: var(--shadow-raised);
+    color: var(--ink-2);
+  }
+  .price-card :focus-visible {
+    outline-color: var(--blue-strong);
+  }
+  .rows {
+    margin-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+  }
+  .rows li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--navy);
+    font-weight: 650;
+  }
+  .from {
+    color: var(--ink-2);
+    font-weight: 600;
+  }
+  .note {
+    margin-top: 1rem;
+    color: var(--ink-3);
+    font-size: 0.9375rem;
+  }
+  .price-card .btn-primary {
+    white-space: normal;
+    text-align: center;
+    background: var(--blue-strong);
+    color: #fff;
+  }
+  .price-card .btn-primary:hover {
+    background: var(--blue-strong-hover);
+  }
+</style>

@@ -1,31 +1,80 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
   eyebrow?: string;
   title: string;
   intro: string;
-  /** Compact navy hero (pair with <Base dark>). */
-  dark?: boolean;
+  /** Primary button target, e.g. /get-started?program=ppa. */
+  cta?: string;
+  ctaLabel?: string;
+  secondary?: { label: string; href: string };
 }
-const { eyebrow, title, intro, dark = false } = Astro.props;
+const {
+  eyebrow,
+  title,
+  intro,
+  cta = '/get-started',
+  ctaLabel = 'Get your rate',
+  secondary,
+} = Astro.props;
+const hasAside = Astro.slots.has('aside');
+const ctaAttr = (href: string) => (href.startsWith('/get-started') ? 'hero' : undefined);
 ---
 
-<section class:list={dark ? 'intro-dark navy glow' : 'bg-paper border-rule border-b'}>
-  <div class:list={['container', dark ? 'intro-dark-inner' : 'py-14 md:py-20']}>
-    {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
-    <h1 class="max-w-[20ch]">{title}</h1>
-    <p class="lead mt-5">{intro}</p>
-    <slot />
+<!-- Navy intro for every inner page; pair with <Base dark>. -->
+<section class="intro navy">
+  <div class:list={['container intro-inner', { 'has-aside': hasAside }]}>
+    <div>
+      {eyebrow && <p class="pill mb-5">{eyebrow}</p>}
+      <h1>{title}</h1>
+      <p class="lead mt-5">{intro}</p>
+      <slot />
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={cta} class="btn btn-primary" data-cta={ctaAttr(cta)}>
+          {ctaLabel}
+          <Icon name="arrow-right" size={18} />
+        </a>
+        {secondary && (
+          <a href={secondary.href} class="btn btn-secondary" data-cta={ctaAttr(secondary.href)}>
+            {secondary.label}
+          </a>
+        )}
+      </div>
+    </div>
+    {hasAside && (
+      <div class="intro-aside">
+        <slot name="aside" />
+      </div>
+    )}
   </div>
 </section>
 
 <style>
-  .intro-dark {
+  .intro {
     display: flex;
     align-items: center;
-    min-height: 48vh;
+    min-height: 44vh;
     padding-top: var(--header-h);
+    border-bottom: 3px solid var(--red);
   }
-  .intro-dark-inner {
+  .intro-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
     padding-block: 3.5rem 4rem;
+  }
+  h1 {
+    max-width: 18ch;
+  }
+  .lead {
+    max-width: 56ch;
+  }
+  @media (min-width: 1024px) {
+    .intro-inner.has-aside {
+      grid-template-columns: minmax(0, 1fr) 420px;
+      align-items: center;
+      gap: 4rem;
+    }
   }
 </style>

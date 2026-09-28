@@ -1,68 +1,57 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import IconBadge from '../components/IconBadge.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Frame from '../components/Frame.astro';
 import Flow from '../components/Flow.astro';
-import Shot from '../components/Shot.astro';
+import BrowserFrame from '../components/BrowserFrame.astro';
+import CheckList from '../components/CheckList.astro';
+import SectionHead from '../components/SectionHead.astro';
+import QualificationSection from '../components/QualificationSection.astro';
+import PricingSection from '../components/PricingSection.astro';
+import FaqStrip from '../components/FaqStrip.astro';
 import { features } from '../lib/features';
-import { loginHref, siteUrl } from '../lib/site';
-
-const programs = [
-  {
-    id: 'ppa',
-    tab: 'Pay per application',
-    href: '/pay-per-application',
-    summary:
-      'You pay for submitted applications, not for calls. Your agents take calls in the Life Leads Plus portal and log each application before they hang up.',
-    rows: [
-      ['You pay for', 'Submitted applications your agents log on the call'],
-      ['Calls reach you', 'In the portal, in your agents’ browsers'],
-      ['Best for', 'Agencies that want cost tied to production'],
-      ['Billing', 'Prepaid balance, one charge per application'],
-    ],
-  },
-  {
-    id: 'ppc',
-    tab: 'Pay per call',
-    href: '/pay-per-call',
-    summary:
-      'You pay for each call that passes the buffer time on your agreement. Take calls on your own phones or dialer, or in the portal.',
-    rows: [
-      ['You pay for', 'Calls that pass your buffer'],
-      ['Calls reach you', 'Your phones, your dialer, or the portal'],
-      ['Best for', 'Agencies with their own phone system or dialer'],
-      ['Billing', 'Prepaid balance, one charge per billable call'],
-    ],
-  },
-];
+import { pick } from '../lib/faqs';
+import { siteUrl } from '../lib/site';
 
 const steps = [
   {
     title: 'Apply',
+    icon: 'file-pen-line',
     body: 'Tell us your licensed states, how many agents you have and the volume you want.',
   },
   {
     title: 'Set up',
+    icon: 'sliders-horizontal',
     body: 'Sign your agreement, fund your prepaid balance, and set your delivery hours, states and daily caps.',
   },
   {
     title: 'Take calls',
+    icon: 'headset',
     body: 'Callers transfer live to your agents, in the portal or to your own number.',
   },
   {
     title: 'Track everything',
+    icon: 'file-text',
     body: 'Calls, recordings, applications, spend and monthly statements, all in your portal.',
   },
-];
+] as const;
+
+const trust = [
+  ['user-check', 'Qualified before transfer'],
+  ['map-pin', 'Only your licensed states'],
+  ['headset', 'Every call recorded'],
+  ['wallet', 'Starts at $25 per call'],
+] as const;
 
 const controls = [
-  ['states', 'Your states', "Calls only come from the states you're licensed in."],
-  ['hours', 'Your hours', 'Calls only arrive during the delivery hours you set.'],
-  ['cap', 'Your daily cap', 'Set how many calls a day you want, and change it any time.'],
-  ['rec', 'Every recording', 'Listen to any call from your call log.'],
-  ['balance', 'Prepaid balance', 'You fund a balance up front. No surprise invoices.'],
-  ['statements', 'Monthly statements', 'Download a statement for any month.'],
+  ['states', 'map-pin', 'Your states', "Calls only come from the states you're licensed in."],
+  ['hours', 'clock', 'Your hours', 'Calls only arrive during the delivery hours you set.'],
+  ['cap', 'gauge', 'Your daily cap', 'Set how many calls a day you want, and change it any time.'],
+  ['rec', 'headphones', 'Every recording', 'Listen to any call from your call log.'],
+  ['balance', 'wallet', 'Prepaid balance', 'You fund a balance up front. No surprise invoices.'],
+  ['statements', 'file-text', 'Monthly statements', 'Download a statement for any month.'],
 ] as const;
 const states = ['TX', 'FL', 'GA', 'NC', 'OH', 'TN', 'PA', 'AZ', 'MI', 'IN'];
 // Deterministic "waveform": 40 bar heights between 20% and 100%.
@@ -85,7 +74,7 @@ const jsonLd = {
 
 <Base
   title="Live Final Expense and Medicare Calls | Life Leads Plus"
-  description="Live Final Expense and Medicare calls transferred to your licensed agents. Pay per submitted application or pay per call, with every call, recording and dollar in your own portal."
+  description="Live Final Expense and Medicare calls transferred to your licensed agents. Pay per submitted application from $199 or pay per call from $25, with every call, recording and dollar in your own portal."
   jsonLd={jsonLd}
 >
   <section class="hero">
@@ -102,13 +91,23 @@ const jsonLd = {
           call — and see every call, recording and dollar in your own portal.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/get-started" class="btn btn-primary">
-            Get started
+          <a href="/get-started" class="btn btn-primary" data-cta="hero">
+            Get your rate
+            <Icon name="arrow-right" size={18} />
           </a>
-          <a href={loginHref} class="btn btn-secondary">
-            Client login
+          <a href="#how-title" class="btn btn-secondary">
+            {' '}
+            See how it works{' '}
           </a>
         </div>
+        <ul class="trust">
+          {trust.map(([icon, text]) => (
+            <li>
+              <Icon name={icon} size={18} />
+              {text}
+            </li>
+          ))}
+        </ul>
       </div>
       <Frame
         shot="agents-floor"
@@ -119,74 +118,81 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="section bg-paper" aria-labelledby="programs-title">
+  <QualificationSection />
+
+  <PricingSection />
+
+  <section class="section" aria-labelledby="how-title">
     <div class="container">
-      <div data-reveal>
-        <h2 id="programs-title">Two ways to pay.</h2>
-        <div class="segmented mt-8" role="tablist" aria-label="Programs" data-tabs>
-          {programs.map((p, i) => (
+      <SectionHead
+        eyebrow="How it works"
+        title="Live calls in four steps."
+        lead="From application to your first delivery day."
+        id="how-title"
+      />
+      <div class="mt-12">
+        <Flow items={[...steps]} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section navy" aria-labelledby="portal-title">
+    <div class="container">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <SectionHead
+          eyebrow="The portal"
+          title="Everything in one portal."
+          lead="Your calls, your agents and your spend in one place, from any browser."
+          id="portal-title"
+        />
+        <div class="segmented" role="tablist" aria-label="Portal features" data-tabs>
+          {showcase.map((f, i) => (
             <button
               type="button"
               role="tab"
-              id={`tab-${p.id}`}
-              aria-controls={`panel-${p.id}`}
+              id={`stab-${f.id}`}
+              aria-controls={`spanel-${f.id}`}
               aria-selected={i === 0 ? 'true' : 'false'}
               tabindex={i === 0 ? 0 : -1}
             >
-              {p.tab}
+              {f.tab}
             </button>
           ))}
         </div>
       </div>
-      {programs.map((p, i) => (
+      {showcase.map((f, i) => (
         <div
-          class="card program-panel mt-6"
+          class="showcase-panel"
           role="tabpanel"
-          id={`panel-${p.id}`}
-          aria-labelledby={`tab-${p.id}`}
+          id={`spanel-${f.id}`}
+          aria-labelledby={`stab-${f.id}`}
           hidden={i !== 0}
         >
-          <p class="program-summary">{p.summary}</p>
-          <dl class="program-rows">
-            {p.rows.map(([k, v]) => (
-              <div>
-                <dt>{k}</dt>
-                <dd>{v}</dd>
-              </div>
-            ))}
-          </dl>
-          <a href={p.href} class="btn btn-primary mt-8">
-            Learn more<span class="sr-only"> about {p.tab}</span>
-            <Icon name="arrow-right" size={18} />
-          </a>
+          <BrowserFrame shot={f.shot} alt={f.alt} dark />
+          <div>
+            <h3 class="text-[1.625rem]">{f.title}</h3>
+            <CheckList items={f.bullets} dark class="mt-5" />
+            <a href="/platform" class="link-arrow mt-8">
+              See the portal
+              <Icon name="arrow-right" size={18} />
+            </a>
+          </div>
         </div>
       ))}
-      <p class="text-ink-2 mt-6 text-[0.9375rem]">
-        Not sure? Choose ‘Not sure yet’ on the <a href="/get-started">application</a> and we’ll
-        recommend one.
-      </p>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="how-title">
+  <section class="section" aria-labelledby="control-title">
     <div class="container">
-      <h2 id="how-title" data-reveal>
-        How it works
-      </h2>
-      <div class="mt-12">
-        <Flow items={steps} />
-      </div>
-    </div>
-  </section>
-
-  <section class="section bg-paper" aria-labelledby="control-title">
-    <div class="container">
-      <h2 id="control-title" data-reveal>
-        You’re in control.
-      </h2>
-      <ul class="bento mt-10" data-reveal-group>
-        {controls.map(([kind, title, body]) => (
-          <li class={`card tile tile-${kind}`} data-reveal>
+      <SectionHead
+        eyebrow="Your controls"
+        title="You’re in control."
+        lead="You decide where calls come from, when they arrive and how many you get."
+        id="control-title"
+      />
+      <ul class="bento mt-12" data-reveal-group>
+        {controls.map(([kind, icon, title, body]) => (
+          <li class={`card card-interactive tile tile-${kind}`} data-reveal>
             <div class="tile-visual" aria-hidden="true">
               {kind === 'states' && (
                 <div class="chips">
@@ -250,78 +256,24 @@ const jsonLd = {
                 </div>
               )}
             </div>
-            <h3 class="mt-6 text-lg">{title}</h3>
-            <p class="text-ink-2 mt-1">{body}</p>
+            <div class="mt-6 flex items-center gap-3">
+              <IconBadge name={icon} />
+              <h3 class="text-[1.1875rem]">{title}</h3>
+            </div>
+            <p class="text-ink-2 mt-3">{body}</p>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section class="section navy" aria-labelledby="portal-title">
-    <div class="container">
-      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
-        <div>
-          <h2 id="portal-title">Everything in one portal.</h2>
-          <p class="lead mt-4">
-            Your calls, your agents and your spend in one place, from any browser.
-          </p>
-        </div>
-        <div class="segmented" role="tablist" aria-label="Portal features" data-tabs>
-          {showcase.map((f, i) => (
-            <button
-              type="button"
-              role="tab"
-              id={`stab-${f.id}`}
-              aria-controls={`spanel-${f.id}`}
-              aria-selected={i === 0 ? 'true' : 'false'}
-              tabindex={i === 0 ? 0 : -1}
-            >
-              {f.tab}
-            </button>
-          ))}
-        </div>
-      </div>
-      {showcase.map((f, i) => (
-        <div
-          class="showcase-panel"
-          role="tabpanel"
-          id={`spanel-${f.id}`}
-          aria-labelledby={`stab-${f.id}`}
-          hidden={i !== 0}
-        >
-          <Shot shot={f.shot} alt={f.alt} />
-          <div>
-            <h3>{f.title}</h3>
-            <ul class="ticks mt-4">
-              {f.bullets.map((b) => (
-                <li>{b}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      ))}
-      <a href="/platform" class="link-arrow mt-10">
-        See the portal
-        <Icon name="arrow-right" size={18} />
-      </a>
-    </div>
-  </section>
-
-  <section class="section" aria-label="Verticals">
-    <div class="container grid gap-6 md:grid-cols-2" data-reveal-group>
-      <div class="vertical" data-reveal>
-        <Icon name="shield-heart" size={48} class="vertical-icon" />
-        <h3 class="mt-6 text-2xl">Final Expense</h3>
-        <p class="text-ink-2 mt-2">Seniors looking for coverage for funeral and final costs.</p>
-      </div>
-      <div class="vertical" data-reveal>
-        <Icon name="stethoscope" size={48} class="vertical-icon" />
-        <h3 class="mt-6 text-2xl">Medicare</h3>
-        <p class="text-ink-2 mt-2">Beneficiaries looking at their Medicare options.</p>
-      </div>
-    </div>
-  </section>
+  <FaqStrip
+    items={pick(
+      'How are Final Expense callers qualified?',
+      'How much does it cost?',
+      'Do I need a phone system or dialer?',
+    )}
+  />
 
   <CtaBand />
 </Base>
@@ -367,44 +319,27 @@ const jsonLd = {
     height: 0.3em;
     overflow: visible;
   }
-
-  .program-panel {
-    padding: clamp(1.5rem, 4vw, 2.5rem);
+  .trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem 1.5rem;
+    margin-top: 1.75rem;
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+    font-weight: 550;
   }
-  .program-summary {
-    font-size: 1.125rem;
-    color: var(--ink);
+  .trust li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
   }
-  .program-rows {
-    margin-top: 1.5rem;
-    border-top: 1px solid var(--rule);
-  }
-  .program-rows > div {
-    display: grid;
-    gap: 0.25rem;
-    padding-block: 0.875rem;
-    border-bottom: 1px solid var(--rule);
-  }
-  .program-rows dt {
-    color: var(--ink-3);
-    font-size: 0.875rem;
-    font-weight: 650;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .program-rows dd {
-    color: var(--navy);
-    font-weight: 600;
-  }
-  @media (min-width: 640px) {
-    .program-rows > div {
-      grid-template-columns: 200px 1fr;
-      align-items: baseline;
-    }
+  .trust :global(svg) {
+    color: var(--blue-strong);
   }
 
   .bento {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.25rem;
   }
   @media (min-width: 640px) {
@@ -415,6 +350,7 @@ const jsonLd = {
   @media (min-width: 1024px) {
     .bento {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
     }
     /* 1 and 4 span two columns; 6 too, so the last row has no hole. */
     .tile:nth-child(1),
@@ -424,31 +360,39 @@ const jsonLd = {
     }
   }
   .tile {
-    padding: 1.75rem;
+    padding: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .tile {
+      padding: 2rem;
+    }
   }
   .tile-visual {
     display: flex;
     align-items: center;
-    min-height: 88px;
-    padding: 1rem;
-    border-radius: 10px;
-    background: var(--paper);
+    min-height: 140px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: var(--grad-panel);
+    border: 1px solid var(--rule);
   }
   .chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.375rem;
+    gap: 0.5rem;
   }
   .chip {
-    padding: 0.25rem 0.625rem;
+    padding: 0.375rem 0.875rem;
     border-radius: 999px;
     border: 1px solid var(--blue-strong);
+    background: #fff;
     color: var(--blue-strong);
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     font-weight: 700;
   }
   .chip.on {
-    background: var(--blue-strong);
+    background: var(--navy);
+    border-color: var(--navy);
     color: #fff;
   }
   .hours {
@@ -456,9 +400,9 @@ const jsonLd = {
   }
   .hours-bar {
     position: relative;
-    height: 14px;
+    height: 16px;
     border-radius: 999px;
-    background: var(--rule);
+    background: #dbe3ee;
   }
   .hours-window {
     position: absolute;
@@ -472,9 +416,9 @@ const jsonLd = {
   .hours-ticks {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    margin-top: 0.5rem;
+    margin-top: 0.625rem;
     color: var(--ink-3);
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     font-weight: 600;
   }
   .stepper {
@@ -485,32 +429,34 @@ const jsonLd = {
   .stepper-btn {
     display: grid;
     place-items: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     border: 1px solid var(--rule);
     background: #fff;
     color: var(--navy);
+    box-shadow: var(--shadow-card);
   }
   .stepper-value {
-    min-width: 7.5rem;
+    min-width: 8.5rem;
     text-align: center;
     color: var(--navy);
-    font-weight: 700;
+    font-size: 1.125rem;
+    font-weight: 750;
     font-variant-numeric: tabular-nums;
   }
   .rec {
     display: flex;
     align-items: center;
-    gap: 0.875rem;
+    gap: 1rem;
     width: 100%;
   }
   .rec-play {
     display: grid;
     place-items: center;
     flex-shrink: 0;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     border-radius: 999px;
     background: var(--blue-strong);
     color: #fff;
@@ -520,7 +466,7 @@ const jsonLd = {
     align-items: center;
     gap: 3px;
     flex: 1;
-    height: 40px;
+    height: 56px;
     min-width: 0;
     overflow: hidden;
   }
@@ -529,25 +475,25 @@ const jsonLd = {
     min-width: 2px;
     border-radius: 2px;
     background: var(--blue-strong);
-    opacity: 0.8;
+    opacity: 0.85;
   }
   .wave span:nth-child(n + 15) {
     background: #b7c2d2;
   }
   .meter {
     display: grid;
-    gap: 0.5rem;
+    gap: 0.625rem;
     width: 100%;
   }
   .meter-label {
     color: var(--ink-3);
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     font-weight: 650;
   }
   .meter-bar {
-    height: 12px;
+    height: 14px;
     border-radius: 999px;
-    background: var(--rule);
+    background: #dbe3ee;
   }
   .meter-bar span {
     display: block;
@@ -558,46 +504,32 @@ const jsonLd = {
   }
   .docs {
     display: grid;
-    gap: 0.375rem;
+    gap: 0.5rem;
   }
   .doc {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.25rem 0.625rem;
-    border-radius: 6px;
+    padding: 0.375rem 0.75rem;
+    border-radius: 8px;
     border: 1px solid var(--rule);
     background: #fff;
     color: var(--navy);
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     font-weight: 600;
   }
 
   .showcase-panel {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
+    gap: 2.5rem;
     align-items: center;
-    margin-top: 2.5rem;
+    margin-top: 3rem;
   }
   @media (min-width: 1024px) {
     .showcase-panel {
-      grid-template-columns: minmax(0, 1fr) 300px;
-      gap: 3rem;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 3.5rem;
     }
-  }
-
-  .vertical {
-    padding: clamp(1.75rem, 4vw, 2.5rem);
-    border: 1px solid var(--rule);
-    border-radius: 12px;
-    transition: background-color 150ms;
-  }
-  .vertical:hover {
-    background: var(--blue-tint);
-  }
-  .vertical :global(.vertical-icon) {
-    color: var(--blue-strong);
-    stroke-width: 1.5;
   }
 </style>

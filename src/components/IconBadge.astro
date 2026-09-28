@@ -1,0 +1,14 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+
+interface Props {
+  name: IconName;
+  dark?: boolean;
+  class?: string;
+}
+const { name, dark = false, class: className } = Astro.props;
+---
+
+<span class:list={['icon-badge', { dark }, className]} aria-hidden="true">
+  <Icon name={name} size={22} />
+</span>

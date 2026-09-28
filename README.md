@@ -9,18 +9,19 @@ Astro 5 · Tailwind CSS 4 · TypeScript · deployed on Vercel (`@astrojs/vercel`
 
 | Route                  | Rendering                                     |
 | ---------------------- | --------------------------------------------- |
-| `/`                    | prerendered                                   |
+| `/`                    | prerendered (pricing, caller qualification)   |
 | `/pay-per-application` | prerendered                                   |
 | `/pay-per-call`        | prerendered                                   |
 | `/platform`            | prerendered (nav label "The Portal")          |
 | `/faq`                 | prerendered (FAQPage JSON-LD)                 |
-| `/get-started`         | prerendered (application form)                |
+| `/get-started`         | prerendered (3-step application form)         |
 | `/privacy`             | prerendered ("last updated" = build date)     |
 | `/404`                 | prerendered                                   |
 | `/og.png`              | generated at build (1200×630)                 |
 | `/sitemap.xml`         | generated at build                            |
 | `/robots.txt`          | generated at build                            |
-| `/api/apply`           | **function** — form endpoint, sends email     |
+| `/api/apply`           | **function** — application: email + webhook   |
+| `/api/partial`         | **function** — step 1 lead: email + webhook   |
 | `/login`               | **function** — 302 to `PORTAL_URL` + `/login` |
 
 `/login` is a server route (not an `astro.config` redirect) so it reads `PORTAL_URL` at request
@@ -39,34 +40,47 @@ emails with nodemailer's JSON transport instead of sending them.
 
 Scripts:
 
-| Command               | What it does                                                      |
-| --------------------- | ----------------------------------------------------------------- |
-| `npm run build`       | Production build into `.vercel/output`                            |
-| `npm run check`       | `astro check` (types)                                             |
-| `npm run lint`        | ESLint + Prettier check                                           |
-| `npm run format`      | Prettier write                                                    |
-| `npm test`            | Playwright smoke + form tests (starts its own dev server on 4322) |
-| `npm run screenshots` | Full-page screenshots at 390 and 1440 into `docs/screenshots/`    |
+| Command               | What it does                                                       |
+| --------------------- | ------------------------------------------------------------------ |
+| `npm run build`       | Production build into `.vercel/output`                             |
+| `npm run check`       | `astro check` (types)                                              |
+| `npm run lint`        | ESLint + Prettier check                                            |
+| `npm run format`      | Prettier write                                                     |
+| `npm test`            | Playwright tests (dev servers on 4322 and 4323, webhook mock 4390) |
+| `npm run screenshots` | Full-page screenshots at 390 and 1440 into `docs/screenshots/`     |
 
 First Playwright run: `npx playwright install chromium`.
 
 ## Environment variables
 
-| Variable             | Required | Used for                                                                                                                                                                             |
-| -------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `SITE_URL`           | no       | Canonical URLs, sitemap, OG image URL, email logo. Defaults on Vercel to the production domain (`VERCEL_PROJECT_PRODUCTION_URL`: your custom domain once added, else `*.vercel.app`) |
-| `PORTAL_URL`         | yes      | "Client login" links (`PORTAL_URL/login`) and the `/login` redirect                                                                                                                  |
-| `APPLY_TO_EMAIL`     | yes      | Recipient of new client applications                                                                                                                                                 |
-| `SMTP_HOST`          | yes      | SMTP server                                                                                                                                                                          |
-| `SMTP_PORT`          | yes      | `465` = TLS, otherwise STARTTLS (default `587`)                                                                                                                                      |
-| `SMTP_USER`          | usually  | SMTP username                                                                                                                                                                        |
-| `SMTP_PASSWORD`      | usually  | SMTP password                                                                                                                                                                        |
-| `SMTP_FROM`          | yes      | From address, e.g. `Life Leads Plus <no-reply@yourdomain.com>`                                                                                                                       |
-| `PUBLIC_PHONE`       | no       | Shown in header, footer and Get Started when set; hidden when unset                                                                                                                  |
-| `PUBLIC_EMAIL`       | no       | Same rule as `PUBLIC_PHONE`; also the Privacy page contact                                                                                                                           |
-| `COMPANY_LEGAL_NAME` | no       | Footer copyright and Privacy page (default `Life Leads Plus`)                                                                                                                        |
+| Variable                       | Required | Used for                                                                                                                                                                             |
+| ------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `SITE_URL`                     | no       | Canonical URLs, sitemap, OG image URL, email logo. Defaults on Vercel to the production domain (`VERCEL_PROJECT_PRODUCTION_URL`: your custom domain once added, else `*.vercel.app`) |
+| `PORTAL_URL`                   | yes      | "Client login" links (`PORTAL_URL/login`) and the `/login` redirect                                                                                                                  |
+| `APPLY_TO_EMAIL`               | yes      | Recipient of new client applications                                                                                                                                                 |
+| `SMTP_HOST`                    | yes      | SMTP server                                                                                                                                                                          |
+| `SMTP_PORT`                    | yes      | `465` = TLS, otherwise STARTTLS (default `587`)                                                                                                                                      |
+| `SMTP_USER`                    | usually  | SMTP username                                                                                                                                                                        |
+| `SMTP_PASSWORD`                | usually  | SMTP password                                                                                                                                                                        |
+| `SMTP_FROM`                    | yes      | From address, e.g. `Life Leads Plus <no-reply@yourdomain.com>`                                                                                                                       |
+| `PUBLIC_PHONE`                 | no       | Shown in header, footer and Get Started when set; hidden when unset                                                                                                                  |
+| `PUBLIC_EMAIL`                 | no       | Same rule as `PUBLIC_PHONE`; also the Privacy page contact                                                                                                                           |
+| `COMPANY_LEGAL_NAME`           | no       | Footer copyright and Privacy page (default `Life Leads Plus`)                                                                                                                        |
+| `PUBLIC_SCHEDULE_URL`          | no       | "Schedule a call" button on the application success screen                                                                                                                           |
+| `APPLY_WEBHOOK_URL`            | no       | Every application and partial lead is also POSTed here as JSON. An application is accepted when the webhook **or** the email succeeds                                                |
+| `PUBLIC_GA4_ID`                | no       | Google Analytics 4. Loaded only when set                                                                                                                                             |
+| `PUBLIC_META_PIXEL_ID`         | no       | Meta Pixel. Loaded only when set                                                                                                                                                     |
+| `PUBLIC_GOOGLE_ADS_ID`         | no       | Google Ads tag. Loaded only when set                                                                                                                                                 |
+| `PUBLIC_GOOGLE_ADS_LEAD_LABEL` | no       | With `PUBLIC_GOOGLE_ADS_ID`, sends the lead conversion on a successful application                                                                                                   |
 
-Pages are prerendered, so every variable except those read by `/api/apply` and `/login` is baked
+Pricing and caller qualification live in `src/lib/offer.ts`; FAQ answers in `src/lib/faqs.ts`.
+
+Tracking (`src/lib/track.ts`): `cta_click` (every `/get-started` button has a `data-cta` location),
+`form_start`, `form_step_complete`, `generate_lead`, `phone_click`, `qualification_tab` and
+`buffer_slider_used` go to gtag and fbq when loaded, and are no-ops otherwise. UTM tags, `gclid`,
+`fbclid`, referrer and landing page are kept for the session and sent with each application.
+
+Pages are prerendered, so every variable except those read by `/api/apply`, `/api/partial` and `/login` is baked
 in at build time. On Vercel, any env var change takes effect on the next deployment — redeploy
 after changing one.
 

@@ -6,7 +6,7 @@ import Icon from './Icon.astro';
 import { nav, loginHref, phone, telHref } from '../lib/site';
 
 interface Props {
-  /** Starts transparent over a navy hero; turns white after 16px of scroll. */
+  /** Starts transparent over a navy hero; turns white after 8px of scroll. */
   dark?: boolean;
 }
 const { dark = false } = Astro.props;
@@ -63,9 +63,8 @@ const path = Astro.url.pathname.replace(/\/$/, '');
         {' '}
         Client login{' '}
       </a>
-      <a href="/get-started" class="btn btn-primary header-cta">
-        {' '}
-        Get started{' '}
+      <a href="/get-started" class="btn btn-primary header-cta" data-cta="header">
+        Get your rate
       </a>
     </div>
 
@@ -117,9 +116,8 @@ const path = Astro.url.pathname.replace(/\/$/, '');
           </a>
         </li>
       </ul>
-      <a href="/get-started" class="btn btn-primary mt-6 w-full">
-        {' '}
-        Get started{' '}
+      <a href="/get-started" class="btn btn-primary mt-6 w-full" data-cta="header">
+        Get your rate
       </a>
       {phone && (
         <a href={telHref} class="sheet-link mt-2 flex items-center gap-2">
@@ -140,13 +138,22 @@ const path = Astro.url.pathname.replace(/\/$/, '');
     border-bottom: 1px solid transparent;
     transition:
       background-color 0.2s,
-      border-color 0.2s;
+      border-color 0.2s,
+      box-shadow 0.2s;
   }
   .site-header.solid {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: saturate(1.4) blur(12px);
-    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+    background: #fff;
+  }
+  .site-header.scrolled {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom-color: var(--rule);
+    box-shadow: var(--shadow-card);
+  }
+  .header-cta {
+    min-height: 44px;
+    padding-block: 0.625rem;
   }
   .logo-link {
     display: grid;
@@ -253,11 +260,14 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 
 <script>
   const header = document.querySelector<HTMLElement>('[data-header]')!;
-  if (header.dataset.dark !== undefined) {
-    const onScroll = () => header.classList.toggle('solid', window.scrollY > 16);
-    onScroll();
-    addEventListener('scroll', onScroll, { passive: true });
-  }
+  const dark = header.dataset.dark !== undefined;
+  const onScroll = () => {
+    const scrolled = window.scrollY > 8;
+    header.classList.toggle('scrolled', scrolled);
+    if (dark) header.classList.toggle('solid', scrolled);
+  };
+  onScroll();
+  addEventListener('scroll', onScroll, { passive: true });
 
   // Native modal <dialog>: traps focus and closes on Esc.
   const dialog = document.querySelector<HTMLDialogElement>('#mobile-menu')!;

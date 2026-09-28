@@ -1,0 +1,107 @@
+---
+import { Picture } from 'astro:assets';
+import agentsFloor from '../assets/screens/agents-floor.png';
+import applications from '../assets/screens/applications.png';
+import customers from '../assets/screens/customers.png';
+import statements from '../assets/screens/statements.png';
+
+// The only portal screenshots outside the home hero: crops with no sidebar, header or toasts.
+// Regenerate with `node scripts/crop-screens.mjs`.
+const shots = { 'agents-floor': agentsFloor, applications, customers, statements };
+
+interface Props {
+  shot: keyof typeof shots;
+  alt: string;
+  /** On a navy band. */
+  dark?: boolean;
+  eager?: boolean;
+  class?: string;
+}
+const { shot, alt, dark = false, eager = false, class: className } = Astro.props;
+const src = shots[shot];
+---
+
+<figure class:list={['bf', { 'bf-dark': dark }, className]}>
+  <div class="bf-window" style={`--w:${src.width}px`}>
+    <div class="bf-bar" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <!-- Always at native size so the smallest UI text stays ≥ 10px; wider crops scroll sideways. -->
+    <div class="bf-view" tabindex="0" role="region" aria-label={`Screenshot: ${alt}`} data-bf-view>
+      <Picture
+        src={src}
+        alt={alt}
+        formats={['webp']}
+        width={src.width}
+        height={src.height}
+        widths={[src.width]}
+        sizes={`${src.width}px`}
+        loading={eager ? 'eager' : 'lazy'}
+        fetchpriority={eager ? 'high' : undefined}
+        quality={85}
+      />
+    </div>
+  </div>
+</figure>
+
+<style>
+  .bf {
+    min-width: 0;
+    padding: 16px;
+    border-radius: 28px;
+    background: var(--grad-panel);
+    border: 1px solid var(--rule);
+  }
+  @media (min-width: 640px) {
+    .bf {
+      padding: 32px;
+    }
+  }
+  .bf-dark {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  .bf-window {
+    width: min(100%, calc(var(--w) + 2px));
+    margin-inline: auto;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-panel);
+    background: #fff;
+    box-shadow: var(--shadow-raised);
+    overflow: hidden;
+  }
+  .bf-bar {
+    display: flex;
+    gap: 6px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .bf-bar span {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--rule);
+  }
+  .bf-view {
+    position: relative;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #c9d6ea transparent;
+  }
+  .bf-view:focus-visible {
+    outline-offset: -3px;
+  }
+  /* Fade the right edge while more of the screenshot is off to the side. */
+  .bf-view[data-more] {
+    mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent);
+  }
+  .bf-view :global(img) {
+    display: block;
+    width: var(--w);
+    max-width: none;
+    height: auto;
+  }
+</style>

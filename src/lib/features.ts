@@ -1,11 +1,11 @@
-/** Portal features, shared by the home showcase and /platform. `shot` names a crop in Shot.astro. */
+/** Portal features, shared by the home showcase and /platform. `shot` names a crop in BrowserFrame.astro. */
 export const features = [
   {
     id: 'agents',
     tab: 'Your agents',
-    shot: 'floor-cards',
+    shot: 'agents-floor',
     title: 'Your agents, live',
-    alt: 'Two agent cards showing each agent on a call, with calls, talk time, applications and closing percentage today',
+    alt: 'Agent tiles showing who is ready and who is on a call, with calls, talk time, applications and closing percentage today',
     bullets: [
       'Who’s ready, who’s on a call, and for how long',
       'Calls, talk time and applications today',

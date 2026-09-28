@@ -1,67 +1,63 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
-import Shot from '../components/Shot.astro';
+import SectionHead from '../components/SectionHead.astro';
+import BrowserFrame from '../components/BrowserFrame.astro';
+import CheckList from '../components/CheckList.astro';
+import IconBadge from '../components/IconBadge.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { features } from '../lib/features';
+import { loginHref } from '../lib/site';
 
 const also = [
-  'Call log with recordings',
-  'Delivery hours, states and daily caps',
-  'Returns',
-  'Monthly statements',
-  'Browser softphone for your agents',
-  'Password reset and invites for your team',
-];
+  ['receipt', 'Call log with recordings'],
+  ['calendar-clock', 'Delivery hours, states and daily caps'],
+  ['phone-forwarded', 'Returns'],
+  ['receipt', 'Monthly statements'],
+  ['headset', 'Browser softphone for your agents'],
+  ['users', 'Password reset and invites for your team'],
+] as const;
 ---
 
 <Base
   title="The Client Portal | Life Leads Plus"
   description="Every Life Leads Plus client gets a portal login for calls, recordings, agents, applications, prepaid balance and monthly statements."
+  dark
 >
   <PageIntro
     eyebrow="The Portal"
     title="One portal for your calls, your agents and your money."
     intro="Every client gets a Life Leads Plus portal login. What you see depends on how you take calls."
+    secondary={{ label: 'Client login', href: loginHref }}
   />
 
-  <div class="section">
-    <div class="container story">
-      <div class="story-list">
-        {features.map((f, i) => (
-          <section class="story-item" aria-labelledby={`f-${f.id}`} data-story={i}>
-            <Shot shot={f.shot} alt={f.alt} class="story-inline" eager={i === 0} />
-            <div data-reveal>
-              <h2 id={`f-${f.id}`} class="text-[1.75rem]">
-                {f.title}
-              </h2>
-              <ul class="ticks mt-5">
-                {f.bullets.map((b) => (
-                  <li>{b}</li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        ))}
+  {features.map((f, i) => (
+    <section class:list={['section', { 'bg-paper': i % 2 === 1 }]} aria-labelledby={`f-${f.id}`}>
+      <div class:list={['container feature', { flip: i % 2 === 1 }]}>
+        <div class="section-head" data-reveal>
+          <p class="pill">{f.tab}</p>
+          <h2 id={`f-${f.id}`}>{f.title}</h2>
+          <CheckList items={f.bullets} class="mt-8" />
+        </div>
+        <BrowserFrame shot={f.shot} alt={f.alt} eager={i === 0} />
       </div>
-      <div class="story-stage" aria-hidden="true">
-        {features.map((f, i) => (
-          <div class:list={['story-shot', { active: i === 0 }]} data-shot={i}>
-            <Shot shot={f.shot} alt="" />
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
+    </section>
+  ))}
 
-  <section class="section bg-paper" aria-labelledby="also-title">
+  <section class="section navy" aria-labelledby="also-title">
     <div class="container">
-      <h2 id="also-title" data-reveal>
-        Also in the portal
-      </h2>
-      <ul class="ticks mt-8 sm:grid-cols-2" data-reveal>
-        {also.map((a) => (
-          <li>{a}</li>
+      <SectionHead
+        eyebrow="More"
+        title="Also in the portal"
+        lead="The rest of what comes with every client login."
+        id="also-title"
+      />
+      <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+        {also.map(([icon, title]) => (
+          <li class="card card-pad card-interactive flex items-center gap-4" data-reveal>
+            <IconBadge name={icon} dark />
+            <h3 class="text-[1.125rem]">{title}</h3>
+          </li>
         ))}
       </ul>
     </div>
@@ -71,66 +67,21 @@ const also = [
 </Base>
 
 <style>
-  .story-list {
+  .feature {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 5rem;
+    gap: 2.5rem;
+    align-items: center;
   }
-  .story-item {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
-  }
-  .story-stage {
-    display: none;
-  }
-  /* Desktop: text scrolls on the left, the matching crop stays pinned on the right. */
   @media (min-width: 1024px) {
-    .story {
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    .feature {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
       gap: 4rem;
     }
-    .story-list {
-      gap: 0;
+    .feature.flip {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     }
-    .story-item {
-      min-height: 70vh;
-      align-content: center;
-    }
-    .story-item :global(.story-inline) {
-      display: none;
-    }
-    .story-stage {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      position: sticky;
-      top: calc(var(--header-h) + 2rem);
-      height: calc(100vh - var(--header-h) - 4rem);
-      align-items: center;
-    }
-    .story-shot {
-      grid-area: 1 / 1;
-      opacity: 0;
-      transition: opacity 300ms var(--ease);
-    }
-    .story-shot.active {
-      opacity: 1;
+    .feature.flip > :first-child {
+      order: 2;
     }
   }
 </style>
-
-<script>
-  // Swap the pinned crop to match the feature crossing the middle of the viewport.
-  const shots = [...document.querySelectorAll<HTMLElement>('[data-shot]')];
-  const io = new IntersectionObserver(
-    (entries) =>
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        const i = Number((e.target as HTMLElement).dataset.story);
-        shots.forEach((s, j) => s.classList.toggle('active', i === j));
-      }),
-    { rootMargin: '-45% 0px -45% 0px' },
-  );
-  document.querySelectorAll('[data-story]').forEach((el) => io.observe(el));
-</script>

@@ -3,8 +3,8 @@ import Icon from './Icon.astro';
 ---
 
 <div class="mobile-cta" data-mobile-cta hidden>
-  <a href="/get-started" class="btn btn-primary w-full">
-    Get started
+  <a href="/get-started" class="btn btn-primary w-full" data-cta="mobile_bar">
+    Get your rate
     <Icon name="arrow-right" size={18} />
   </a>
 </div>
@@ -45,7 +45,7 @@ import Icon from './Icon.astro';
 </style>
 
 <script>
-  // Appears once the page's first section (the hero) has scrolled out of view.
+  // Appears once the page's first section (the hero or intro) has scrolled out of view.
   const bar = document.querySelector<HTMLElement>('[data-mobile-cta]')!;
   const hero = document.querySelector('main > section');
   if (hero) {

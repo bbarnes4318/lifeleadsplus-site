@@ -13,6 +13,20 @@ export const phone = clean(env.PUBLIC_PHONE);
 export const email = clean(env.PUBLIC_EMAIL);
 export const legalName = clean(env.COMPANY_LEGAL_NAME) ?? 'Life Leads Plus';
 export const telHref = phone ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined;
+export const scheduleUrl = clean(env.PUBLIC_SCHEDULE_URL);
+
+export const analytics = {
+  ga4: clean(env.PUBLIC_GA4_ID),
+  metaPixel: clean(env.PUBLIC_META_PIXEL_ID),
+  googleAds: clean(env.PUBLIC_GOOGLE_ADS_ID),
+  googleAdsLeadLabel: clean(env.PUBLIC_GOOGLE_ADS_LEAD_LABEL),
+};
+/** Names of the analytics tools that are switched on, for the Privacy page. */
+export const analyticsTools = [
+  analytics.ga4 && 'Google Analytics',
+  analytics.metaPixel && 'Meta Pixel',
+  analytics.googleAds && 'Google Ads',
+].filter((t): t is string => !!t);
 
 export const nav = [
   { href: '/pay-per-application', label: 'Pay Per Application' },

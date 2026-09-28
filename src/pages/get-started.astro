@@ -1,341 +1,504 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { STATES, VERTICALS, PROGRAMS, TAKE_CALLS, TIMES, TIME_ZONES } from '../lib/apply';
-import { phone, telHref, email } from '../lib/site';
+import { STATES, TIMES, TIME_ZONES, BUFFERS } from '../lib/apply';
+import { pricing } from '../lib/offer';
+import { phone, telHref, email, scheduleUrl } from '../lib/site';
 
-const STEPS = ['Your agency', 'Coverage', 'Program', 'Review'];
+const STEPS = ['Your agency', 'Coverage', 'Program'];
 const req = '<span class="req" aria-hidden="true">*</span>';
+const next = [
+  'We review your states and volume.',
+  'We send your program, rate and agreement.',
+  'You fund your balance and we set your first delivery day.',
+];
+const verticals = [
+  ['Final Expense', 'shield-check', 'final-expense'],
+  ['Medicare', 'stethoscope', 'medicare'],
+] as const;
+const programs = [
+  [
+    'Pay per application',
+    'receipt',
+    `from $${pricing.ppa.rows[0].from} ${pricing.ppa.unit}`,
+    'ppa',
+  ],
+  [
+    'Pay per call',
+    'phone-forwarded',
+    `from $${pricing.ppc.rows[0].from} ${pricing.ppc.unit} · price depends on states, ages and buffer time`,
+    'ppc',
+  ],
+  ['Not sure yet', 'circle-help', 'we’ll recommend one', ''],
+] as const;
+const takeCalls = [
+  ['In the portal', 'headset'],
+  ['On our own phones or dialer', 'phone-forwarded'],
+  ['Not sure yet', 'circle-help'],
+] as const;
 ---
 
 <Base
-  title="Get Started | Life Leads Plus"
-  description="Tell us about your agency — licensed states, agents, verticals and volume — and we’ll reply with your program and rate for live Final Expense and Medicare calls."
+  title="Get Your Rate | Life Leads Plus"
+  description="Tell us your states, agents and volume. We reply with your program, rate and agreement for live Final Expense and Medicare calls, from $25 per call or $199 per application."
 >
-  <section class="bg-paper border-rule border-b">
-    <div class="container py-12 md:py-16">
-      <p class="eyebrow">Get started</p>
-      <h1 class="mt-4">Tell us about your agency.</h1>
-      <p class="lead mt-4">We’ll reply with your program and rate.</p>
-    </div>
-  </section>
+  <section class="apply">
+    <div class="container apply-grid">
+      <aside class="panel navy" aria-labelledby="apply-title">
+        <p class="pill">Get your rate</p>
+        <h1 id="apply-title" class="mt-5">
+          Get your rate.
+        </h1>
+        <p class="lead mt-4">
+          Tell us your states, agents and volume. We reply with your program, rate and agreement.
+        </p>
 
-  <section class="container grid gap-10 py-12 md:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-14">
-    <div>
-      <div id="apply-success" class="card success" tabindex="-1" hidden>
-        <svg class="success-check" viewBox="0 0 52 52" aria-hidden="true">
-          <circle cx="26" cy="26" r="24" />
-          <path d="M15 27l7 7 15-15" />
-        </svg>
-        <h2 class="mt-5 text-2xl">Thanks — we got it.</h2>
-        <p class="text-ink-2 mt-2">We’ll reply with your program and rate.</p>
-      </div>
+        <p class="price-line">
+          {`Pay per application from $${pricing.ppa.rows[0].from} · Pay per call from $${pricing.ppc.rows[0].from}`}
+        </p>
+        <dl class="price-summary">
+          <div>
+            <dt>Pay per application</dt>
+            <dd>
+              <strong>from ${pricing.ppa.rows[0].from}</strong>
+              {pricing.ppa.unit}
+            </dd>
+          </div>
+          <div>
+            <dt>Pay per call</dt>
+            <dd>
+              <strong>from ${pricing.ppc.rows[0].from}</strong>
+              {pricing.ppc.unit}
+            </dd>
+          </div>
+        </dl>
 
-      <form id="apply-form" class="card form-card" novalidate>
-        <noscript>
-          <p class="form-alert">Please turn on JavaScript to send this form.</p>
-        </noscript>
-
-        <div class="progress" aria-hidden="true">
-          <span data-progress></span>
+        <div class="panel-next">
+          <h2 class="next-title">What happens next</h2>
+          <ol class="next-list">
+            {next.map((s, i) => (
+              <li>
+                <span class="num-circle" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span>{s}</span>
+              </li>
+            ))}
+          </ol>
         </div>
-        <ol class="steps-nav" aria-label="Form steps">
-          {STEPS.map((label, i) => (
-            <li aria-current={i === 0 ? 'step' : undefined} data-step-label={i}>
-              <span class="steps-num">{i + 1}</span>
-              <span class="steps-text">{label}</span>
-            </li>
-          ))}
-        </ol>
 
-        <section class="step" data-step="0" aria-labelledby="step-0-title">
-          <h2 id="step-0-title" class="step-title" tabindex="-1">
-            Your agency
-          </h2>
-          <div class="grid gap-7 sm:grid-cols-2">
-            <div class="field">
-              <label for="agency">
-                Agency name <Fragment set:html={req} />
-              </label>
-              <input
-                id="agency"
-                name="agency"
-                autocomplete="organization"
-                aria-required="true"
-                aria-describedby="err-agency"
-                maxlength="200"
-              />
-              <p class="error" id="err-agency" hidden></p>
-            </div>
-            <div class="field">
-              <label for="name">
-                Your name <Fragment set:html={req} />
-              </label>
-              <input
-                id="name"
-                name="name"
-                autocomplete="name"
-                aria-required="true"
-                aria-describedby="err-name"
-                maxlength="200"
-              />
-              <p class="error" id="err-name" hidden></p>
-            </div>
-            <div class="field">
-              <label for="email">
-                Email <Fragment set:html={req} />
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                aria-required="true"
-                aria-describedby="err-email"
-                maxlength="200"
-              />
-              <p class="error" id="err-email" hidden></p>
-            </div>
-            <div class="field">
-              <label for="phone">
-                Mobile phone <Fragment set:html={req} />
-              </label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                autocomplete="tel"
-                aria-required="true"
-                aria-describedby="err-phone"
-                maxlength="40"
-              />
-              <p class="error" id="err-phone" hidden></p>
-            </div>
-          </div>
-        </section>
+        {phone && (
+          <a href={telHref} class="btn btn-ghost panel-phone">
+            <Icon name="phone" size={18} />
+            Prefer to talk? Call {phone}
+          </a>
+        )}
+      </aside>
 
-        <section class="step" data-step="1" aria-labelledby="step-1-title" hidden>
-          <h2 id="step-1-title" class="step-title" tabindex="-1">
-            Coverage
+      <div class="form-col">
+        <div id="apply-success" class="card success" tabindex="-1" hidden>
+          <svg class="success-check" viewBox="0 0 52 52" aria-hidden="true">
+            <circle cx="26" cy="26" r="24"></circle>
+            <path d="M15 27l7 7 15-15"></path>
+          </svg>
+          <h2 class="mt-5 text-[1.75rem]">
+            Thanks, <span data-success-name></span> — we got it.
           </h2>
-          <fieldset class="field" aria-describedby="err-states">
-            <legend>
-              States you’re licensed in <Fragment set:html={req} />
-            </legend>
-            <ul class="chips" data-chips aria-label="Selected states"></ul>
-            <input
-              type="search"
-              class="mt-2"
-              placeholder="Search states"
-              aria-label="Search states"
-              aria-controls="state-list"
-              data-state-search
-              autocomplete="off"
-            />
-            <div class="flex gap-2">
-              <button type="button" class="mini-btn" data-states-all>
-                Select all
-              </button>
-              <button type="button" class="mini-btn" data-states-clear>
-                Clear
-              </button>
+          <p class="text-ink-2 mt-2">
+            We’ll reply to <strong data-success-email></strong> with your program, rate and
+            agreement.
+          </p>
+          {(scheduleUrl || phone) && (
+            <div class="mt-6 flex flex-wrap gap-3">
+              {scheduleUrl && (
+                <a href={scheduleUrl} target="_blank" rel="noopener" class="btn btn-primary">
+                  Schedule a call
+                  <Icon name="arrow-right" size={18} />
+                </a>
+              )}
+              {phone && (
+                <a
+                  href={telHref}
+                  class:list={['btn', scheduleUrl ? 'btn-secondary' : 'btn-primary']}
+                >
+                  <Icon name="phone" size={18} />
+                  Call {phone}
+                </a>
+              )}
             </div>
-            <div id="state-list" class="state-list">
-              {Object.entries(STATES).map(([code, label]) => (
-                <label class="check" data-state-name={label.toLowerCase()}>
-                  <input type="checkbox" name="states" value={code} data-label={label} />
-                  {label}
-                </label>
-              ))}
-            </div>
-            <p class="error" id="err-states" hidden></p>
-          </fieldset>
-          <div class="field">
-            <label for="agents">
-              Number of licensed agents <Fragment set:html={req} />
-            </label>
-            <input
-              id="agents"
-              name="agents"
-              type="number"
-              min="1"
-              max="1000"
-              step="1"
-              inputmode="numeric"
-              aria-required="true"
-              aria-describedby="err-agents"
-            />
-            <p class="error" id="err-agents" hidden></p>
-          </div>
-          <fieldset class="field" aria-describedby="err-verticals">
-            <legend>
-              Verticals <Fragment set:html={req} />
-            </legend>
-            <div class="options">
-              {VERTICALS.map((v) => (
-                <label class="check">
-                  <input type="checkbox" name="verticals" value={v} />
-                  {v}
-                </label>
-              ))}
-            </div>
-            <p class="error" id="err-verticals" hidden></p>
-          </fieldset>
-        </section>
+          )}
+          <ol class="success-next">
+            {next.map((s, i) => (
+              <li>
+                <span class="num-circle" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span>{s}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
 
-        <section class="step" data-step="2" aria-labelledby="step-2-title" hidden>
-          <h2 id="step-2-title" class="step-title" tabindex="-1">
-            Program
-          </h2>
-          <fieldset class="field" aria-describedby="err-program">
-            <legend>
-              Program <Fragment set:html={req} />
-            </legend>
-            <div class="options">
-              {PROGRAMS.map((v) => (
-                <label class="check">
-                  <input type="radio" name="program" value={v} />
-                  {v}
-                </label>
-              ))}
-            </div>
-            <p class="error" id="err-program" hidden></p>
-          </fieldset>
-          <fieldset class="field" aria-describedby="err-takeCalls">
-            <legend>
-              How will your agents take calls? <Fragment set:html={req} />
-            </legend>
-            <div class="options">
-              {TAKE_CALLS.map((v) => (
-                <label class="check">
-                  <input type="radio" name="takeCalls" value={v} />
-                  {v}
-                </label>
-              ))}
-            </div>
-            <p class="error" id="err-takeCalls" hidden></p>
-          </fieldset>
-          <div class="field">
-            <label for="callsPerDay">Calls you want per day</label>
-            <input
-              id="callsPerDay"
-              name="callsPerDay"
-              type="number"
-              min="1"
-              step="1"
-              inputmode="numeric"
-              aria-describedby="err-callsPerDay"
-            />
-            <p class="error" id="err-callsPerDay" hidden></p>
-          </div>
-          <fieldset class="field" aria-describedby="err-hours">
-            <legend>Delivery hours</legend>
-            <div class="grid gap-3 sm:grid-cols-3">
-              <select name="hoursFrom" aria-label="Start time">
-                <option value="">Start time</option>
-                {TIMES.map(([v, l]) => (
-                  <option value={v}>{l}</option>
-                ))}
-              </select>
-              <select name="hoursTo" aria-label="End time">
-                <option value="">End time</option>
-                {TIMES.map(([v, l]) => (
-                  <option value={v}>{l}</option>
-                ))}
-              </select>
-              <select name="timezone" aria-label="Time zone">
-                <option value="">Time zone</option>
-                {TIME_ZONES.map((z) => (
-                  <option value={z}>{z}</option>
-                ))}
-              </select>
-            </div>
-            <p class="error" id="err-hours" hidden></p>
-          </fieldset>
-        </section>
+        <form id="apply-form" class="card form-card" novalidate>
+          <noscript>
+            <p class="form-alert">Please turn on JavaScript to send this form.</p>
+          </noscript>
 
-        <section class="step" data-step="3" aria-labelledby="step-3-title" hidden>
-          <h2 id="step-3-title" class="step-title" tabindex="-1">
-            Review
-          </h2>
-          <div class="review" data-review></div>
-          <div class="field">
-            <label for="notes">Anything else</label>
-            <textarea
-              id="notes"
-              name="notes"
-              rows="4"
-              maxlength="1000"
-              aria-describedby="notes-hint err-notes"
-            ></textarea>
-            <p class="hint" id="notes-hint">
-              Up to 1000 characters.
+          <div class="stepper">
+            <p class="stepper-count" data-step-count>
+              Step 1 of 3
             </p>
-            <p class="error" id="err-notes" hidden></p>
+            <div class="stepper-bar" aria-hidden="true">
+              {STEPS.map(() => (
+                <span data-seg />
+              ))}
+            </div>
+            <ol class="stepper-names" aria-label="Form steps">
+              {STEPS.map((label, i) => (
+                <li aria-current={i === 0 ? 'step' : undefined} data-step-label={i}>
+                  {label}
+                </li>
+              ))}
+            </ol>
           </div>
-          <div class="field">
-            <label class="check items-start">
+
+          <section class="step" data-step="0" aria-labelledby="step-0-title">
+            <h2 id="step-0-title" class="step-title" tabindex="-1">
+              Your agency
+            </h2>
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div class="field">
+                <label for="agency">
+                  Agency name <Fragment set:html={req} />
+                </label>
+                <input
+                  id="agency"
+                  name="agency"
+                  autocomplete="organization"
+                  aria-required="true"
+                  aria-describedby="err-agency"
+                  maxlength="200"
+                />
+                <p class="error" id="err-agency" hidden></p>
+              </div>
+              <div class="field">
+                <label for="name">
+                  Your name <Fragment set:html={req} />
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  autocomplete="name"
+                  aria-required="true"
+                  aria-describedby="err-name"
+                  maxlength="200"
+                />
+                <p class="error" id="err-name" hidden></p>
+              </div>
+              <div class="field">
+                <label for="email">
+                  Email <Fragment set:html={req} />
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  aria-required="true"
+                  aria-describedby="err-email"
+                  maxlength="200"
+                />
+                <p class="error" id="err-email" hidden></p>
+              </div>
+              <div class="field">
+                <label for="phone">
+                  Mobile phone <Fragment set:html={req} />
+                </label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  aria-required="true"
+                  aria-describedby="err-phone"
+                  maxlength="40"
+                />
+                <p class="error" id="err-phone" hidden></p>
+              </div>
+            </div>
+            <div class="field">
+              <label class="consent">
+                <input
+                  type="checkbox"
+                  name="consent"
+                  aria-required="true"
+                  aria-describedby="err-consent"
+                />
+                <span>
+                  I agree that Life Leads Plus may contact me about its programs by phone, text and
+                  email at the number and address above. <Fragment set:html={req} />
+                </span>
+              </label>
+              <p class="error" id="err-consent" hidden></p>
+            </div>
+          </section>
+
+          <section class="step" data-step="1" aria-labelledby="step-1-title" hidden>
+            <h2 id="step-1-title" class="step-title" tabindex="-1">
+              Coverage
+            </h2>
+            <fieldset class="field" aria-describedby="err-states">
+              <legend>
+                States you’re licensed in <Fragment set:html={req} />
+              </legend>
+              <div class="state-tools">
+                <input
+                  type="search"
+                  placeholder="Search states"
+                  aria-label="Search states"
+                  aria-controls="state-list"
+                  data-state-search
+                  autocomplete="off"
+                />
+                <span class="state-count" data-state-count aria-live="polite">
+                  0 selected
+                </span>
+                <button type="button" class="text-btn" data-states-all>
+                  Select all
+                </button>
+                <button type="button" class="text-btn" data-states-clear>
+                  Clear
+                </button>
+              </div>
+              <div id="state-list" class="state-grid">
+                {Object.entries(STATES).map(([code, label]) => (
+                  <label class="state-chip" data-state-name={label.toLowerCase()}>
+                    <input type="checkbox" name="states" value={code} class="vh" />
+                    {label}
+                  </label>
+                ))}
+              </div>
+              <p class="error" id="err-states" hidden></p>
+            </fieldset>
+            <div class="field max-w-[280px]">
+              <label for="agents">
+                Number of licensed agents <Fragment set:html={req} />
+              </label>
               <input
-                type="checkbox"
-                name="consent"
+                id="agents"
+                name="agents"
+                type="number"
+                min="1"
+                max="1000"
+                step="1"
+                inputmode="numeric"
                 aria-required="true"
-                aria-describedby="err-consent"
-                class="mt-1"
+                aria-describedby="err-agents"
               />
-              <span>
-                I agree that Life Leads Plus may contact me about its programs by phone, text and
-                email at the number and address above. <Fragment set:html={req} />
-              </span>
-            </label>
-            <p class="error" id="err-consent" hidden></p>
+              <p class="error" id="err-agents" hidden></p>
+            </div>
+            <fieldset class="field" aria-describedby="err-verticals">
+              <legend>
+                Verticals <Fragment set:html={req} />
+              </legend>
+              <div class="opts opts-2">
+                {verticals.map(([v, icon, slug]) => (
+                  <label class="opt">
+                    <input type="checkbox" name="verticals" value={v} data-slug={slug} class="vh" />
+                    <span class="opt-icon">
+                      <Icon name={icon} size={22} />
+                    </span>
+                    <span class="opt-title">{v}</span>
+                    <span class="opt-mark" aria-hidden="true">
+                      <Icon name="check" size={14} />
+                    </span>
+                  </label>
+                ))}
+              </div>
+              <p class="error" id="err-verticals" hidden></p>
+            </fieldset>
+          </section>
+
+          <section class="step" data-step="2" aria-labelledby="step-2-title" hidden>
+            <h2 id="step-2-title" class="step-title" tabindex="-1">
+              Program
+            </h2>
+            <fieldset class="field" aria-describedby="err-program">
+              <legend>
+                Program <Fragment set:html={req} />
+              </legend>
+              <div class="opts">
+                {programs.map(([v, icon, sub, slug]) => (
+                  <label class="opt">
+                    <input type="radio" name="program" value={v} data-slug={slug} class="vh" />
+                    <span class="opt-icon">
+                      <Icon name={icon} size={22} />
+                    </span>
+                    <span>
+                      <span class="opt-title">{v}</span>
+                      <span class="opt-sub">{sub}</span>
+                    </span>
+                    <span class="opt-mark" aria-hidden="true">
+                      <Icon name="check" size={14} />
+                    </span>
+                  </label>
+                ))}
+              </div>
+              <p class="error" id="err-program" hidden></p>
+            </fieldset>
+
+            <div class="reveal" data-ppc-extra inert>
+              <div>
+                <div class="ppc-extra">
+                  <p class="ppc-note">Optional. These set your pay per call price.</p>
+                  <fieldset class="field" aria-describedby="err-ages">
+                    <legend>Caller ages</legend>
+                    <div class="grid max-w-[360px] grid-cols-2 gap-3">
+                      <div class="field">
+                        <label for="ageFrom" class="sub-label">
+                          From
+                        </label>
+                        <input
+                          id="ageFrom"
+                          name="ageFrom"
+                          type="number"
+                          min="18"
+                          max="100"
+                          step="1"
+                          inputmode="numeric"
+                          aria-describedby="err-ages"
+                        />
+                      </div>
+                      <div class="field">
+                        <label for="ageTo" class="sub-label">
+                          To
+                        </label>
+                        <input
+                          id="ageTo"
+                          name="ageTo"
+                          type="number"
+                          min="18"
+                          max="100"
+                          step="1"
+                          inputmode="numeric"
+                          aria-describedby="err-ages"
+                        />
+                      </div>
+                    </div>
+                    <p class="error" id="err-ages" hidden></p>
+                  </fieldset>
+                  <div class="field max-w-[360px]">
+                    <label for="buffer">Buffer time</label>
+                    <select id="buffer" name="buffer" aria-describedby="err-buffer">
+                      <option value="">Choose a buffer time</option>
+                      {BUFFERS.map((b) => (
+                        <option value={b}>{b}</option>
+                      ))}
+                    </select>
+                    <p class="error" id="err-buffer" hidden></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <fieldset class="field" aria-describedby="err-takeCalls">
+              <legend>
+                How will your agents take calls? <Fragment set:html={req} />
+              </legend>
+              <div class="opts opts-3">
+                {takeCalls.map(([v, icon]) => (
+                  <label class="opt">
+                    <input type="radio" name="takeCalls" value={v} class="vh" />
+                    <span class="opt-icon">
+                      <Icon name={icon} size={22} />
+                    </span>
+                    <span class="opt-title">{v}</span>
+                    <span class="opt-mark" aria-hidden="true">
+                      <Icon name="check" size={14} />
+                    </span>
+                  </label>
+                ))}
+              </div>
+              <p class="error" id="err-takeCalls" hidden></p>
+            </fieldset>
+            <div class="field max-w-[280px]">
+              <label for="callsPerDay">Calls you want per day</label>
+              <input
+                id="callsPerDay"
+                name="callsPerDay"
+                type="number"
+                min="1"
+                step="1"
+                inputmode="numeric"
+                aria-describedby="err-callsPerDay"
+              />
+              <p class="error" id="err-callsPerDay" hidden></p>
+            </div>
+            <fieldset class="field" aria-describedby="err-hours">
+              <legend>Delivery hours</legend>
+              <div class="grid gap-3 sm:grid-cols-3">
+                <select name="hoursFrom" aria-label="Start time">
+                  <option value="">Start time</option>
+                  {TIMES.map(([v, l]) => (
+                    <option value={v}>{l}</option>
+                  ))}
+                </select>
+                <select name="hoursTo" aria-label="End time">
+                  <option value="">End time</option>
+                  {TIMES.map(([v, l]) => (
+                    <option value={v}>{l}</option>
+                  ))}
+                </select>
+                <select name="timezone" aria-label="Time zone">
+                  <option value="">Time zone</option>
+                  {TIME_ZONES.map((z) => (
+                    <option value={z}>{z}</option>
+                  ))}
+                </select>
+              </div>
+              <p class="error" id="err-hours" hidden></p>
+            </fieldset>
+            <div class="field">
+              <label for="notes">Anything else</label>
+              <textarea
+                id="notes"
+                name="notes"
+                rows="4"
+                maxlength="1000"
+                aria-describedby="notes-hint err-notes"
+              ></textarea>
+              <p class="hint" id="notes-hint">
+                Up to 1000 characters.
+              </p>
+              <p class="error" id="err-notes" hidden></p>
+            </div>
+          </section>
+
+          <div class="hp" aria-hidden="true">
+            <label for="company_website">Company website</label>
+            <input id="company_website" name="company_website" tabindex="-1" autocomplete="off" />
           </div>
-        </section>
 
-        <div class="hp" aria-hidden="true">
-          <label for="company_website">Company website</label>
-          <input id="company_website" name="company_website" tabindex="-1" autocomplete="off" />
-        </div>
+          <div id="form-status" role="status" aria-live="polite"></div>
 
-        <div id="form-status" role="status" aria-live="polite"></div>
+          <div class="form-nav">
+            <button type="button" class="btn btn-secondary" data-back hidden>
+              <Icon name="arrow-left" size={18} />
+              Back
+            </button>
+            <button type="submit" class="btn btn-primary submit">
+              <span class="spinner" aria-hidden="true" hidden></span>
+              <span data-label>Next</span>
+              <Icon name="arrow-right" size={18} />
+            </button>
+          </div>
+        </form>
 
-        <div class="form-nav">
-          <button type="button" class="btn btn-secondary" data-back hidden>
-            <Icon name="arrow-left" size={18} />
-            Back
-          </button>
-          <button type="submit" class="btn btn-primary ml-auto min-w-[200px]">
-            <span class="spinner" aria-hidden="true" hidden></span>
-            <span data-label>Next</span>
-            <Icon name="arrow-right" size={18} />
-          </button>
-        </div>
-      </form>
-    </div>
-
-    <aside class="lg:sticky lg:top-24 lg:self-start" aria-labelledby="next-title">
-      <div class="card bg-paper p-7">
-        <h2 id="next-title" class="text-xl">
-          What happens next
-        </h2>
-        <ol class="mt-5 grid gap-5">
-          {[
-            'We review your states and volume.',
-            'We send your program, rate and agreement.',
-            'You fund your balance and we set your first delivery day.',
-          ].map((s, i) => (
-            <li class="flex gap-3">
-              <span class="num" aria-hidden="true">
-                {i + 1}
-              </span>
-              <span class="text-ink-2">{s}</span>
-            </li>
-          ))}
-        </ol>
         {(phone || email) && (
-          <ul class="border-rule mt-6 grid gap-2 border-t pt-5 text-[0.9375rem]">
+          <ul class="contact">
             {phone && (
               <li>
-                <a href={telHref} class="flex items-center gap-2">
+                <a href={telHref}>
                   <Icon name="phone" size={16} />
                   {phone}
                 </a>
@@ -343,7 +506,7 @@ const req = '<span class="req" aria-hidden="true">*</span>';
             )}
             {email && (
               <li>
-                <a href={`mailto:${email}`} class="flex items-center gap-2">
+                <a href={`mailto:${email}`}>
                   <Icon name="mail" size={16} />
                   {email}
                 </a>
@@ -351,12 +514,165 @@ const req = '<span class="req" aria-hidden="true">*</span>';
             )}
           </ul>
         )}
+
+        <div class="next-mobile">
+          <h2 class="next-title">What happens next</h2>
+          <ol class="next-list">
+            {next.map((s, i) => (
+              <li>
+                <span class="num-circle" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span>{s}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
-    </aside>
+    </div>
   </section>
 </Base>
 
 <style>
+  .apply {
+    padding-block: clamp(1.5rem, 4vw, 3.5rem) clamp(4rem, 8vw, 6rem);
+    background: linear-gradient(var(--paper), #fff 480px);
+  }
+  .apply-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .apply-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 2.5rem;
+      align-items: start;
+    }
+    .panel {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+    }
+  }
+
+  /* Navy panel: compact header on phones, full sticky panel from 1024px. */
+  .panel {
+    padding: 28px 24px;
+    border-radius: var(--radius-panel);
+    border-bottom: 3px solid var(--red);
+    box-shadow: var(--shadow-raised);
+  }
+  .panel h1 {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+  }
+  .price-line {
+    margin-top: 1rem;
+    color: #fff;
+    font-size: 0.9375rem;
+    font-weight: 650;
+  }
+  .price-summary,
+  .panel-next,
+  .panel-phone {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .panel {
+      padding: 40px;
+    }
+    .price-line {
+      display: none;
+    }
+    .price-summary {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+    .panel-next {
+      display: block;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .panel-phone {
+      display: inline-flex;
+      margin-top: 2rem;
+      white-space: normal;
+    }
+    .next-mobile {
+      display: none;
+    }
+  }
+  .price-summary > div {
+    padding: 1rem 1.125rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .price-summary dt {
+    color: var(--on-navy-accent);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .price-summary dd {
+    margin-top: 0.125rem;
+    color: var(--on-navy);
+  }
+  .price-summary strong {
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-right: 0.25rem;
+  }
+  .next-title {
+    font-size: 1.125rem;
+  }
+  .next-list,
+  .success-next {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  .next-list li,
+  .success-next li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .next-list .num-circle,
+  .success-next .num-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8125rem;
+  }
+  .next-mobile {
+    margin-top: 2rem;
+    color: var(--ink-2);
+  }
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+  }
+  .contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* Form */
+  .form-card {
+    display: grid;
+    gap: 2rem;
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    box-shadow: var(--shadow-raised);
+  }
   .field {
     display: grid;
     gap: 0.5rem;
@@ -364,12 +680,16 @@ const req = '<span class="req" aria-hidden="true">*</span>';
   }
   label,
   legend {
-    font-weight: 600;
+    font-weight: 650;
     color: var(--ink);
-    font-size: 0.975rem;
+    font-size: 0.9375rem;
   }
   legend {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .sub-label {
+    color: var(--ink-2);
+    font-weight: 600;
   }
   :global(.req) {
     color: var(--ink-3);
@@ -378,72 +698,246 @@ const req = '<span class="req" aria-hidden="true">*</span>';
   select,
   textarea {
     width: 100%;
-    min-height: 44px;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #b7c2d2;
-    border-radius: 6px;
-    background: var(--surface);
+    min-height: 52px;
+    padding: 0.75rem 0.875rem;
+    border: 1.5px solid #cfd9e8;
+    border-radius: var(--radius-control);
+    background-color: var(--surface);
     color: var(--ink);
     font: inherit;
     font-size: 1rem;
+    transition:
+      border-color 150ms,
+      box-shadow 150ms;
   }
-  input[type='checkbox'],
-  input[type='radio'] {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    accent-color: var(--blue-strong);
+  textarea {
+    min-height: 120px;
+  }
+  :is(input, select, textarea):focus-visible {
+    outline: none;
+    border-color: var(--blue-strong);
+    box-shadow: 0 0 0 3px rgba(11, 92, 214, 0.25);
+  }
+  input[data-valid] {
+    padding-right: 2.75rem;
+    background: var(--surface)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23079455' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")
+      right 16px center / 16px no-repeat;
   }
   [aria-invalid='true'] {
     border-color: #b42318 !important;
   }
-  .check {
+  .consent {
     display: flex;
-    align-items: center;
-    gap: 0.625rem;
+    align-items: flex-start;
+    gap: 0.75rem;
     font-weight: 500;
     color: var(--ink-2);
     cursor: pointer;
   }
-  .options {
+  .consent input {
+    width: 20px;
+    height: 20px;
+    margin-top: 0.2em;
+    flex-shrink: 0;
+    accent-color: var(--blue-strong);
+  }
+  .vh {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .state-tools {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem 1.75rem;
-  }
-  .state-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 0.25rem 1rem;
-    max-height: 240px;
-    overflow-y: auto;
-    margin-top: 0.5rem;
-    padding: 0.75rem;
-    border: 1px solid var(--rule);
-    border-radius: 6px;
-  }
-  .state-list .check {
-    padding: 0.25rem 0;
-  }
-  .state-list .check[hidden] {
-    display: none;
-  }
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.375rem;
-  }
-  .chips :global(button) {
-    display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
-    min-height: 32px;
-    padding: 0.25rem 0.625rem;
-    border-radius: 999px;
-    background: var(--blue-tint);
-    color: var(--navy);
+    gap: 0.5rem 1rem;
+  }
+  .state-tools input {
+    flex: 1 1 220px;
+  }
+  .state-count {
+    color: var(--ink-3);
     font-size: 0.875rem;
     font-weight: 600;
   }
+  .text-btn {
+    min-height: 44px;
+    color: var(--blue-strong);
+    font-size: 0.9375rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .text-btn:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .state-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-control);
+    background: var(--paper);
+  }
+  .state-chip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.375rem 0.875rem;
+    border: 1.5px solid #cfd9e8;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--ink-2);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    transition:
+      background-color 120ms,
+      border-color 120ms,
+      color 120ms;
+  }
+  .state-chip:hover {
+    border-color: var(--blue-strong);
+  }
+  .state-chip:has(input:checked) {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
+  .state-chip:has(input:focus-visible),
+  .opt:has(input:focus-visible) {
+    outline: 2px solid var(--blue-strong);
+    outline-offset: 2px;
+  }
+  .state-chip[hidden] {
+    display: none;
+  }
+
+  .opts {
+    display: grid;
+    gap: 0.75rem;
+  }
+  @media (min-width: 640px) {
+    .opts-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .opts-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .opt {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    min-height: 64px;
+    padding: 16px;
+    padding-right: 48px;
+    border: 1.5px solid #cfd9e8;
+    border-radius: var(--radius-card);
+    background: #fff;
+    cursor: pointer;
+    transition:
+      border-color 150ms,
+      background-color 150ms;
+  }
+  .opt:hover {
+    border-color: var(--blue-strong);
+  }
+  .opt:has(input:checked) {
+    border-color: var(--blue-strong);
+    background: var(--blue-tint);
+  }
+  .opt-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--blue-tint);
+    color: var(--blue-strong);
+  }
+  .opt:has(input:checked) .opt-icon {
+    background: #fff;
+  }
+  .opt-title {
+    display: block;
+    color: var(--navy);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .opt-sub {
+    display: block;
+    margin-top: 0.125rem;
+    color: var(--ink-2);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  .opt-mark {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    translate: 0 -50%;
+    border-radius: 999px;
+    border: 1.5px solid #b7c2d2;
+    background: #fff;
+    color: transparent;
+  }
+  .opt:has(input:checked) .opt-mark {
+    border-color: var(--blue-strong);
+    background: var(--blue-strong);
+    color: #fff;
+  }
+  .opt-mark :global(svg) {
+    stroke-width: 3.2;
+  }
+
+  /* Pay per call extras: height transition in and out. */
+  .reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition:
+      grid-template-rows 250ms var(--ease),
+      visibility 250ms;
+    margin-block: -1rem;
+  }
+  .reveal.open {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    margin-block: 0;
+  }
+  .reveal > div {
+    overflow: hidden;
+  }
+  .ppc-extra {
+    display: grid;
+    gap: 1.5rem;
+    padding: 1.25rem;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--rule);
+    background: var(--grad-panel);
+  }
+  .ppc-note {
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+  }
+
   .error {
     color: #b42318;
     font-size: 0.9rem;
@@ -456,7 +950,7 @@ const req = '<span class="req" aria-hidden="true">*</span>';
   :global(.form-alert) {
     padding: 0.875rem 1rem;
     border: 1px solid #f4c7c3;
-    border-radius: 6px;
+    border-radius: 10px;
     background: #fef3f2;
     color: #b42318;
     font-weight: 550;
@@ -488,67 +982,41 @@ const req = '<span class="req" aria-hidden="true">*</span>';
       transform: rotate(360deg);
     }
   }
-  .form-card {
-    --pad: clamp(1.25rem, 4vw, 2.5rem);
-    display: grid;
-    gap: 1.75rem;
-    padding: var(--pad);
-    overflow: hidden;
-  }
-  .progress {
-    height: 4px;
-    margin: calc(-1 * var(--pad)) calc(-1 * var(--pad)) 0;
-    background: var(--rule);
-  }
-  .progress span {
-    display: block;
-    width: 25%;
-    height: 100%;
-    background: var(--blue-strong);
-    transition: width 300ms var(--ease);
-  }
-  .steps-nav {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.5rem;
-  }
-  .steps-nav li {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+
+  .stepper-count {
     color: var(--ink-3);
     font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.25;
+    font-weight: 650;
   }
-  .steps-num {
-    display: inline-grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: 26px;
-    height: 26px;
+  .stepper-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-top: 0.625rem;
+  }
+  .stepper-bar span {
+    height: 6px;
     border-radius: 999px;
-    border: 1.5px solid #b7c2d2;
+    background:
+      linear-gradient(var(--blue-strong), var(--blue-strong)) left / 0 100% no-repeat,
+      var(--rule);
+    transition: background-size 250ms var(--ease);
+  }
+  .stepper-bar span[data-on] {
+    background-size: 100% 100%;
+  }
+  .stepper-names {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    margin-top: 0.5rem;
+    color: var(--ink-3);
     font-size: 0.8125rem;
+    font-weight: 600;
   }
-  .steps-nav li[aria-current='step'] {
+  .stepper-names li[aria-current='step'],
+  .stepper-names li[data-done] {
     color: var(--navy);
-  }
-  .steps-nav li[aria-current='step'] .steps-num,
-  .steps-nav li[data-done] .steps-num {
-    border-color: var(--blue-strong);
-    background: var(--blue-strong);
-    color: #fff;
-  }
-  @media (max-width: 639px) {
-    .steps-nav li:not([aria-current='step']) .steps-text {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-    }
   }
   .step {
     display: grid;
@@ -558,7 +1026,7 @@ const req = '<span class="req" aria-hidden="true">*</span>';
     display: none;
   }
   .step-title {
-    font-size: 1.5rem;
+    font-size: 1.625rem;
   }
   .step-title:focus {
     outline: none;
@@ -572,67 +1040,29 @@ const req = '<span class="req" aria-hidden="true">*</span>';
   .form-nav .btn[hidden] {
     display: none;
   }
-  .mini-btn,
-  .review :global(.mini-btn) {
-    min-height: 36px;
-    padding: 0.25rem 0.75rem;
-    border-radius: 8px;
-    border: 1px solid var(--rule);
-    background: #fff;
-    color: var(--blue-strong);
-    font-size: 0.875rem;
-    font-weight: 650;
-    cursor: pointer;
+  .submit {
+    margin-left: auto;
+    min-width: 200px;
   }
-  .mini-btn:hover,
-  .review :global(.mini-btn:hover) {
-    border-color: var(--blue-strong);
-  }
-  .review {
-    display: grid;
-    gap: 1rem;
-  }
-  .review :global(.review-group) {
-    padding: 1.25rem;
-    border-radius: 10px;
-    background: var(--paper);
-  }
-  .review :global(.review-head) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
-  }
-  .review :global(h3) {
-    font-size: 1.0625rem;
-  }
-  .review :global(dl) {
-    display: grid;
-    gap: 0.125rem 1rem;
-    font-size: 0.9375rem;
-  }
-  .review :global(dt) {
-    color: var(--ink-3);
-  }
-  .review :global(dd) {
-    color: var(--ink);
-    font-weight: 550;
-    overflow-wrap: anywhere;
-  }
-  .review :global(dd + dt) {
-    margin-top: 0.5rem;
-  }
-  @media (min-width: 640px) {
-    .review :global(dl) {
-      grid-template-columns: 200px minmax(0, 1fr);
-    }
-    .review :global(dd + dt) {
-      margin-top: 0;
+  @media (max-width: 479px) {
+    .submit {
+      min-width: 0;
+      flex: 1;
     }
   }
+
   .success {
     padding: clamp(1.75rem, 5vw, 3rem);
+    box-shadow: var(--shadow-raised);
+  }
+  .success:focus {
+    outline: none;
+  }
+  .success-next {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-2);
   }
   .success-check {
     width: 56px;
@@ -660,18 +1090,6 @@ const req = '<span class="req" aria-hidden="true">*</span>';
     from {
       stroke-dashoffset: 36;
     }
-  }
-  .num {
-    display: inline-grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
-    border-radius: 999px;
-    background: var(--navy);
-    color: #fff;
-    font-size: 0.875rem;
-    font-weight: 700;
   }
 </style>
 
