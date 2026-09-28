@@ -19,9 +19,9 @@ const path = Astro.url.pathname.replace(/\/$/, '');
       <Image
         src={wordmark}
         alt="Life Leads Plus"
-        height={36}
+        height={52}
         densities={[1, 2, 3]}
-        class="logo logo-light"
+        class="logo logo-light logo-tall"
         loading="eager"
       />
       {dark && (
@@ -86,9 +86,9 @@ const path = Astro.url.pathname.replace(/\/$/, '');
         <Image
           src={wordmark}
           alt="Life Leads Plus"
-          height={36}
+          height={52}
           densities={[1, 2, 3]}
-          class="logo"
+          class="logo logo-tall"
         />
       </a>
       <button type="button" class="menu-btn ml-auto inline-grid" data-menu-close>
@@ -168,6 +168,15 @@ const path = Astro.url.pathname.replace(/\/$/, '');
   @media (min-width: 1024px) {
     .logo {
       height: 36px;
+    }
+  }
+  /* The light logo is nearly square, so it needs more height than the wide dark wordmark. */
+  .logo.logo-tall {
+    height: 44px;
+  }
+  @media (min-width: 1024px) {
+    .logo.logo-tall {
+      height: 52px;
     }
   }
   .nav-link {
