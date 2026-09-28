@@ -59,9 +59,7 @@ test('home pay per call card shows what the price depends on', async ({ page }) 
 
 test('pay per call filter section shows the three filters', async ({ page }) => {
   await page.goto('/pay-per-call');
-  await expect(
-    page.getByRole('heading', { level: 2, name: /Your filters set the final price/ }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: /From \$25 a call/ })).toBeVisible();
   await expect(page.locator('[data-ppc-filters] h3')).toHaveText(['States', 'Ages', 'Buffer time']);
   await expect(
     page.getByRole('link', { name: 'Get your pay per call rate' }).first(),
@@ -133,7 +131,7 @@ test('buffer slider readout flips at the marker', async ({ page }) => {
 test('FAQ filter hides and shows questions', async ({ page }) => {
   await page.goto('/faq');
   const questions = page.locator('details');
-  await expect(questions.filter({ visible: true })).toHaveCount(19);
+  await expect(questions.filter({ visible: true })).toHaveCount(20);
   await page.getByRole('button', { name: 'Billing' }).click();
   await expect(page.getByRole('button', { name: 'Billing' })).toHaveAttribute(
     'aria-pressed',
@@ -145,7 +143,7 @@ test('FAQ filter hides and shows questions', async ({ page }) => {
   await page.getByRole('button', { name: 'Pricing' }).click();
   await expect(questions.filter({ visible: true })).toHaveCount(4);
   await page.getByRole('button', { name: 'All' }).click();
-  await expect(questions.filter({ visible: true })).toHaveCount(19);
+  await expect(questions.filter({ visible: true })).toHaveCount(20);
 });
 
 // The full-frame captures show the owner sidebar and billing amounts; only the crops may ship.
@@ -275,4 +273,26 @@ test('hero H1 punctuation sits against its word', async ({ page }) => {
     [...document.fonts].some((f) => f.family.includes('Jakarta Punct') && f.status === 'loaded'),
   );
   expect(loaded).toBe(true);
+});
+
+test('legal pages show the company contact block', async ({ page }) => {
+  for (const path of ['/terms', '/privacy', '/tcpa-compliance']) {
+    await page.goto(path);
+    const main = page.locator('main');
+    await expect(main).toContainText('Life Leads Plus');
+    await expect(main).toContainText('Denver, CO 80202');
+    await expect(main.locator('a[href="tel:+13035550100"]').first()).toBeVisible();
+  }
+});
+
+test('footer links to all three legal pages', async ({ page }) => {
+  await page.goto('/');
+  const footer = page.locator('footer').getByRole('navigation', { name: 'Legal' });
+  for (const [name, href] of [
+    ['Terms of Service', '/terms'],
+    ['Privacy Policy', '/privacy'],
+    ['TCPA & Compliance', '/tcpa-compliance'],
+  ]) {
+    await expect(footer.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
+  }
 });

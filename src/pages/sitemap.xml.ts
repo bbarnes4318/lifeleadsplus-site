@@ -9,6 +9,8 @@ const paths = [
   '/faq',
   '/get-started',
   '/privacy',
+  '/terms',
+  '/tcpa-compliance',
 ];
 
 export const GET: APIRoute = () =>

@@ -64,12 +64,12 @@ export const pricing = {
       { vertical: 'Final Expense', from: 199 },
       { vertical: 'Medicare', from: 199 },
     ],
-    note: 'Your rate moves up or down with your agents’ conversion.',
+    note: 'Your rate moves with your agents’ conversion.',
     bullets: [
-      'Pay only for applications your agents submit',
-      'Agents take calls in the portal, in their browser',
-      'Every application tied to its call and recording',
-      'Prepaid balance',
+      'No application, no charge',
+      'Agents take calls in their browser. No dialer to buy.',
+      'Every application tied to its call recording',
+      'Prepaid balance. No surprise invoices.',
     ],
   },
   ppc: {
@@ -83,10 +83,10 @@ export const pricing = {
     ],
     note: 'Your final price depends on your filters: states, ages and buffer time.',
     bullets: [
-      'Pay only for calls that pass your buffer',
-      'Take calls on your phones, your dialer or the portal',
+      'Calls that end inside your buffer are free',
+      'Ring your phones, your dialer or the portal',
       'Every call recorded in your call log',
-      'Prepaid balance',
+      'Prepaid balance. No surprise invoices.',
     ],
   },
 } as const;
@@ -96,13 +96,13 @@ export const ppcFilters = [
     id: 'states',
     icon: 'map-pin',
     title: 'States',
-    body: 'Choose the states you’re licensed in. Calls only come from those states.',
+    body: 'Only callers in the states your agents are licensed in.',
   },
-  { id: 'ages', icon: 'users', title: 'Ages', body: 'Choose the caller age range you want.' },
+  { id: 'ages', icon: 'users', title: 'Ages', body: 'The caller age range your carriers want.' },
   {
     id: 'buffer',
     icon: 'calendar-clock',
     title: 'Buffer time',
-    body: 'Choose how long a call must last before it’s billable.',
+    body: 'How long a call has to last before you pay for it.',
   },
 ] as const;

@@ -50,7 +50,8 @@ const takeCalls = [
           Get your rate.
         </h1>
         <p class="lead mt-4">
-          Tell us your states, agents and volume. We reply with your program, rate and agreement.
+          Tell us your states, agents and volume. We’ll reply with your program, your rate and your
+          agreement.
         </p>
 
         <p class="price-line">
@@ -234,9 +235,15 @@ const takeCalls = [
                   aria-required="true"
                   aria-describedby="err-consent"
                 />
+                <!-- Links inside a label don't toggle its checkbox (HTML label activation rules). -->
                 <span>
-                  I agree that Life Leads Plus may contact me about its programs by phone, text and
-                  email at the number and address above. <Fragment set:html={req} />
+                  By checking this box, I agree that Life Leads Plus may contact me about its
+                  programs by phone calls and text messages, including calls and texts made with an
+                  automatic telephone dialing system or an artificial, prerecorded or AI-generated
+                  voice, and by email, at the phone number and email address above. Consent is not a
+                  condition of purchase. Message and data rates may apply. Message frequency varies.
+                  Reply STOP to opt out. I agree to the <a href="/terms">Terms of Service</a> and
+                  <a href="/privacy">Privacy Policy</a>. <Fragment set:html={req} />
                 </span>
               </label>
               <p class="error" id="err-consent" hidden></p>

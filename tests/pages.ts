@@ -6,5 +6,7 @@ export const pages = [
   ['faq', '/faq'],
   ['get-started', '/get-started'],
   ['privacy', '/privacy'],
+  ['terms', '/terms'],
+  ['tcpa-compliance', '/tcpa-compliance'],
   ['404', '/does-not-exist'],
 ] as const;

@@ -11,8 +11,8 @@ interface Props {
 }
 const { bg = 'paper' } = Astro.props;
 const cards = [
-  { id: 'ppa', icon: 'receipt', pill: 'Cost tied to production', ...pricing.ppa },
-  { id: 'ppc', icon: 'phone-forwarded', pill: 'Use your own phones or dialer', ...pricing.ppc },
+  { id: 'ppa', icon: 'receipt', pill: 'Pay only when you write', ...pricing.ppa },
+  { id: 'ppc', icon: 'phone-forwarded', pill: 'Short calls are free', ...pricing.ppc },
 ] as const;
 ---
 
@@ -24,8 +24,8 @@ const cards = [
   <div class="container">
     <SectionHead
       eyebrow="Pricing"
-      title="Two ways to pay. Both prepaid."
-      lead="Pick the program that fits how your agency sells."
+      title="Pay for sales, or pay for calls. Your call."
+      lead="Pay per application and you’re only charged when your agents write business. Pay per call and short calls cost you nothing. Both are prepaid, with no surprise invoices."
       id="pricing-title"
     />
     <div class="mt-12 grid gap-6 lg:grid-cols-2" data-reveal-group>
@@ -78,8 +78,8 @@ const cards = [
       ))}
     </div>
     <p class="text-ink-2 mt-8 text-[0.9375rem]">
-      Not sure which fits? Choose ‘Not sure yet’ on the <a href="/get-started">application</a> and
-      we’ll recommend one.
+      Not sure which fits? Pick ‘Not sure yet’ on the <a href="/get-started">application</a> and
+      we’ll recommend the right one for your agency.
     </p>
   </div>
 </section>

@@ -7,12 +7,17 @@ interface Props {
   items: [string, string][];
   lead?: string;
 }
-const { items, lead = 'Short answers to what agencies ask us most.' } = Astro.props;
+const { items, lead = 'Straight answers before you start.' } = Astro.props;
 ---
 
 <section class="section bg-paper" aria-labelledby="faq-strip-title">
   <div class="container">
-    <SectionHead eyebrow="FAQ" title="Questions" id="faq-strip-title" lead={lead} />
+    <SectionHead
+      eyebrow="FAQ"
+      title="Questions agency owners ask"
+      id="faq-strip-title"
+      lead={lead}
+    />
     <div class="mt-12 grid gap-5 md:grid-cols-3" data-reveal-group>
       {items.map(([q, a]) => (
         <div class="card card-pad" data-reveal>

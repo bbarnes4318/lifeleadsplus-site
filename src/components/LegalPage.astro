@@ -1,0 +1,194 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from './PageIntro.astro';
+import CtaBand from './CtaBand.astro';
+import { LEGAL } from '../lib/legal';
+
+interface Props {
+  title: string;
+  intro: string;
+  description: string;
+  sections: { id: string; title: string }[];
+}
+const { title, intro, description, sections } = Astro.props;
+---
+
+<Base title={`${title} | Life Leads Plus`} description={description} dark>
+  <PageIntro
+    eyebrow="Legal"
+    title={title}
+    intro={intro}
+    secondary={{ label: 'Get your rate', href: '/get-started' }}
+  >
+    <p class="mt-4 text-sm">
+      Effective {LEGAL.effective} · Last updated {LEGAL.updated} · Operated by {LEGAL.entity}
+    </p>
+  </PageIntro>
+
+  <section class="section">
+    <div class="container legal-grid">
+      <nav class="toc toc-side" aria-label="Contents">
+        <ol>
+          {sections.map((s) => (
+            <li>
+              <a href={`#${s.id}`}>{s.title}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <div class="legal">
+        <div class="card card-pad toc toc-card">
+          <p class="toc-title">Contents</p>
+          <ol>
+            {sections.map((s) => (
+              <li>
+                <a href={`#${s.id}`}>{s.title}</a>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <slot />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand bg="paper" />
+</Base>
+
+<style>
+  .legal-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .toc-side {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .legal-grid {
+      grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+      gap: 64px;
+      align-items: start;
+    }
+    .toc-side {
+      display: block;
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+    }
+    .toc-card {
+      display: none;
+    }
+  }
+  .toc ol {
+    display: grid;
+    gap: 0.5rem;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .toc a {
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+  .toc a:hover,
+  .toc a[aria-current='true'] {
+    color: var(--blue-strong);
+  }
+  .toc a[aria-current='true'] {
+    font-weight: 650;
+  }
+  .toc-card {
+    margin-bottom: 2.5rem;
+  }
+  .toc-title {
+    margin-bottom: 0.75rem;
+    color: var(--navy);
+    font-weight: 700;
+  }
+</style>
+
+<!-- Page content arrives through the slot, so these rules can't be scoped to this component. -->
+<style is:global>
+  .legal {
+    max-width: 74ch;
+  }
+  .legal > :first-child {
+    margin-top: 0;
+  }
+  .legal h2 {
+    margin-top: 3rem;
+    font-size: 1.5rem;
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+  .legal h3 {
+    margin-top: 1.75rem;
+    font-size: 1.125rem;
+  }
+  .legal h4 {
+    margin-top: 1.25rem;
+    font-size: 1rem;
+  }
+  .legal p,
+  .legal li {
+    margin-top: 0.875rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .legal ul {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .legal .legal-ol {
+    padding-left: 1.25rem;
+    list-style: decimal;
+  }
+  .legal strong {
+    color: var(--navy);
+  }
+  .legal .caps {
+    font-size: 0.9375rem;
+  }
+  .legal .table-wrap {
+    margin-top: 1.25rem;
+    overflow-x: auto;
+  }
+  .legal table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+  .legal th,
+  .legal td {
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    color: var(--ink-2);
+    text-align: left;
+    vertical-align: top;
+  }
+  .legal th {
+    background: var(--paper);
+    color: var(--navy);
+  }
+  .legal .callout {
+    margin-top: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--blue-strong);
+    border-radius: 12px;
+    background: var(--paper);
+  }
+  .legal .callout-title {
+    margin-top: 0;
+    color: var(--navy);
+    font-weight: 700;
+  }
+</style>
+
+<script>
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a')];
+  const setActive = (id: string) =>
+    links.forEach((a) => a.setAttribute('aria-current', String(a.hash === `#${id}`)));
+  const seen = new IntersectionObserver(
+    (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+    { rootMargin: '0px 0px -70% 0px' },
+  );
+  document.querySelectorAll('.legal h2[id]').forEach((h) => seen.observe(h));
+</script>
