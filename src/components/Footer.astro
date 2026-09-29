@@ -6,21 +6,19 @@ import { loginHref, phone, telHref, email, legalName } from '../lib/site';
 
 const columns = [
   {
-    title: 'Calls',
+    title: 'Programs',
     links: [
-      { href: '/#final-expense', label: 'Final Expense' },
-      { href: '/#medicare', label: 'Medicare' },
-      { href: '/#platform', label: 'Platform' },
+      { href: '/pay-per-application', label: 'Pay Per Application' },
+      { href: '/pay-per-call', label: 'Pay Per Call' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { href: '/get-started', label: 'Get Started' },
-      { href: loginHref, label: 'Sign In' },
-      { href: '/pay-per-application', label: 'Pay Per Application' },
-      { href: '/pay-per-call', label: 'Pay Per Call' },
+      { href: '/platform', label: 'The Portal' },
       { href: '/faq', label: 'FAQ' },
+      { href: '/get-started', label: 'Get your rate' },
+      { href: loginHref, label: 'Client login' },
     ],
   },
   {
@@ -48,11 +46,7 @@ const columns = [
           />
         </a>
         <p class="max-w-[40ch] text-[0.9375rem]">
-          <strong class="text-white">Final Expense &amp; Medicare Calls</strong>
-          <br />
-          Calls for licensed agents.
-          <br />
-          Technology for the conversations that follow.
+          Live, pre-qualified Final Expense and Medicare calls for licensed agencies.
         </p>
       </div>
       <a href="/get-started" class="btn btn-light" data-cta="footer">
