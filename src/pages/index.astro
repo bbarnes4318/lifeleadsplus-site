@@ -8,72 +8,36 @@ import Flow from '../components/Flow.astro';
 import BrowserFrame from '../components/BrowserFrame.astro';
 import CheckList from '../components/CheckList.astro';
 import SectionHead from '../components/SectionHead.astro';
-import QualificationSection from '../components/QualificationSection.astro';
-import PricingSection from '../components/PricingSection.astro';
-import ClosedLoopSection from '../components/ClosedLoopSection.astro';
-import FaqStrip from '../components/FaqStrip.astro';
 import { features } from '../lib/features';
-import { pick } from '../lib/faqs';
-import { siteUrl } from '../lib/site';
+import { loginHref, siteUrl } from '../lib/site';
 
-const steps = [
+const platformSteps = [
   {
-    title: 'Apply',
-    icon: 'file-pen-line',
-    body: 'Tell us your licensed states, how many agents you have and how many calls you want a day.',
-  },
-  {
-    title: 'Set up',
-    icon: 'sliders-horizontal',
-    body: 'Sign your agreement, fund your prepaid balance and set your states, hours and daily cap.',
-  },
-  {
-    title: 'Take calls',
+    title: 'Answer the call',
     icon: 'headset',
-    body: 'Qualified callers transfer live to your agents, in the portal or on your own number.',
+    body: 'Your agent works the conversation through the platform.',
   },
   {
-    title: 'Track everything',
-    icon: 'file-text',
-    body: 'Every call, recording, application and dollar in one login.',
+    title: 'See the customer',
+    icon: 'user',
+    body: 'Customer information is available alongside the interaction.',
+  },
+  {
+    title: 'Record the outcome',
+    icon: 'clipboard-check',
+    body: 'Dispositions and notes give your team a record of what happened.',
+  },
+  {
+    title: 'Keep working it',
+    icon: 'calendar-clock',
+    body: 'Follow-up and activity stay connected to the customer.',
+  },
+  {
+    title: 'See the activity',
+    icon: 'eye',
+    body: 'Agencies can maintain visibility into what their agents are doing.',
   },
 ] as const;
-
-const trust = [
-  ['user-check', 'Qualified before transfer'],
-  ['map-pin', 'Only your licensed states'],
-  ['headset', 'Every call recorded'],
-  ['wallet', 'Starts at $25 per call'],
-] as const;
-
-const controls = [
-  ['states', 'map-pin', 'Your states', 'Only callers in states where your agents are licensed.'],
-  ['hours', 'clock', 'Your hours', 'Calls only arrive while your agents are working.'],
-  [
-    'cap',
-    'gauge',
-    'Your daily cap',
-    'Set exactly how many calls you want a day. Change it anytime.',
-  ],
-  [
-    'rec',
-    'headphones',
-    'Every call recorded',
-    'Hear exactly what your agent said, and what the caller said.',
-  ],
-  ['balance', 'wallet', 'Prepaid balance', 'You fund it, you control it. No surprise invoices.'],
-  [
-    'statements',
-    'file-text',
-    'Monthly statements',
-    'A clean statement for every month, ready for your accountant.',
-  ],
-] as const;
-const states = ['TX', 'FL', 'GA', 'NC', 'OH', 'TN', 'PA', 'AZ', 'MI', 'IN'];
-// Deterministic "waveform": 40 bar heights between 20% and 100%.
-const wave = Array.from({ length: 40 }, (_, i) =>
-  Math.round(20 + 80 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.45))),
-);
 
 const showcase = ['agents', 'applications', 'customers', 'statements'].map((id) =>
   features.find((f) => f.id === id)!,
@@ -89,41 +53,45 @@ const jsonLd = {
 ---
 
 <Base
-  title="Live Final Expense and Medicare Calls | Life Leads Plus"
-  description="Live Final Expense and Medicare calls transferred to your licensed agents. Pay per submitted application from $199 or pay per call from $25, with every call, recording and dollar in your own portal."
+  title="Final Expense and Medicare Calls for Licensed Agents | Life Leads Plus"
+  description="Final Expense and Medicare calls for licensed agents and agencies, with the platform to receive, work and track every conversation. No offshore call center. No buying blind."
   jsonLd={jsonLd}
 >
   <section class="hero">
     <div class="container hero-grid">
       <div>
-        <p class="eyebrow">Final Expense · Medicare</p>
-        <!-- No whitespace inside the span: a trailing space would widen it past "way". -->
-        <!-- prettier-ignore -->
-        <h1 class="mt-4">
-          Live insurance calls, <span class="underline-stroke">priced the way<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span><br class="hidden lg:inline" /> your agency sells.
-        </h1>
-        <p class="lead mt-6">
-          Callers transferred live to your licensed agents. Pay per submitted application or pay per
-          call — and see every call, recording and dollar in your own portal.
+        <p class="eyebrow">Life Leads Plus</p>
+        <h1 class="mt-4">You’ve paid for enough bad calls.</h1>
+        <p class="lead text-navy mt-6 font-semibold">Insurance calls should be worth answering.</p>
+        <p class="lead mt-4">
+          Life Leads Plus gives licensed agents and agencies access to{' '}
+          <strong>Final Expense and Medicare calls</strong> through a platform built to make the
+          entire process more transparent — from the moment the call reaches your agent to what
+          happens after they hang up.
         </p>
+        <ul class="nos">
+          <li>
+            <Icon name="x" size={18} />
+            No offshore call center.
+          </li>
+          <li>
+            <Icon name="x" size={18} />
+            No mystery behind the conversation.
+          </li>
+          <li>
+            <Icon name="x" size={18} />
+            No buying blind.
+          </li>
+        </ul>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/get-started" class="btn btn-primary" data-cta="hero">
-            Get your rate
+            Get Started
             <Icon name="arrow-right" size={18} />
           </a>
-          <a href="#how-title" class="btn btn-secondary">
-            {' '}
-            See how it works{' '}
+          <a href={loginHref} class="btn btn-secondary">
+            Sign In
           </a>
         </div>
-        <ul class="trust">
-          {trust.map(([icon, text]) => (
-            <li>
-              <Icon name={icon} size={18} />
-              {text}
-            </li>
-          ))}
-        </ul>
       </div>
       <Frame
         shot="agents-floor"
@@ -134,49 +102,192 @@ const jsonLd = {
     </div>
   </section>
 
-  <QualificationSection />
+  <section class="section bg-paper" aria-labelledby="trust-title">
+    <div class="container narrow" data-reveal>
+      <h2 id="trust-title">The insurance call business has a trust problem.</h2>
+      <p class="lead mt-6">Agents know what it feels like.</p>
+      <ul class="beats mt-6">
+        <li>You pay for a “live transfer.”</li>
+        <li>Someone comes on the line.</li>
+        <li>The consumer isn’t who you expected.</li>
+        <li>The conversation isn’t what you were promised.</li>
+        <li>The caller is somewhere halfway around the world.</li>
+        <li>Or the call has already been worked by someone else.</li>
+        <li class="strong">And you’re still paying for it.</li>
+      </ul>
+      <p class="lead text-navy mt-6 font-semibold">That’s not how we want to do business.</p>
+    </div>
+  </section>
 
-  <ClosedLoopSection />
-
-  <PricingSection />
-
-  <section class="section" aria-labelledby="how-title">
-    <div class="container">
+  <section class="section" aria-labelledby="better-title">
+    <div class="container narrow">
       <SectionHead
-        eyebrow="How it works"
-        title="From application to live calls."
-        lead="No dialer to buy and no leads to chase. This is the whole process."
-        id="how-title"
+        eyebrow="A better way to buy calls"
+        title="Know what you’re buying. Know who you’re talking to."
+        id="better-title"
       />
-      <div class="mt-12">
-        <Flow items={[...steps]} />
+      <div class="copy mt-6" data-reveal>
+        <p>
+          Life Leads Plus was built for licensed insurance professionals who are tired of treating
+          every call purchase like a gamble.
+        </p>
+        <p>
+          We provide <strong>Final Expense and Medicare calls</strong> through a U.S.-focused
+          operation and give the agent the technology to receive, work, and track those
+          conversations.
+        </p>
+        <p>The goal isn’t to sell you the most calls possible.</p>
+        <p>It’s to give you a better experience with the calls you actually buy.</p>
       </div>
     </div>
   </section>
 
-  <section class="section navy" aria-labelledby="portal-title">
-    <div class="container">
-      <div class="flex flex-wrap items-end justify-between gap-6">
-        <SectionHead
-          eyebrow="The portal"
-          title="See every call, agent and dollar."
-          lead="One login shows you exactly what you’re paying for and what it’s producing."
-          id="portal-title"
-        />
-        <div class="segmented" role="tablist" aria-label="Portal features" data-tabs>
-          {showcase.map((f, i) => (
-            <button
-              type="button"
-              role="tab"
-              id={`stab-${f.id}`}
-              aria-controls={`spanel-${f.id}`}
-              aria-selected={i === 0 ? 'true' : 'false'}
-              tabindex={i === 0 ? 0 : -1}
-            >
-              {f.tab}
-            </button>
-          ))}
+  <section class="section navy" aria-labelledby="offshore-title">
+    <div class="container narrow">
+      <SectionHead
+        eyebrow="Not an offshore transfer center."
+        title="We’re on this side of the conversation."
+        id="offshore-title"
+      />
+      <div class="copy mt-6" data-reveal>
+        <p>
+          Your customer isn’t handed off to an overseas call center and passed around until somebody
+          takes the transfer.
+        </p>
+        <p>
+          Life Leads Plus is built around getting insurance conversations into the hands of{' '}
+          <strong>licensed agents</strong>.
+        </p>
+        <p>That distinction matters.</p>
+        <p>Because when you’re paying for a call, you should know what you’re paying for.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-paper" aria-label="Final Expense and Medicare">
+    <div class="container grid gap-6 lg:grid-cols-2" data-reveal-group>
+      <article id="final-expense" class="card card-pad vertical" data-reveal>
+        <IconBadge name="shield-heart" />
+        <p class="eyebrow mt-5">Final Expense</p>
+        <h2 class="mt-3 text-[1.75rem]">
+          Put real conversations in front of your Final Expense agents.
+        </h2>
+        <div class="copy mt-5">
+          <p>Final Expense remains a phone business.</p>
+          <p>
+            Your agents need people to talk to — not another spreadsheet, another recycled lead, or
+            another transfer that falls apart the moment they answer.
+          </p>
+          <p>
+            Life Leads Plus delivers Final Expense calls through a system designed around the agent
+            experience.
+          </p>
+          <p>
+            Your agents answer. They have the conversation. They work the opportunity. And the
+            activity stays connected to the customer.
+          </p>
         </div>
+        <div class="mt-auto pt-8">
+          <a href="/get-started" class="btn btn-primary" data-cta="final_expense">
+            Get Final Expense Calls
+            <Icon name="arrow-right" size={18} />
+          </a>
+        </div>
+      </article>
+      <article id="medicare" class="card card-pad vertical" data-reveal>
+        <IconBadge name="heart-pulse" />
+        <p class="eyebrow mt-5">Medicare</p>
+        <h2 class="mt-3 text-[1.75rem]">
+          Give your Medicare agents conversations they can actually work.
+        </h2>
+        <div class="copy mt-5">
+          <p>
+            Medicare is too important for your agents to spend their day sorting through
+            questionable leads and bad transfers.
+          </p>
+          <p>
+            Life Leads Plus provides Medicare calls to licensed agents and gives them the platform
+            to manage the conversation and everything that follows.
+          </p>
+        </div>
+        <div class="mt-auto pt-8">
+          <a href="/get-started" class="btn btn-primary" data-cta="medicare">
+            Get Medicare Calls
+            <Icon name="arrow-right" size={18} />
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="difference-title">
+    <div class="container two-col">
+      <div>
+        <SectionHead
+          eyebrow="The Life Leads Plus difference"
+          title="We’re not trying to hide the call from you."
+          id="difference-title"
+        />
+        <ul class="beats mt-6" data-reveal>
+          <li>You should be able to understand what you’re buying.</li>
+          <li>You should know where the conversation came from.</li>
+          <li>You should know what happened when your agent answered.</li>
+          <li>And your organization should have a record of the activity.</li>
+        </ul>
+        <p class="lead mt-6">
+          That’s why the call and the technology around the call live in the same system.
+        </p>
+      </div>
+      <div>
+        <SectionHead
+          eyebrow="Your call. Your agent. Your customer."
+          title="The relationship shouldn’t disappear after the transfer."
+        />
+        <div class="copy mt-6" data-reveal>
+          <p>This is where Life Leads Plus is different.</p>
+          <p>
+            When an agent receives a call, the conversation becomes part of your team’s workflow —
+            not a disposable transaction that disappears the second the transfer connects.
+          </p>
+        </div>
+        <ul class="tags mt-6" data-reveal>
+          <li>Customer information</li>
+          <li>Call activity</li>
+          <li>Dispositions</li>
+          <li>Notes</li>
+          <li>Follow-up</li>
+          <li>Recordings where applicable</li>
+        </ul>
+        <p class="lead mt-6">The pieces surrounding the conversation stay together.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="platform" class="section navy" aria-labelledby="platform-title">
+    <div class="container">
+      <SectionHead
+        eyebrow="And then there’s the platform."
+        title="Because the call is only the beginning."
+        lead="Life Leads Plus includes the technology your agents use to work the calls. They don’t need to bounce between a transfer provider, a separate dialer, a CRM, spreadsheets, and whatever else they’ve accumulated over the years. They can work the conversation inside the Life Leads Plus environment."
+        id="platform-title"
+      />
+      <div class="mt-12">
+        <Flow items={[...platformSteps]} dark />
+      </div>
+
+      <div class="segmented mt-16" role="tablist" aria-label="Portal features" data-tabs>
+        {showcase.map((f, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`stab-${f.id}`}
+            aria-controls={`spanel-${f.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            {f.tab}
+          </button>
+        ))}
       </div>
       {showcase.map((f, i) => (
         <div
@@ -191,7 +302,7 @@ const jsonLd = {
             <h3 class="text-[1.625rem]">{f.title}</h3>
             <CheckList items={f.bullets} dark class="mt-5" />
             <a href="/platform" class="link-arrow mt-8">
-              See the portal
+              See the platform
               <Icon name="arrow-right" size={18} />
             </a>
           </div>
@@ -200,100 +311,119 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="section" aria-labelledby="control-title">
-    <div class="container">
-      <SectionHead
-        eyebrow="Your controls"
-        title="You set the rules. We deliver inside them."
-        lead="Calls only come from your states, only during your hours, and never past your daily cap."
-        id="control-title"
-      />
-      <ul class="bento mt-12" data-reveal-group>
-        {controls.map(([kind, icon, title, body]) => (
-          <li class={`card card-interactive tile tile-${kind}`} data-reveal>
-            <div class="tile-visual" aria-hidden="true">
-              {kind === 'states' && (
-                <div class="chips">
-                  {states.map((s, i) => (
-                    <span class:list={['chip', { on: i < 6 }]}>{s}</span>
-                  ))}
-                </div>
-              )}
-              {kind === 'hours' && (
-                <div class="hours">
-                  <div class="hours-bar">
-                    <span class="hours-window" />
-                  </div>
-                  <div class="hours-ticks">
-                    <span>12a</span>
-                    <span>6a</span>
-                    <span>12p</span>
-                    <span>6p</span>
-                  </div>
-                </div>
-              )}
-              {kind === 'cap' && (
-                <div class="stepper">
-                  <span class="stepper-btn">
-                    <Icon name="minus" size={16} />
-                  </span>
-                  <span class="stepper-value">Daily cap: 40</span>
-                  <span class="stepper-btn">
-                    <Icon name="plus" size={16} />
-                  </span>
-                </div>
-              )}
-              {kind === 'rec' && (
-                <div class="rec">
-                  <span class="rec-play">
-                    <Icon name="play" size={14} />
-                  </span>
-                  <span class="wave">
-                    {wave.map((h) => (
-                      <span style={`height:${h}%`} />
-                    ))}
-                  </span>
-                </div>
-              )}
-              {kind === 'balance' && (
-                <div class="meter">
-                  <span class="meter-label">Balance</span>
-                  <span class="meter-bar">
-                    <span />
-                  </span>
-                </div>
-              )}
-              {kind === 'statements' && (
-                <div class="docs">
-                  {['Aug 2026', 'Jul 2026', 'Jun 2026'].map((m) => (
-                    <span class="doc">
-                      <Icon name="file-text" size={14} />
-                      {m} · PDF
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div class="mt-6 flex items-center gap-3">
-              <IconBadge name={icon} />
-              <h3 class="text-[1.1875rem]">{title}</h3>
-            </div>
-            <p class="text-ink-2 mt-3">{body}</p>
+  <section class="section" aria-labelledby="blind-title">
+    <div class="container two-col">
+      <div>
+        <SectionHead
+          eyebrow="Stop buying blind."
+          title="Start building an insurance sales operation you can actually see."
+          id="blind-title"
+        />
+        <p class="lead mt-6">
+          Life Leads Plus gives agencies something they don’t get from a disconnected transfer
+          marketplace: <strong class="text-navy">visibility.</strong>
+        </p>
+        <ul class="beats mt-6" data-reveal>
+          <li>You can see the calls.</li>
+          <li>You can see the activity.</li>
+          <li>You can see what your agents are doing with the opportunities you’re paying for.</li>
+          <li>And your agents have one place to work them.</li>
+        </ul>
+      </div>
+      <div>
+        <SectionHead
+          eyebrow="The economics matter."
+          title="Your agents shouldn’t have to gamble on every call."
+        />
+        <p class="lead mt-6">
+          Whether you’re buying on a <strong>CPA or CPL basis</strong>, the economics only work when
+          the underlying opportunity is worth working.
+        </p>
+        <ul class="beats mt-6" data-reveal>
+          <li>That means the quality of the conversation matters.</li>
+          <li>The experience of the agent matters.</li>
+          <li>The ability to track what happened matters.</li>
+          <li>
+            And ultimately, the relationship between the call provider and the agency matters.
           </li>
-        ))}
-      </ul>
+        </ul>
+        <p class="lead text-navy mt-6 font-semibold">Life Leads Plus is built around all four.</p>
+      </div>
     </div>
   </section>
 
-  <FaqStrip
-    items={pick(
-      'How are Final Expense callers qualified?',
-      'Who else handles my calls?',
-      'How much does it cost?',
-    )}
-  />
+  <section class="section bg-paper" aria-label="For agencies and agents">
+    <div class="container grid gap-6 lg:grid-cols-2" data-reveal-group>
+      <article class="card card-pad" data-reveal>
+        <IconBadge name="users" />
+        <p class="eyebrow mt-5">For agencies</p>
+        <h2 class="mt-3 text-[1.75rem]">
+          If you’re putting money behind your agents, you should know what you’re buying.
+        </h2>
+        <div class="copy mt-5">
+          <p>
+            Life Leads Plus gives agencies a centralized environment for their agents to receive and
+            work Final Expense and Medicare calls.
+          </p>
+          <p>
+            Your agents get the calls. Your organization gets the platform. And everyone works from
+            the same record of what happened.
+          </p>
+        </div>
+      </article>
+      <article class="card card-pad" data-reveal>
+        <IconBadge name="user-check" />
+        <p class="eyebrow mt-5">For agents</p>
+        <h2 class="mt-3 text-[1.75rem]">You became an insurance agent to sell insurance.</h2>
+        <div class="copy mt-5">
+          <p>
+            Not to spend your day fighting bad transfers. Not to argue about whether a call was
+            legitimate. Not to chase down information that should have been available in the first
+            place.
+          </p>
+          <p>
+            And definitely not to wonder what happened to the customer after the call disappeared
+            into somebody else’s system.
+          </p>
+        </div>
+        <CheckList
+          class="mt-5"
+          items={[
+            'Get calls you can work.',
+            'Use a platform you can see.',
+            'Know what happened next.',
+          ]}
+        />
+      </article>
+    </div>
+  </section>
 
-  <CtaBand />
+  <section class="section" aria-labelledby="bottom-title">
+    <div class="container narrow">
+      <SectionHead
+        eyebrow="The bottom line"
+        title="Better calls start with a better way of doing business."
+        lead="Life Leads Plus provides Final Expense and Medicare calls to licensed insurance professionals — without building the business around offshore transfers and opaque call practices."
+        id="bottom-title"
+      />
+      <ul class="beats mt-6" data-reveal>
+        <li>The calls matter.</li>
+        <li>The agent matters.</li>
+        <li>The customer matters.</li>
+        <li>And the agency paying for the opportunity matters.</li>
+      </ul>
+      <p class="lead text-navy mt-6 font-semibold">That’s the standard.</p>
+    </div>
+  </section>
+
+  <CtaBand
+    bg="paper"
+    eyebrow="Ready to see the difference?"
+    title="Give your agents something better to answer."
+    lead="Final Expense and Medicare calls for licensed insurance professionals."
+    cta="Get Started"
+    signIn
+  />
 </Base>
 
 <style>
@@ -309,240 +439,86 @@ const jsonLd = {
     .hero-grid {
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     }
-    /* Fit "Live insurance calls," on one line of the narrower 5fr column. */
-    .hero h1 {
-      font-size: clamp(2.5rem, 3.4vw, 3.125rem);
-    }
   }
-  /* A little more line-height than other headings, so the underline has room between the
-     descenders above it and the ascenders of the next line. */
-  .hero h1 {
-    line-height: 1.1;
-  }
-  .underline-stroke {
-    position: relative;
-    white-space: nowrap;
-  }
-  /* The span's box ends at the font's descent (baseline + 0.217em in Plus Jakarta Sans), but the
-     "p" and "y" ink reaches baseline + 0.233em. The SVG starts at baseline + 0.107em + 1px, so the
-     curve's low ends (under "p" and "y") run about 0.32em below the baseline, clear of both
-     descenders, and its middle arch (about 0.18em below) stays above the next line's ascenders.
-     It is inset 0.05em each side to stay within the ink of "priced the way". Pixel-tested at 360,
-     390, 768, 1024 and 1440px. */
-  .underline-stroke svg {
-    position: absolute;
-    left: 0.05em;
-    top: calc(100% - 0.11em + 1px);
-    width: calc(100% - 0.1em);
-    height: 0.3em;
-    overflow: visible;
-  }
-  .trust {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.625rem 1.5rem;
-    margin-top: 1.75rem;
-    color: var(--ink-2);
-    font-size: 0.9375rem;
-    font-weight: 550;
-  }
-  .trust li {
-    display: inline-flex;
-    align-items: center;
+  .nos {
+    display: grid;
     gap: 0.5rem;
-  }
-  .trust :global(svg) {
-    color: var(--blue-strong);
-  }
-
-  .bento {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.25rem;
-  }
-  @media (min-width: 640px) {
-    .bento {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-  @media (min-width: 1024px) {
-    .bento {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
-    /* 1 and 4 span two columns; 6 too, so the last row has no hole. */
-    .tile:nth-child(1),
-    .tile:nth-child(4),
-    .tile:nth-child(6) {
-      grid-column: span 2;
-    }
-  }
-  .tile {
-    padding: 1.5rem;
-  }
-  @media (min-width: 1024px) {
-    .tile {
-      padding: 2rem;
-    }
-  }
-  .tile-visual {
-    display: flex;
-    align-items: center;
-    min-height: 140px;
-    padding: 1.5rem;
-    border-radius: 12px;
-    background: var(--grad-panel);
-    border: 1px solid var(--rule);
-  }
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  .chip {
-    padding: 0.375rem 0.875rem;
-    border-radius: 999px;
-    border: 1px solid var(--blue-strong);
-    background: #fff;
-    color: var(--blue-strong);
-    font-size: 0.875rem;
-    font-weight: 700;
-  }
-  .chip.on {
-    background: var(--navy);
-    border-color: var(--navy);
-    color: #fff;
-  }
-  .hours {
-    width: 100%;
-  }
-  .hours-bar {
-    position: relative;
-    height: 16px;
-    border-radius: 999px;
-    background: #dbe3ee;
-  }
-  .hours-window {
-    position: absolute;
-    left: calc(9 / 24 * 100%);
-    width: calc(10 / 24 * 100%);
-    top: 0;
-    bottom: 0;
-    border-radius: 999px;
-    background: var(--blue-strong);
-  }
-  .hours-ticks {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin-top: 0.625rem;
-    color: var(--ink-3);
-    font-size: 0.8125rem;
-    font-weight: 600;
-  }
-  .stepper {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  .stepper-btn {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: 1px solid var(--rule);
-    background: #fff;
+    margin-top: 1.5rem;
     color: var(--navy);
-    box-shadow: var(--shadow-card);
-  }
-  .stepper-value {
-    min-width: 8.5rem;
-    text-align: center;
-    color: var(--navy);
-    font-size: 1.125rem;
-    font-weight: 750;
-    font-variant-numeric: tabular-nums;
-  }
-  .rec {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-  }
-  .rec-play {
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: 44px;
-    height: 44px;
-    border-radius: 999px;
-    background: var(--blue-strong);
-    color: #fff;
-  }
-  .wave {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    flex: 1;
-    height: 56px;
-    min-width: 0;
-    overflow: hidden;
-  }
-  .wave span {
-    flex: 1;
-    min-width: 2px;
-    border-radius: 2px;
-    background: var(--blue-strong);
-    opacity: 0.85;
-  }
-  .wave span:nth-child(n + 15) {
-    background: #b7c2d2;
-  }
-  .meter {
-    display: grid;
-    gap: 0.625rem;
-    width: 100%;
-  }
-  .meter-label {
-    color: var(--ink-3);
-    font-size: 0.875rem;
     font-weight: 650;
   }
-  .meter-bar {
-    height: 14px;
-    border-radius: 999px;
-    background: #dbe3ee;
-  }
-  .meter-bar span {
-    display: block;
-    width: 70%;
-    height: 100%;
-    border-radius: inherit;
-    background: var(--blue-strong);
-  }
-  .docs {
-    display: grid;
-    gap: 0.5rem;
-  }
-  .doc {
-    display: inline-flex;
+  .nos li {
+    display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.375rem 0.75rem;
-    border-radius: 8px;
-    border: 1px solid var(--rule);
-    background: #fff;
-    color: var(--navy);
-    font-size: 0.875rem;
-    font-weight: 600;
   }
-
+  .nos :global(svg) {
+    color: var(--red);
+  }
+  .narrow {
+    max-width: 52rem;
+  }
+  .two-col {
+    display: grid;
+    gap: 4rem;
+  }
+  @media (min-width: 1024px) {
+    .two-col {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+  .copy {
+    display: grid;
+    gap: 1rem;
+    font-size: 1.125rem;
+    color: var(--ink-2);
+  }
+  .navy .copy {
+    color: var(--on-navy);
+  }
+  .navy .copy strong {
+    color: #fff;
+  }
+  .card .copy {
+    font-size: 1rem;
+  }
+  .beats {
+    display: grid;
+    gap: 0.625rem;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--blue-strong);
+    color: var(--ink-2);
+    font-size: 1.125rem;
+  }
+  .beats .strong {
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .tags li {
+    padding: 0.375rem 0.875rem;
+    border-radius: 999px;
+    background: var(--blue-tint);
+    color: var(--blue-strong);
+    font-size: 0.9375rem;
+    font-weight: 650;
+  }
+  .vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    scroll-margin-top: 96px;
+  }
   .showcase-panel {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 2.5rem;
     align-items: center;
-    margin-top: 3rem;
+    margin-top: 2.5rem;
   }
   @media (min-width: 1024px) {
     .showcase-panel {

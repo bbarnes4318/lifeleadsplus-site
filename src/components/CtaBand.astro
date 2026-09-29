@@ -1,28 +1,38 @@
 ---
 import Icon from './Icon.astro';
-import { phone, telHref } from '../lib/site';
+import { loginHref, phone, telHref } from '../lib/site';
 
 interface Props {
   /** Background of the section around the panel; pick the one that differs from the section above. */
   bg?: 'white' | 'paper';
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  cta?: string;
+  /** Adds "Already have an account? Sign In" under the buttons. */
+  signIn?: boolean;
 }
-const { bg = 'white' } = Astro.props;
+const {
+  bg = 'white',
+  eyebrow = 'Next step',
+  title = 'Put live callers in front of your agents.',
+  lead = 'Tell us your states, agent count and volume. We’ll send your program, your rate and your agreement.',
+  cta = 'Get your rate',
+  signIn = false,
+} = Astro.props;
 ---
 
 <section class:list={['section', { 'bg-paper': bg === 'paper' }]} aria-labelledby="cta-title">
   <div class="container">
     <div class="cta-panel navy" data-reveal>
       <div class="section-head">
-        <p class="pill">Next step</p>
-        <h2 id="cta-title">Put live callers in front of your agents.</h2>
-        <p class="lead">
-          Tell us your states, agent count and volume. We’ll send your program, your rate and your
-          agreement.
-        </p>
+        <p class="pill">{eyebrow}</p>
+        <h2 id="cta-title">{title}</h2>
+        <p class="lead">{lead}</p>
       </div>
       <div class="cta-actions">
         <a href="/get-started" class="btn btn-light" data-cta="cta_band">
-          Get your rate
+          {cta}
           <Icon name="arrow-right" size={18} />
         </a>
         {phone && (
@@ -30,6 +40,14 @@ const { bg = 'white' } = Astro.props;
             <Icon name="phone" size={18} />
             Call {phone}
           </a>
+        )}
+        {signIn && (
+          <p class="text-[0.9375rem]">
+            Already have an account?{' '}
+            <a href={loginHref} class="font-semibold">
+              Sign In
+            </a>
+          </p>
         )}
       </div>
     </div>
