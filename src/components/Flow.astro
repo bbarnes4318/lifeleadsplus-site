@@ -3,7 +3,7 @@ import IconBadge from './IconBadge.astro';
 import type { IconName } from './Icon.astro';
 
 interface Props {
-  items: { title: string; body?: string; icon: IconName }[];
+  items: { title: string; body?: string; icon: IconName; price?: string }[];
   /** On a navy band. */
   dark?: boolean;
 }
@@ -23,6 +23,7 @@ const { items, dark = false } = Astro.props;
         <span class="sr-only">Step {i + 1}: </span>
         {item.title}
       </h3>
+      {item.price && <p class="flow-price">{item.price}</p>}
       {item.body && <p class="flow-body">{item.body}</p>}
     </li>
   ))}
@@ -57,6 +58,12 @@ const { items, dark = false } = Astro.props;
   }
   .flow-card {
     position: relative;
+  }
+  .flow-price {
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 750;
+    color: var(--navy);
   }
   .flow-top {
     display: flex;

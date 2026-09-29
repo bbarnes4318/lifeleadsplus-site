@@ -25,7 +25,7 @@ test('header nav links work', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
   const nav = page.getByRole('navigation', { name: 'Main' });
-  await nav.getByRole('link', { name: 'The Portal' }).click();
+  await nav.getByRole('link', { name: 'Live Portal' }).click();
   await expect(page).toHaveURL(/\/platform$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText('One portal');
   await expect(page.getByRole('link', { name: 'Client login' }).first()).toHaveAttribute(

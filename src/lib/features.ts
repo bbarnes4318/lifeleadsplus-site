@@ -2,9 +2,9 @@
 export const features = [
   {
     id: 'agents',
-    tab: 'Your agents',
+    tab: 'Live Agent Floor',
     shot: 'agents-floor',
-    title: 'Know who’s selling right now.',
+    title: 'See who’s ready, who’s on a call and who’s closing.',
     alt: 'Agent tiles showing who is ready and who is on a call, with calls, talk time, applications and closing percentage today',
     bullets: [
       'See who’s ready, who’s on a call and for how long',
@@ -14,9 +14,9 @@ export const features = [
   },
   {
     id: 'customers',
-    tab: 'Customers',
+    tab: 'Built-in Prospect CRM',
     shot: 'customers',
-    title: 'Follow up with every caller.',
+    title: 'Every caller tracked. Every follow-up scheduled.',
     alt: 'An agent’s customer list with prospects, stages, follow-ups and states',
     bullets: [
       'A built-in CRM for every agent. No extra software.',
@@ -26,9 +26,9 @@ export const features = [
   },
   {
     id: 'applications',
-    tab: 'Applications',
+    tab: 'Application Audit Log',
     shot: 'applications',
-    title: 'Every sale, tied to the call that made it.',
+    title: 'Every application tied to its call and its recording.',
     alt: 'Applications page listing carrier, plan, face amount, premium and agent for each application',
     bullets: [
       'Carrier, face amount and premium on every application',
@@ -38,9 +38,9 @@ export const features = [
   },
   {
     id: 'statements',
-    tab: 'Statements',
+    tab: 'Financial Transparency',
     shot: 'statements',
-    title: 'Know exactly where your money went.',
+    title: 'Every dollar accounted for.',
     alt: 'Statements panel with a PDF and CSV download for each month',
     bullets: [
       'Your prepaid balance and every charge against it',

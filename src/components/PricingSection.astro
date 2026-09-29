@@ -23,9 +23,9 @@ const cards = [
 >
   <div class="container">
     <SectionHead
-      eyebrow="Pricing"
-      title="Pay per application or pay per call."
-      lead="Pay per application: you’re charged only when an agent submits one. Pay per call: calls that end inside your buffer are free. Both are prepaid, with no surprise invoices."
+      eyebrow="Transparent pricing"
+      title="Choose the pay structure built for your floor."
+      lead="Scale with no surprise invoices. Both programs are prepaid: you pay per submitted application, or per call that clears your buffer."
       id="pricing-title"
     />
     <div class="mt-12 grid gap-6 lg:grid-cols-2" data-reveal-group>
@@ -67,7 +67,7 @@ const cards = [
           <CheckList items={c.bullets} class="mt-6" />
           <div class="plan-actions">
             <a href={c.apply} class="btn btn-primary" data-cta="pricing_card">
-              Get your {c.name.toLowerCase()} rate
+              {c.cta}
               <Icon name="arrow-right" size={18} />
             </a>
             <a href={c.href} class="btn btn-secondary">

@@ -2,6 +2,26 @@ export const CATEGORIES = ['Programs', 'Pricing', 'Qualification', 'Billing', 'P
 export type Category = (typeof CATEGORIES)[number];
 
 export const faqs: [string, string, Category][] = [
+  [
+    'How does pay per application work?',
+    'We send live transfers to your agents. Your agent takes the call, pitches, and submits the application. If they submit it, you’re charged your pay per application rate. If the call drops, the caller hangs up, or it ends without an application, you pay $0.',
+    'Programs',
+  ],
+  [
+    'How is an application verified?',
+    'Your agents log every application in the portal during the call. Each one is tied to its call and its recording, so you can check exactly what you’re charged for.',
+    'Programs',
+  ],
+  [
+    'What happens if a call ends quickly on pay per call?',
+    'Every pay per call agreement has a buffer time. Any call that ends before your buffer is free.',
+    'Programs',
+  ],
+  [
+    'Can I use this with my existing dialer or CRM?',
+    'Yes. Your agents can take calls in the portal with no extra software. On pay per call, we can also transfer calls to your own phones or dialer. Pay per application runs in the portal.',
+    'Programs',
+  ],
   ['What verticals do you offer?', 'Final Expense and Medicare.', 'Programs'],
   [
     'What’s the difference between pay per application and pay per call?',

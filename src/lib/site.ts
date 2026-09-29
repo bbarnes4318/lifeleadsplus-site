@@ -29,8 +29,8 @@ export const analyticsTools = [
 ].filter((t): t is string => !!t);
 
 export const nav = [
-  { href: '/pay-per-application', label: 'Pay Per Application' },
-  { href: '/pay-per-call', label: 'Pay Per Call' },
-  { href: '/platform', label: 'The Portal' },
+  { href: '/pay-per-application', label: 'Pay-Per-App (PPA)' },
+  { href: '/pay-per-call', label: 'Pay-Per-Call (PPC)' },
+  { href: '/platform', label: 'Live Portal' },
   { href: '/faq', label: 'FAQ' },
 ];

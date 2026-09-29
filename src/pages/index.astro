@@ -18,45 +18,64 @@ import { siteUrl } from '../lib/site';
 
 const steps = [
   {
-    title: 'Caller connects',
+    title: 'Live transfer connects',
     icon: 'phone-incoming',
-    body: '$0. A screened caller is transferred live to your agent.',
+    price: '$0.00',
+    body: 'A pre-screened caller is transferred live to your agent in the portal.',
   },
   {
-    title: 'Your agent talks',
+    title: 'Your agent pitches',
     icon: 'headset',
-    body: '$0. Take as long as the call needs.',
+    price: '$0.00',
+    body: 'Take as long as you need. No timer tricks, no per-minute penalties.',
   },
   {
-    title: 'No application?',
+    title: 'No sale? You pay zero.',
     icon: 'circle-help',
-    body: '$0. Not interested, not ready, hung up. You pay nothing.',
+    price: '$0.00',
+    body: 'Not interested, changed their mind, hung up? No application submitted means nothing to pay.',
   },
   {
     title: 'Application submitted',
     icon: 'clipboard-check',
-    body: 'From $199. The one thing you’re charged for.',
+    price: 'Starts at $199',
+    body: 'Only when your agent submits an application do you pay. You pay for production.',
   },
 ] as const;
 
 const trust = [
-  ['wallet', 'No application, no charge'],
-  ['user-check', 'Callers screened first'],
-  ['headset', 'Every call recorded'],
+  ['wallet', '$0 unless an application is submitted'],
+  ['user-check', '5-point live screening'],
+  ['headset', '100% of calls recorded'],
   ['map-pin', 'Only your licensed states'],
 ] as const;
 
 const controls = [
-  ['states', 'map-pin', 'Your states', 'Only callers in states where your agents are licensed.'],
-  ['hours', 'clock', 'Your hours', 'Calls only arrive while your agents are working.'],
-  ['cap', 'gauge', 'Your daily cap', 'Pick how many calls you want a day. Change it whenever.'],
+  [
+    'states',
+    'map-pin',
+    'Geographic precision',
+    'Target strictly the states where your agents are licensed.',
+  ],
+  ['hours', 'clock', 'Schedule locks', 'Calls only arrive while your team is logged in and ready.'],
+  [
+    'cap',
+    'gauge',
+    'Custom daily caps',
+    'Set your daily volume. Scale up or throttle down anytime.',
+  ],
   [
     'rec',
     'headphones',
-    'Every call recorded',
-    'Listen to what your agent said and what the caller said.',
+    '100% audio archives',
+    'Listen to full recordings of every call from your call log.',
   ],
-  ['balance', 'wallet', 'Prepaid balance', 'You fund it and you control it. No surprise invoices.'],
+  [
+    'balance',
+    'wallet',
+    'Real-time audit trail',
+    'Every charge tracked against your prepaid balance. No mystery billing.',
+  ],
   [
     'statements',
     'file-text',
@@ -84,31 +103,32 @@ const jsonLd = {
 ---
 
 <Base
-  title="Pay for Applications, Not Calls | Life Leads Plus"
-  description="Live Final Expense and Medicare calls sent straight to your agents. Pay per submitted application from $199, or pay per call from $25. No application, no charge."
+  title="Pay Only for Applications | Live Final Expense & Medicare Transfers | Life Leads Plus"
+  description="Stop buying dead calls. Pre-screened, live Final Expense and Medicare transfers sent straight to your agents. Pay $0 unless an application is submitted. PPA from $199."
   jsonLd={jsonLd}
 >
   <section class="hero">
     <div class="container hero-grid">
       <div>
-        <p class="eyebrow">Final Expense · Medicare</p>
+        <p class="eyebrow">Final Expense &amp; Medicare live transfers</p>
         <!-- No whitespace inside the span: a trailing space would widen it past "way". -->
         <!-- prettier-ignore -->
         <h1 class="mt-4">
-          Pay for applications,<br class="hidden lg:inline" /> <span class="underline-stroke">not the call<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span>.
+          Stop buying <span class="underline-stroke">dead calls<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span>.<br class="hidden lg:inline" /> Pay only when your agents submit applications.
         </h1>
         <p class="lead mt-6">
-          Live Final Expense and Medicare callers, sent straight to your agents. Your agent takes
-          the call and works the caller. If they don’t submit an application, you don’t pay.
+          Cut the bad leads and wasted dialer hours. We send pre-screened, live Final Expense and
+          Medicare callers straight to your floor. If your agent doesn’t submit an application, you
+          pay $0. Period.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/get-started" class="btn btn-primary" data-cta="hero">
-            Get your rate
+            Get Your Custom Rate
             <Icon name="arrow-right" size={18} />
           </a>
           <a href="#how-title" class="btn btn-secondary">
             {' '}
-            See how it works{' '}
+            See How PPA Works{' '}
           </a>
         </div>
         <ul class="trust">
@@ -132,9 +152,9 @@ const jsonLd = {
   <section class="section bg-paper" aria-labelledby="how-title">
     <div class="container">
       <SectionHead
-        eyebrow="What a call costs"
-        title="The call is free. The application is where you pay."
-        lead="Your agent gets the caller live and works the conversation. You’re charged only when they submit an application."
+        eyebrow="The zero-risk model"
+        title="How you get live transfers with zero risk."
+        lead="Most vendors charge you for the call. We charge you for the application."
         id="how-title"
       />
       <div class="mt-12">
@@ -152,9 +172,9 @@ const jsonLd = {
   <section class="section" aria-labelledby="control-title">
     <div class="container">
       <SectionHead
-        eyebrow="Your controls"
-        title="You set the rules."
-        lead="Your states. Your hours. Your daily cap. Calls never arrive outside them."
+        eyebrow="Total command"
+        title="You control the spigot."
+        lead="Set exact rules to keep your agency running at peak efficiency."
         id="control-title"
       />
       <ul class="bento mt-12" data-reveal-group>
@@ -239,8 +259,8 @@ const jsonLd = {
       <div class="flex flex-wrap items-end justify-between gap-6">
         <SectionHead
           eyebrow="The portal"
-          title="See every call, application and dollar."
-          lead="One login. Your agents, your calls, your applications, your spend."
+          title="Your whole sales floor in one system."
+          lead="Track floor status, listen to recordings, review applications and audit agent conversion, all from one dashboard."
           id="portal-title"
         />
         <div class="segmented" role="tablist" aria-label="Portal features" data-tabs>
@@ -282,9 +302,10 @@ const jsonLd = {
 
   <FaqStrip
     items={pick(
-      'How are Final Expense callers qualified?',
-      'Who else handles my calls?',
-      'How much does it cost?',
+      'How does pay per application work?',
+      'How is an application verified?',
+      'What happens if a call ends quickly on pay per call?',
+      'Can I use this with my existing dialer or CRM?',
     )}
   />
 
@@ -312,7 +333,7 @@ const jsonLd = {
   /* A little more line-height than other headings, so the underline has room between the
      descenders above it and the ascenders of the next line. */
   .hero h1 {
-    line-height: 1.1;
+    line-height: 1.2;
   }
   .underline-stroke {
     position: relative;

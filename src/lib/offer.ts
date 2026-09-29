@@ -5,24 +5,24 @@ export const qualifications = {
     icon: 'shield-check',
     items: [
       {
-        title: 'Interested in final expense',
-        body: 'Confirmed interested in final expense coverage before transfer.',
+        title: 'Confirmed final expense interest',
+        body: 'Interest in final expense coverage is confirmed before transfer.',
+      },
+      {
+        title: 'Independent decision maker',
+        body: 'Confirms they don’t need a power of attorney to make financial decisions.',
       },
       {
         title: 'Not in a nursing home or assisted living',
         body: 'Confirms they don’t live in a nursing home or assisted living facility.',
       },
       {
-        title: 'Makes their own financial decisions',
-        body: 'Confirms they don’t need a power of attorney to make financial decisions.',
-      },
-      {
         title: 'Age 40 to 85',
         body: 'Confirms they’re between 40 and 85.',
       },
       {
-        title: 'Agrees to speak with a licensed agent',
-        body: 'Agrees to talk with a licensed agent about their plan options.',
+        title: 'Ready to talk to a licensed agent',
+        body: 'Agrees to speak with a licensed agent about their plan options.',
       },
     ],
   },
@@ -31,11 +31,11 @@ export const qualifications = {
     icon: 'stethoscope',
     items: [
       {
-        title: 'Interested in Medicare',
-        body: 'Confirmed interested in Medicare plan options before transfer.',
+        title: 'Active Medicare interest',
+        body: 'Interest in Medicare plan options is confirmed before transfer.',
       },
       {
-        title: 'Has Medicare Parts A and B',
+        title: 'Parts A and B verified',
         body: 'Confirms they have Medicare Parts A and B.',
       },
       {
@@ -43,12 +43,12 @@ export const qualifications = {
         body: 'Confirms they don’t live in a nursing home or assisted living facility.',
       },
       {
-        title: 'Makes their own financial decisions',
+        title: 'Independent decision maker',
         body: 'Confirms they don’t need a power of attorney to make financial decisions.',
       },
       {
-        title: 'Agrees to speak with a licensed agent',
-        body: 'Agrees to talk with a licensed agent about their plan options.',
+        title: 'Ready to talk to a licensed agent',
+        body: 'Agrees to speak with a licensed agent about their plan options.',
       },
     ],
   },
@@ -56,7 +56,7 @@ export const qualifications = {
 
 export const pricing = {
   ppa: {
-    name: 'Pay per application',
+    name: 'Pay-Per-Application',
     href: '/pay-per-application',
     apply: '/get-started?program=ppa',
     unit: 'per submitted application',
@@ -64,16 +64,17 @@ export const pricing = {
       { vertical: 'Final Expense', from: 199 },
       { vertical: 'Medicare', from: 199 },
     ],
-    note: 'Your rate goes up or down with your agents’ conversion.',
+    note: 'Zero cost per call. You pay strictly on results, and your rate moves with your agents’ conversion.',
+    cta: 'Apply for Pay-Per-App',
     bullets: [
-      'No application, no charge',
-      'Agents take calls in their browser. No dialer to buy.',
-      'Every application linked to its call and recording',
+      '$0 if no application is submitted',
+      'Calls in the browser, included. No dialer to buy.',
+      'Every application tied to its call recording',
       'Prepaid balance. No surprise invoices.',
     ],
   },
   ppc: {
-    name: 'Pay per call',
+    name: 'Pay-Per-Call',
     href: '/pay-per-call',
     apply: '/get-started?program=ppc',
     unit: 'per billable call',
@@ -81,12 +82,13 @@ export const pricing = {
       { vertical: 'Final Expense', from: 25 },
       { vertical: 'Medicare', from: 25 },
     ],
-    note: 'Your final price depends on your filters: states, ages and buffer time.',
+    note: 'Predictable volume with buffer protection. Your final price depends on your filters: states, ages and buffer time.',
+    cta: 'Set Up Pay-Per-Call',
     bullets: [
       'Calls that end inside your buffer are free',
       'Take calls on your phones, your dialer or the portal',
-      'Every call recorded in your call log',
-      'Prepaid balance. No surprise invoices.',
+      'Filter by state, caller age and hours',
+      'Every call in your log with its length, recording and billable status',
     ],
   },
 } as const;

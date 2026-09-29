@@ -2,8 +2,15 @@
 import SectionHead from './SectionHead.astro';
 import IconBadge from './IconBadge.astro';
 
-const usual = ['Call center', 'Lead network', 'Dialer vendor', 'CRM vendor', 'Your agent'];
-const ours = ['Caller', 'One closed system', 'Your agent'];
+const usual = [
+  'Clickbait ads',
+  'Affiliate network',
+  'Lead broker',
+  'Dialer vendor',
+  'Offshore call center',
+  'Your agent',
+];
+const ours = ['Targeted prospect', '5-point screening', 'Your agent'];
 const cards = [
   [
     'shield-check',
@@ -31,23 +38,21 @@ const cards = [
 <section class="section navy" aria-labelledby="closed-title">
   <div class="container">
     <SectionHead
-      eyebrow="One closed system"
-      title="No middlemen between the caller and your agent."
-      lead="Most vendors pass your caller through other companies’ phone lines, dialers, CRMs and call centers. Every handoff is another company with your callers and your data. We run it in one system, from the first ring to your agent’s screen."
+      eyebrow="Closed-loop engine"
+      title="No middlemen. No brokered leads. Total control."
+      lead="A lot of vendors buy calls from brokers, who bought them from affiliate networks, who generated them with clickbait ads. We run the whole chain in one system, from the first ring to your agent’s screen."
       id="closed-title"
     />
 
     <div class="compare mt-12" data-reveal>
       <div class="panel">
-        <p class="panel-label">The usual chain</p>
+        <p class="panel-label">The broken vendor chain</p>
         <ol class="chain">
           {usual.map((c) => (
             <li>{c}</li>
           ))}
         </ol>
-        <p class="panel-caption">
-          Every link is another company with access to your callers and data.
-        </p>
+        <p class="panel-caption">Low intent. High drop-off. Nobody accountable.</p>
       </div>
       <div class="panel ours">
         <p class="panel-label">Life Leads Plus</p>
@@ -57,7 +62,7 @@ const cards = [
           ))}
         </ol>
         <p class="panel-caption">
-          Screening, routing, transfer, recording and your portal, all in one place.
+          Screening, transfer, recording and your portal in one place, with a full audio trail.
         </p>
       </div>
     </div>

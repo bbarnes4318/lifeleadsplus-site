@@ -4,18 +4,18 @@ import { pages } from './pages';
 
 const QUAL = {
   'Final Expense': [
-    'Interested in final expense',
+    'Confirmed final expense interest',
+    'Independent decision maker',
     'Not in a nursing home or assisted living',
-    'Makes their own financial decisions',
     'Age 40 to 85',
-    'Agrees to speak with a licensed agent',
+    'Ready to talk to a licensed agent',
   ],
   Medicare: [
-    'Interested in Medicare',
-    'Has Medicare Parts A and B',
+    'Active Medicare interest',
+    'Parts A and B verified',
     'Not in a nursing home or assisted living',
-    'Makes their own financial decisions',
-    'Agrees to speak with a licensed agent',
+    'Independent decision maker',
+    'Ready to talk to a licensed agent',
   ],
 };
 
@@ -49,10 +49,10 @@ for (const path of ['/', '/pay-per-application', '/pay-per-call', '/get-started'
 
 test('home pay per call card shows what the price depends on', async ({ page }) => {
   await page.goto('/');
-  const card = page.getByRole('article', { name: 'Pay per call' });
+  const card = page.getByRole('article', { name: 'Pay-Per-Call' });
   await expect(card).toContainText('Price depends on:');
   await expect(card.locator('.depends-pills')).toHaveText('States · Ages · Buffer time');
-  await expect(page.getByRole('article', { name: 'Pay per application' })).not.toContainText(
+  await expect(page.getByRole('article', { name: 'Pay-Per-Application' })).not.toContainText(
     'Price depends on',
   );
 });
@@ -100,10 +100,10 @@ test('portal showcase tabs switch the screenshot', async ({ page }) => {
   const tabs = page.getByRole('tablist', { name: 'Portal features' });
   const visibleImg = () => page.locator('[role=tabpanel]:visible img').last();
   await expect(visibleImg()).toHaveAttribute('src', /agents-floor/);
-  await tabs.getByRole('tab', { name: 'Applications' }).click();
+  await tabs.getByRole('tab', { name: 'Application Audit Log' }).click();
   await expect(visibleImg()).toHaveAttribute('src', /applications/);
-  await tabs.getByRole('tab', { name: 'Applications' }).press('End');
-  await expect(tabs.getByRole('tab', { name: 'Statements' })).toBeFocused();
+  await tabs.getByRole('tab', { name: 'Application Audit Log' }).press('End');
+  await expect(tabs.getByRole('tab', { name: 'Financial Transparency' })).toBeFocused();
   await expect(visibleImg()).toHaveAttribute('src', /statements/);
 });
 
@@ -131,7 +131,7 @@ test('buffer slider readout flips at the marker', async ({ page }) => {
 test('FAQ filter hides and shows questions', async ({ page }) => {
   await page.goto('/faq');
   const questions = page.locator('details');
-  await expect(questions.filter({ visible: true })).toHaveCount(20);
+  await expect(questions.filter({ visible: true })).toHaveCount(24);
   await page.getByRole('button', { name: 'Billing' }).click();
   await expect(page.getByRole('button', { name: 'Billing' })).toHaveAttribute(
     'aria-pressed',
@@ -143,7 +143,7 @@ test('FAQ filter hides and shows questions', async ({ page }) => {
   await page.getByRole('button', { name: 'Pricing' }).click();
   await expect(questions.filter({ visible: true })).toHaveCount(4);
   await page.getByRole('button', { name: 'All' }).click();
-  await expect(questions.filter({ visible: true })).toHaveCount(20);
+  await expect(questions.filter({ visible: true })).toHaveCount(24);
 });
 
 // The full-frame captures show the owner sidebar and billing amounts; only the crops may ship.
@@ -265,7 +265,7 @@ test('hero H1 punctuation sits against its word', async ({ page }) => {
   const text = runs.join('');
   // No space or &nbsp; before the punctuation, and each mark in the same text node as its word.
   expect(text).not.toMatch(/\s[,.]/); // JS \s includes U+00A0 (&nbsp;)
-  expect(runs.some((t) => t.includes('applications,'))).toBe(true);
+  expect(runs.some((t) => t.includes('applications.'))).toBe(true);
   expect(runs.some((t) => t.trim() === '.')).toBe(true);
   // The tight-bearing comma/period font is what renders them.
   await page.evaluate(() => document.fonts.ready);
