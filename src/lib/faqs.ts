@@ -5,7 +5,7 @@ export const faqs: [string, string, Category][] = [
   ['What verticals do you offer?', 'Final Expense and Medicare.', 'Programs'],
   [
     'What’s the difference between pay per application and pay per call?',
-    'Pay per application charges for submitted applications your agents log in the portal. Pay per call charges for calls that pass the buffer on your agreement.',
+    'Pay per application charges you for each application your agents submit in the portal. Pay per call charges you for each call that lasts past the buffer in your agreement.',
     'Programs',
   ],
   [
@@ -15,7 +15,7 @@ export const faqs: [string, string, Category][] = [
   ],
   [
     'Can I choose my states and hours?',
-    'Yes. Calls only come from your licensed states, during your delivery hours, up to your daily cap.',
+    'Yes. Calls come only from your licensed states, during your delivery hours, up to your daily cap.',
     'Programs',
   ],
   [
@@ -25,52 +25,52 @@ export const faqs: [string, string, Category][] = [
   ],
   [
     'How much does it cost?',
-    'Pay per application starts at $199 per submitted application for Final Expense and Medicare, and your rate moves up or down with your agents’ conversion. Pay per call starts at $25 per billable call for Final Expense and Medicare, and your final price depends on your filters: states, ages and buffer time.',
+    'Pay per application starts at $199 per submitted application for Final Expense and Medicare, and your rate moves up or down with your agents’ conversion. Pay per call starts at $25 per billable call for both, and your final price depends on your states, caller ages and buffer time.',
     'Pricing',
   ],
   [
     'Why does my pay per application rate change?',
-    'Your rate follows your agents’ conversion. It starts at $199 per submitted application and moves up or down as conversion changes.',
+    'Your rate follows your agents’ conversion. It starts at $199 per submitted application and moves as their conversion changes.',
     'Pricing',
   ],
   [
     'What changes my pay per call price?',
-    'Pay per call starts at $25 per billable call for Final Expense and Medicare. Your final price depends on three filters: the states you want calls from, the caller ages you want, and your buffer time.',
+    'Pay per call starts at $25 per billable call for Final Expense and Medicare. Your final price depends on three filters: the states you want calls from, the caller ages you want and your buffer time.',
     'Pricing',
   ],
   [
     'Can I change my filters later?',
-    'Yes. Tell us the states, ages or buffer time you want and we’ll send your updated rate.',
+    'Yes. Tell us the states, ages or buffer time you want and we’ll send an updated rate.',
     'Pricing',
   ],
   [
     'How are Final Expense callers qualified?',
-    'Interest in final expense is established, and the caller answers yes to: not living in a nursing home or assisted living facility; not needing a power of attorney to make financial decisions; being between the ages of 40 and 85; and agreeing to speak with a licensed agent to learn plan options.',
+    'Each caller says they’re interested in final expense coverage. They also confirm they don’t live in a nursing home or assisted living facility, don’t need a power of attorney to make financial decisions, are between 40 and 85, and will talk with a licensed agent about plan options.',
     'Qualification',
   ],
   [
     'How are Medicare callers qualified?',
-    'Interest in Medicare is established, and the caller answers yes to: having Medicare Parts A and B; not living in a nursing home or assisted living facility; not needing a power of attorney to make financial decisions; and agreeing to speak with a licensed agent to learn plan options.',
+    'Each caller says they’re interested in Medicare plan options. They also confirm they have Medicare Parts A and B, don’t live in a nursing home or assisted living facility, don’t need a power of attorney to make financial decisions, and will talk with a licensed agent about plan options.',
     'Qualification',
   ],
   [
     'Are these live calls or leads?',
-    'Live calls. The caller is still on the line when they’re transferred to your agent. You never get a list to chase.',
+    'Live calls. The caller is still on the line when they’re transferred to your agent. There’s no list to chase.',
     'Qualification',
   ],
   [
     'Who else handles my calls?',
-    'No outside vendors sit between the caller and your agent. Qualification, routing, transfer, recording and your portal all run in one closed system.',
+    'No outside vendors sit between the caller and your agent. Screening, routing, transfer, recording and your portal all run in one closed system.',
     'Qualification',
   ],
   [
     'How do I pay?',
-    'Programs are prepaid. You fund a balance and calls or applications draw from it.',
+    'Programs are prepaid. You fund a balance, and calls or applications draw from it.',
     'Billing',
   ],
   [
     'What if a call doesn’t meet my agreement?',
-    'Request a return from your call log within 30 days of the call. Every request is reviewed and the decision shows in your portal.',
+    'Request a return from your call log within 30 days of the call. We review every request, and the decision shows in your portal.',
     'Billing',
   ],
   [
@@ -80,12 +80,12 @@ export const faqs: [string, string, Category][] = [
   ],
   [
     'Do I have to use the portal?',
-    'For pay per application, yes: your agents take calls and log applications there. For pay per call, you can take calls on your own phones or dialer and use the portal for your call log, recordings, spend and statements.',
+    'On pay per application, yes: your agents take calls and log applications there. On pay per call, you can take calls on your own phones or dialer and use the portal for your call log, recordings, spend and statements.',
     'Portal',
   ],
   [
     'Do I need a phone system or dialer?',
-    'No. Your agents can take calls in the portal in their browser. On pay per call, we can also transfer calls to your own phones or dialer.',
+    'No. Your agents can take calls in their browser through the portal. On pay per call, we can also transfer calls to your own phones or dialer.',
     'Portal',
   ],
   ['Can I listen to my calls?', 'Yes. Every call in your call log has its recording.', 'Portal'],

@@ -11,7 +11,7 @@ interface Props {
 }
 const { bg = 'paper' } = Astro.props;
 const cards = [
-  { id: 'ppa', icon: 'receipt', pill: 'Pay only when you write', ...pricing.ppa },
+  { id: 'ppa', icon: 'receipt', pill: 'No application, no charge', ...pricing.ppa },
   { id: 'ppc', icon: 'phone-forwarded', pill: 'Short calls are free', ...pricing.ppc },
 ] as const;
 ---
@@ -24,8 +24,8 @@ const cards = [
   <div class="container">
     <SectionHead
       eyebrow="Pricing"
-      title="Pay for sales, or pay for calls. Your call."
-      lead="Pay per application and you’re only charged when your agents write business. Pay per call and short calls cost you nothing. Both are prepaid, with no surprise invoices."
+      title="Pay per application or pay per call."
+      lead="Pay per application: you’re charged only when an agent submits one. Pay per call: calls that end inside your buffer are free. Both are prepaid, with no surprise invoices."
       id="pricing-title"
     />
     <div class="mt-12 grid gap-6 lg:grid-cols-2" data-reveal-group>
@@ -78,8 +78,8 @@ const cards = [
       ))}
     </div>
     <p class="text-ink-2 mt-8 text-[0.9375rem]">
-      Not sure which fits? Pick ‘Not sure yet’ on the <a href="/get-started">application</a> and
-      we’ll recommend the right one for your agency.
+      Not sure which fits? Choose ‘Not sure yet’ on the <a href="/get-started">application</a> and
+      we’ll recommend one.
     </p>
   </div>
 </section>

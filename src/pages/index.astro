@@ -18,50 +18,45 @@ import { siteUrl } from '../lib/site';
 
 const steps = [
   {
-    title: 'Apply',
-    icon: 'file-pen-line',
-    body: 'Tell us your licensed states, how many agents you have and how many calls you want a day.',
+    title: 'Caller connects',
+    icon: 'phone-incoming',
+    body: '$0. A screened caller is transferred live to your agent.',
   },
   {
-    title: 'Set up',
-    icon: 'sliders-horizontal',
-    body: 'Sign your agreement, fund your prepaid balance and set your states, hours and daily cap.',
-  },
-  {
-    title: 'Take calls',
+    title: 'Your agent talks',
     icon: 'headset',
-    body: 'Qualified callers transfer live to your agents, in the portal or on your own number.',
+    body: '$0. Take as long as the call needs.',
   },
   {
-    title: 'Track everything',
-    icon: 'file-text',
-    body: 'Every call, recording, application and dollar in one login.',
+    title: 'No application?',
+    icon: 'circle-help',
+    body: '$0. Not interested, not ready, hung up. You pay nothing.',
+  },
+  {
+    title: 'Application submitted',
+    icon: 'clipboard-check',
+    body: 'From $199. The one thing you’re charged for.',
   },
 ] as const;
 
 const trust = [
-  ['user-check', 'Qualified before transfer'],
-  ['map-pin', 'Only your licensed states'],
+  ['wallet', 'No application, no charge'],
+  ['user-check', 'Callers screened first'],
   ['headset', 'Every call recorded'],
-  ['wallet', 'Starts at $25 per call'],
+  ['map-pin', 'Only your licensed states'],
 ] as const;
 
 const controls = [
   ['states', 'map-pin', 'Your states', 'Only callers in states where your agents are licensed.'],
   ['hours', 'clock', 'Your hours', 'Calls only arrive while your agents are working.'],
-  [
-    'cap',
-    'gauge',
-    'Your daily cap',
-    'Set exactly how many calls you want a day. Change it anytime.',
-  ],
+  ['cap', 'gauge', 'Your daily cap', 'Pick how many calls you want a day. Change it whenever.'],
   [
     'rec',
     'headphones',
     'Every call recorded',
-    'Hear exactly what your agent said, and what the caller said.',
+    'Listen to what your agent said and what the caller said.',
   ],
-  ['balance', 'wallet', 'Prepaid balance', 'You fund it, you control it. No surprise invoices.'],
+  ['balance', 'wallet', 'Prepaid balance', 'You fund it and you control it. No surprise invoices.'],
   [
     'statements',
     'file-text',
@@ -89,8 +84,8 @@ const jsonLd = {
 ---
 
 <Base
-  title="Live Final Expense and Medicare Calls | Life Leads Plus"
-  description="Live Final Expense and Medicare calls transferred to your licensed agents. Pay per submitted application from $199 or pay per call from $25, with every call, recording and dollar in your own portal."
+  title="Pay for Applications, Not Calls | Life Leads Plus"
+  description="Live Final Expense and Medicare calls sent straight to your agents. Pay per submitted application from $199, or pay per call from $25. No application, no charge."
   jsonLd={jsonLd}
 >
   <section class="hero">
@@ -100,11 +95,11 @@ const jsonLd = {
         <!-- No whitespace inside the span: a trailing space would widen it past "way". -->
         <!-- prettier-ignore -->
         <h1 class="mt-4">
-          Live insurance calls, <span class="underline-stroke">priced the way<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span><br class="hidden lg:inline" /> your agency sells.
+          Pay for applications,<br class="hidden lg:inline" /> <span class="underline-stroke">not the call<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span>.
         </h1>
         <p class="lead mt-6">
-          Callers transferred live to your licensed agents. Pay per submitted application or pay per
-          call — and see every call, recording and dollar in your own portal.
+          Live Final Expense and Medicare callers, sent straight to your agents. Your agent takes
+          the call and works the caller. If they don’t submit an application, you don’t pay.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/get-started" class="btn btn-primary" data-cta="hero">
@@ -134,18 +129,12 @@ const jsonLd = {
     </div>
   </section>
 
-  <QualificationSection />
-
-  <ClosedLoopSection />
-
-  <PricingSection />
-
-  <section class="section" aria-labelledby="how-title">
+  <section class="section bg-paper" aria-labelledby="how-title">
     <div class="container">
       <SectionHead
-        eyebrow="How it works"
-        title="From application to live calls."
-        lead="No dialer to buy and no leads to chase. This is the whole process."
+        eyebrow="What a call costs"
+        title="The call is free. The application is where you pay."
+        lead="Your agent gets the caller live and works the conversation. You’re charged only when they submit an application."
         id="how-title"
       />
       <div class="mt-12">
@@ -154,58 +143,18 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="section navy" aria-labelledby="portal-title">
-    <div class="container">
-      <div class="flex flex-wrap items-end justify-between gap-6">
-        <SectionHead
-          eyebrow="The portal"
-          title="See every call, agent and dollar."
-          lead="One login shows you exactly what you’re paying for and what it’s producing."
-          id="portal-title"
-        />
-        <div class="segmented" role="tablist" aria-label="Portal features" data-tabs>
-          {showcase.map((f, i) => (
-            <button
-              type="button"
-              role="tab"
-              id={`stab-${f.id}`}
-              aria-controls={`spanel-${f.id}`}
-              aria-selected={i === 0 ? 'true' : 'false'}
-              tabindex={i === 0 ? 0 : -1}
-            >
-              {f.tab}
-            </button>
-          ))}
-        </div>
-      </div>
-      {showcase.map((f, i) => (
-        <div
-          class="showcase-panel"
-          role="tabpanel"
-          id={`spanel-${f.id}`}
-          aria-labelledby={`stab-${f.id}`}
-          hidden={i !== 0}
-        >
-          <BrowserFrame shot={f.shot} alt={f.alt} dark />
-          <div>
-            <h3 class="text-[1.625rem]">{f.title}</h3>
-            <CheckList items={f.bullets} dark class="mt-5" />
-            <a href="/platform" class="link-arrow mt-8">
-              See the portal
-              <Icon name="arrow-right" size={18} />
-            </a>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
+  <PricingSection bg="white" />
+
+  <QualificationSection bg="paper" />
+
+  <ClosedLoopSection />
 
   <section class="section" aria-labelledby="control-title">
     <div class="container">
       <SectionHead
         eyebrow="Your controls"
-        title="You set the rules. We deliver inside them."
-        lead="Calls only come from your states, only during your hours, and never past your daily cap."
+        title="You set the rules."
+        lead="Your states. Your hours. Your daily cap. Calls never arrive outside them."
         id="control-title"
       />
       <ul class="bento mt-12" data-reveal-group>
@@ -285,6 +234,52 @@ const jsonLd = {
     </div>
   </section>
 
+  <section class="section navy" aria-labelledby="portal-title">
+    <div class="container">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <SectionHead
+          eyebrow="The portal"
+          title="See every call, application and dollar."
+          lead="One login. Your agents, your calls, your applications, your spend."
+          id="portal-title"
+        />
+        <div class="segmented" role="tablist" aria-label="Portal features" data-tabs>
+          {showcase.map((f, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`stab-${f.id}`}
+              aria-controls={`spanel-${f.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+            >
+              {f.tab}
+            </button>
+          ))}
+        </div>
+      </div>
+      {showcase.map((f, i) => (
+        <div
+          class="showcase-panel"
+          role="tabpanel"
+          id={`spanel-${f.id}`}
+          aria-labelledby={`stab-${f.id}`}
+          hidden={i !== 0}
+        >
+          <BrowserFrame shot={f.shot} alt={f.alt} dark />
+          <div>
+            <h3 class="text-[1.625rem]">{f.title}</h3>
+            <CheckList items={f.bullets} dark class="mt-5" />
+            <a href="/platform" class="link-arrow mt-8">
+              See the portal
+              <Icon name="arrow-right" size={18} />
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
   <FaqStrip
     items={pick(
       'How are Final Expense callers qualified?',
@@ -327,13 +322,13 @@ const jsonLd = {
      "p" and "y" ink reaches baseline + 0.233em. The SVG starts at baseline + 0.107em + 1px, so the
      curve's low ends (under "p" and "y") run about 0.32em below the baseline, clear of both
      descenders, and its middle arch (about 0.18em below) stays above the next line's ascenders.
-     It is inset 0.05em each side to stay within the ink of "priced the way". Pixel-tested at 360,
+     It is inset 0.07em each side to stay within the ink of "not the call". Pixel-tested at 360,
      390, 768, 1024 and 1440px. */
   .underline-stroke svg {
     position: absolute;
-    left: 0.05em;
+    left: 0.07em;
     top: calc(100% - 0.11em + 1px);
-    width: calc(100% - 0.1em);
+    width: calc(100% - 0.14em);
     height: 0.3em;
     overflow: visible;
   }

@@ -16,10 +16,10 @@ export const features = [
     id: 'customers',
     tab: 'Customers',
     shot: 'customers',
-    title: 'No caller goes cold.',
+    title: 'Follow up with every caller.',
     alt: 'An agent’s customer list with prospects, stages, follow-ups and states',
     bullets: [
-      'A built-in CRM for every agent, no extra software',
+      'A built-in CRM for every agent. No extra software.',
       'Each agent sees their own customers. You see everyone’s.',
       'Notes, tasks and follow-ups on every customer',
     ],

@@ -12,14 +12,14 @@ import FaqStrip from '../components/FaqStrip.astro';
 import CtaBand from '../components/CtaBand.astro';
 
 const intro =
-  'Qualified callers transfer live to your agents. You’re charged for the applications they submit, not for the calls that don’t close. Your cost finally tracks your production.';
+  'Your agents take live, screened callers and work the conversation. If no application gets submitted, the call costs you nothing.';
 
 const rate = [
   ['badge-dollar-sign', 'From $199', 'Per submitted application, Final Expense or Medicare.'],
   [
     'sliders-horizontal',
-    'Tied to conversion',
-    'Your rate moves up or down as your agents’ conversion changes.',
+    'Moves with conversion',
+    'Your rate goes up or down as your agents’ conversion changes.',
   ],
   [
     'receipt',
@@ -37,12 +37,12 @@ const needs = [
 
 <Base
   title="Pay Per Application Insurance Leads | Life Leads Plus"
-  description="Pay per submitted application, from $199 for Final Expense and Medicare. Live calls to your licensed agents, with your cost tied directly to production."
+  description="Pay per submitted application, from $199 for Final Expense and Medicare. Live calls to your licensed agents. You’re charged only for applications they submit."
   dark
 >
   <PageIntro
     eyebrow="Pay per application"
-    title="Pay only when your agents write business."
+    title="No application, no charge."
     intro={intro}
     cta="/get-started?program=ppa"
     secondary={{ label: 'How it’s counted', href: '#counted-title' }}
@@ -54,8 +54,8 @@ const needs = [
     <div class="container">
       <SectionHead
         eyebrow="How it’s counted"
-        title="No application, no charge."
-        lead="Your agent logs the application on the call, before they hang up. That logged application is the only thing you pay for."
+        title="One charge: the submitted application."
+        lead="Your agent logs the application during the call. That’s the only thing you’re billed for."
         id="counted-title"
       />
       <div class="mt-12">
@@ -64,12 +64,12 @@ const needs = [
             {
               title: 'Call connects',
               icon: 'phone-incoming',
-              body: 'A qualified caller transfers live to your agent.',
+              body: 'A screened caller transfers live to your agent.',
             },
             {
-              title: 'Your agent answers in the browser',
+              title: 'Your agent answers in a browser',
               icon: 'monitor',
-              body: 'No phone system and no dialer. Just a browser.',
+              body: 'No phone system and no dialer.',
             },
             {
               title: 'Application logged on the call',
@@ -77,7 +77,7 @@ const needs = [
               body: 'Your agent logs it before they hang up.',
             },
             {
-              title: 'You pay for that application',
+              title: 'You’re charged',
               icon: 'wallet',
               body: 'One charge from your prepaid balance. Calls that don’t close cost nothing.',
             },
@@ -95,7 +95,7 @@ const needs = [
         <SectionHead
           eyebrow="Full visibility"
           title="See every application you paid for."
-          lead="Every application sits next to the call it came from, with the recording. You never pay for something you can’t see."
+          lead="Each application sits next to the call it came from, recording included. Nothing gets charged that you can’t see."
           id="see-title"
         />
         <CheckList
@@ -119,7 +119,7 @@ const needs = [
       <SectionHead
         eyebrow="Your rate"
         title="Starts at $199. Moves with your conversion."
-        lead="Every program starts at $199 per submitted application for Final Expense and Medicare. Your rate follows your agents’ conversion, so what you pay reflects what your agents actually close."
+        lead="Every program starts at $199 per submitted application for Final Expense and Medicare. Your rate follows your agents’ conversion, so what you pay tracks what they close."
         id="rate-title"
       />
       <div class="mt-12 grid gap-5 md:grid-cols-3" data-reveal-group>
@@ -138,8 +138,8 @@ const needs = [
     <div class="container">
       <SectionHead
         eyebrow="What you need"
-        title="Three things and you’re ready."
-        lead="No dialer and no phone system required."
+        title="What you need to start."
+        lead="No dialer or phone system required."
         id="need-title"
       />
       <div class="mt-12 grid gap-5 md:grid-cols-3" data-reveal-group>

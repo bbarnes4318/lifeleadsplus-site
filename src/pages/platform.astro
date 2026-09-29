@@ -12,10 +12,10 @@ import { loginHref } from '../lib/site';
 const also = [
   ['receipt', 'Every call, with its recording'],
   ['calendar-clock', 'Your hours, states and daily cap'],
-  ['phone-forwarded', 'Returns, right from your call log'],
+  ['phone-forwarded', 'Return requests from your call log'],
   ['receipt', 'Monthly statements'],
   ['headset', 'Browser softphone for your agents'],
-  ['users', 'Invites and password resets for your team'],
+  ['users', 'Team invites and password resets'],
 ] as const;
 ---
 
@@ -27,7 +27,7 @@ const also = [
   <PageIntro
     eyebrow="The Portal"
     title="One portal. Every call, agent and dollar."
-    intro="Watch your agents work live, keep every customer in a built-in CRM, see each application with its call, and know exactly where your money went. Every client gets a login."
+    intro="Watch your agents work live. Keep every customer in a built-in CRM. See each application next to its call. Know where every dollar went. Every client gets a login."
     secondary={{ label: 'Client login', href: loginHref }}
   />
 
@@ -49,7 +49,7 @@ const also = [
       <SectionHead
         eyebrow="Included"
         title="Also in every login"
-        lead="The rest of what comes with your portal."
+        lead="Everything else that comes with your portal."
         id="also-title"
       />
       <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>

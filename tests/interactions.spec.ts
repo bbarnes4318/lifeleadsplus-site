@@ -241,14 +241,14 @@ async function strokeCheck(page: Page) {
 }
 
 for (const width of [360, 390, 768, 1024, 1440]) {
-  test(`hero underline clears "priced the way" at ${width}px`, async ({ page }) => {
+  test(`hero underline clears the underlined word at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
     const { gap, touching, where, inkLeft, inkRight, redLeft, redRight } = await strokeCheck(page);
     expect(gap).toBeGreaterThanOrEqual(1);
     expect(gap).toBeLessThan(Infinity);
     expect(touching, `stroke touches ink at (x,y fractions of the H1) ${where}`).toBe(0);
-    // The stroke starts and ends within "priced the way": not in the gutter or past "y".
+    // The stroke starts and ends within the underlined phrase: not in the gutter or past "y".
     expect(redLeft).toBeGreaterThanOrEqual(inkLeft);
     expect(redRight).toBeLessThanOrEqual(inkRight);
   });
@@ -265,8 +265,8 @@ test('hero H1 punctuation sits against its word', async ({ page }) => {
   const text = runs.join('');
   // No space or &nbsp; before the punctuation, and each mark in the same text node as its word.
   expect(text).not.toMatch(/\s[,.]/); // JS \s includes U+00A0 (&nbsp;)
-  expect(runs.some((t) => t.includes('calls,'))).toBe(true);
-  expect(runs.some((t) => t.includes('sells.'))).toBe(true);
+  expect(runs.some((t) => t.includes('applications,'))).toBe(true);
+  expect(runs.some((t) => t.trim() === '.')).toBe(true);
   // The tight-bearing comma/period font is what renders them.
   await page.evaluate(() => document.fonts.ready);
   const loaded = await page.evaluate(() =>

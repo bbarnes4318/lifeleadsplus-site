@@ -6,23 +6,23 @@ export const qualifications = {
     items: [
       {
         title: 'Interested in final expense',
-        body: 'Interest in final expense coverage is established before transfer.',
+        body: 'Confirmed interested in final expense coverage before transfer.',
       },
       {
         title: 'Not in a nursing home or assisted living',
-        body: 'The caller answers yes to not living in a nursing home or assisted living facility.',
+        body: 'Confirms they don’t live in a nursing home or assisted living facility.',
       },
       {
         title: 'Makes their own financial decisions',
-        body: 'The caller answers yes to not needing a power of attorney to make financial decisions.',
+        body: 'Confirms they don’t need a power of attorney to make financial decisions.',
       },
       {
         title: 'Age 40 to 85',
-        body: 'The caller answers yes to being between the ages of 40 and 85.',
+        body: 'Confirms they’re between 40 and 85.',
       },
       {
         title: 'Agrees to speak with a licensed agent',
-        body: 'The caller answers yes to speaking with a licensed agent to learn their plan options.',
+        body: 'Agrees to talk with a licensed agent about their plan options.',
       },
     ],
   },
@@ -32,23 +32,23 @@ export const qualifications = {
     items: [
       {
         title: 'Interested in Medicare',
-        body: 'Interest in Medicare plan options is established before transfer.',
+        body: 'Confirmed interested in Medicare plan options before transfer.',
       },
       {
         title: 'Has Medicare Parts A and B',
-        body: 'The caller answers yes to having Medicare Parts A and B.',
+        body: 'Confirms they have Medicare Parts A and B.',
       },
       {
         title: 'Not in a nursing home or assisted living',
-        body: 'The caller answers yes to not living in a nursing home or assisted living facility.',
+        body: 'Confirms they don’t live in a nursing home or assisted living facility.',
       },
       {
         title: 'Makes their own financial decisions',
-        body: 'The caller answers yes to not needing a power of attorney to make financial decisions.',
+        body: 'Confirms they don’t need a power of attorney to make financial decisions.',
       },
       {
         title: 'Agrees to speak with a licensed agent',
-        body: 'The caller answers yes to speaking with a licensed agent to learn their plan options.',
+        body: 'Agrees to talk with a licensed agent about their plan options.',
       },
     ],
   },
@@ -64,11 +64,11 @@ export const pricing = {
       { vertical: 'Final Expense', from: 199 },
       { vertical: 'Medicare', from: 199 },
     ],
-    note: 'Your rate moves with your agents’ conversion.',
+    note: 'Your rate goes up or down with your agents’ conversion.',
     bullets: [
       'No application, no charge',
       'Agents take calls in their browser. No dialer to buy.',
-      'Every application tied to its call recording',
+      'Every application linked to its call and recording',
       'Prepaid balance. No surprise invoices.',
     ],
   },
@@ -84,7 +84,7 @@ export const pricing = {
     note: 'Your final price depends on your filters: states, ages and buffer time.',
     bullets: [
       'Calls that end inside your buffer are free',
-      'Ring your phones, your dialer or the portal',
+      'Take calls on your phones, your dialer or the portal',
       'Every call recorded in your call log',
       'Prepaid balance. No surprise invoices.',
     ],
@@ -98,7 +98,7 @@ export const ppcFilters = [
     title: 'States',
     body: 'Only callers in the states your agents are licensed in.',
   },
-  { id: 'ages', icon: 'users', title: 'Ages', body: 'The caller age range your carriers want.' },
+  { id: 'ages', icon: 'users', title: 'Ages', body: 'The caller age range your carriers write.' },
   {
     id: 'buffer',
     icon: 'calendar-clock',

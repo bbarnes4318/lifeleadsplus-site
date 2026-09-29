@@ -12,7 +12,7 @@ import Icon from '../components/Icon.astro';
 import { ppcFilters } from '../lib/offer';
 
 const intro =
-  'Every program has a buffer. Calls that end before it are free. You only pay for callers who stay on the line with your agent.';
+  'Set a buffer. Any call that ends before it costs you nothing. You pay only when a caller stays on the line.';
 const BUFFER = 90;
 const START = 70;
 const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
@@ -34,7 +34,7 @@ const stateChips = [
 >
   <PageIntro
     eyebrow="Pay per call"
-    title="Pay for real conversations, not hang-ups."
+    title="Calls under your buffer are free."
     intro={intro}
     cta="/get-started?program=ppc"
     secondary={{ label: 'How billing works', href: '#billing-title' }}
@@ -46,8 +46,8 @@ const stateChips = [
     <div class="container">
       <SectionHead
         eyebrow="Pricing"
-        title="From $25 a call. You set what goes into it."
-        lead="Pay per call starts at $25 per billable call for Final Expense and Medicare. Three filters set your final price."
+        title="From $25 a call. Three filters set your price."
+        lead="Pay per call starts at $25 per billable call, Final Expense or Medicare. Your states, caller ages and buffer time decide where you land."
         id="filters-title"
       />
       <ul class="mt-12 grid gap-5 md:grid-cols-3" data-reveal-group data-ppc-filters>
@@ -110,24 +110,24 @@ const stateChips = [
       <div>
         <SectionHead
           eyebrow="How billing works"
-          title="Short calls cost you nothing."
+          title="Short calls cost nothing."
           lead="Your buffer is agreed before your first call."
           id="billing-title"
         />
         <div class="text-ink-2 mt-6 grid gap-4" data-reveal>
           <p>
-            A call that ends inside your buffer is free. A call that passes it is billed once, from
-            your prepaid balance.
+            A call that ends inside your buffer is free. A call that goes past it is billed once,
+            from your prepaid balance.
           </p>
           <p>
-            Your call log shows every call’s length and whether it was billable, so you never have
+            Your call log shows each call’s length and whether it was billable, so there’s nothing
             to guess.
           </p>
         </div>
       </div>
 
       <div class="buffer" data-reveal data-buffer={BUFFER}>
-        <h3>Drag to see what you’d pay for</h3>
+        <h3>Drag to see what you’d be billed for</h3>
         <p class="readout mt-3" aria-live="polite">
           <span data-readout>Call length: {fmt(START)}</span>
           <span class="status" data-status>
@@ -173,8 +173,8 @@ const stateChips = [
     <div class="container">
       <SectionHead
         eyebrow="Taking calls"
-        title="Use your phones, or ours."
-        lead="Send calls to your existing phones or dialer, or let your agents take them in the portal. Either way, you get the full portal."
+        title="Your phones or our portal."
+        lead="Send calls to your existing phones or dialer, or have your agents answer in the portal. Either way, you get the full portal."
         id="ways-title"
       />
       <div class="lanes mt-12" data-reveal>
@@ -208,8 +208,8 @@ const stateChips = [
             <div>
               <h3>Your agents in the portal</h3>
               <p class="text-ink-2 mt-2">
-                No phone system needed. Your agents answer in their browser, with a CRM and
-                application logging built in.
+                No phone system needed. Your agents answer in a browser, with a CRM and application
+                logging built in.
               </p>
             </div>
           </article>
@@ -222,8 +222,8 @@ const stateChips = [
     <div class="container">
       <SectionHead
         eyebrow="Returns"
-        title="Bad call? Request a return."
-        lead="If a call doesn’t meet the criteria on your agreement, request a return right from your call log within 30 days. Every request is reviewed and the decision shows in your portal."
+        title="Bad call? Send it back."
+        lead="If a call doesn’t meet the criteria in your agreement, request a return from your call log within 30 days. We review every request, and the decision shows up in your portal."
         id="returns-title"
       />
       <div class="mt-12">
@@ -235,7 +235,7 @@ const stateChips = [
               icon: 'undo-2',
               body: 'Pick the call and send the request.',
             },
-            { title: 'Reviewed', icon: 'eye', body: 'Every request gets reviewed.' },
+            { title: 'We review it', icon: 'eye', body: 'Every request gets a review.' },
             {
               title: 'Decision shows in your portal',
               icon: 'check-circle',
@@ -252,7 +252,7 @@ const stateChips = [
     items={[
       [
         'What’s the buffer?',
-        'The number of seconds on your agreement a call has to pass before it’s billable. Anything shorter is free.',
+        'The number of seconds in your agreement that a call has to pass before it’s billable. Anything shorter is free.',
       ],
       ['Can I pause calls?', 'Yes. Lower your daily cap or change your hours in the portal.'],
       ['How do I add funds?', 'Request a top-up from the billing page in your portal.'],
