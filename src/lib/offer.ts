@@ -21,6 +21,10 @@ export const qualifications = {
         body: 'Confirms they’re between 40 and 85.',
       },
       {
+        title: 'Active bank account or credit card',
+        body: 'Confirms they have an active bank account or credit card.',
+      },
+      {
         title: 'Ready to talk to a licensed agent',
         body: 'Agrees to speak with a licensed agent about their plan options.',
       },
@@ -45,6 +49,10 @@ export const qualifications = {
       {
         title: 'Independent decision maker',
         body: 'Confirms they don’t need a power of attorney to make financial decisions.',
+      },
+      {
+        title: 'Active bank account or credit card',
+        body: 'Confirms they have an active bank account or credit card.',
       },
       {
         title: 'Ready to talk to a licensed agent',

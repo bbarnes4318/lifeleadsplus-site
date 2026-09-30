@@ -8,6 +8,7 @@ const QUAL = {
     'Independent decision maker',
     'Not in a nursing home or assisted living',
     'Age 40 to 85',
+    'Active bank account or credit card',
     'Ready to talk to a licensed agent',
   ],
   Medicare: [
@@ -15,11 +16,12 @@ const QUAL = {
     'Parts A and B verified',
     'Not in a nursing home or assisted living',
     'Independent decision maker',
+    'Active bank account or credit card',
     'Ready to talk to a licensed agent',
   ],
 };
 
-test('qualification tabs switch content and show the exact 5 items per vertical', async ({
+test('qualification tabs switch content and show the exact 6 items per vertical', async ({
   page,
 }) => {
   await page.goto('/');

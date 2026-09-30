@@ -65,12 +65,12 @@ export const faqs: [string, string, Category][] = [
   ],
   [
     'How are Final Expense callers qualified?',
-    'Each caller says they’re interested in final expense coverage. They also confirm they don’t live in a nursing home or assisted living facility, don’t need a power of attorney to make financial decisions, are between 40 and 85, and will talk with a licensed agent about plan options.',
+    'Each caller says they’re interested in final expense coverage. They also confirm they don’t live in a nursing home or assisted living facility, don’t need a power of attorney to make financial decisions, are between 40 and 85, have an active bank account or credit card, and will talk with a licensed agent about plan options.',
     'Qualification',
   ],
   [
     'How are Medicare callers qualified?',
-    'Each caller says they’re interested in Medicare plan options. They also confirm they have Medicare Parts A and B, don’t live in a nursing home or assisted living facility, don’t need a power of attorney to make financial decisions, and will talk with a licensed agent about plan options.',
+    'Each caller says they’re interested in Medicare plan options. They also confirm they have Medicare Parts A and B, don’t live in a nursing home or assisted living facility, don’t need a power of attorney to make financial decisions, have an active bank account or credit card, and will talk with a licensed agent about plan options.',
     'Qualification',
   ],
   [
