@@ -2,7 +2,7 @@
 export const features = [
   {
     id: 'agents',
-    tab: 'Live Agent Floor',
+    tab: 'Live Agent Status',
     shot: 'agents-floor',
     title: 'See who’s ready, who’s on a call and who’s closing.',
     alt: 'Agent tiles showing who is ready and who is on a call, with calls, talk time, applications and closing percentage today',
