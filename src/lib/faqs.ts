@@ -4,7 +4,7 @@ export type Category = (typeof CATEGORIES)[number];
 export const faqs: [string, string, Category][] = [
   [
     'How does pay per application work?',
-    'We send live transfers to your agents. Your agent takes the call, pitches, and submits the application. If they submit it, you’re charged your pay per application rate. If the call drops, the caller hangs up, or it ends without an application, you pay $0.',
+    'We send pre-screened calls to your agents. Your agent takes the call, pitches, and submits the application. If they submit it, you’re charged your pay per application rate. If the call drops, the caller hangs up, or it ends without an application, you pay $0.',
     'Programs',
   ],
   [
