@@ -109,7 +109,7 @@ test.describe('application form', () => {
     await page.goto('/get-started');
     await fillToProgram(page);
     await page.getByRole('radio', { name: /^Pay per call/ }).check({ force: true });
-    await page.getByLabel('In the portal').check({ force: true });
+    await page.getByLabel('In the dashboard').check({ force: true });
     await page.getByLabel('From', { exact: true }).fill('50');
     await send(page);
     await expect(page.locator('#err-ages')).toHaveText('Enter both ages.');
@@ -124,7 +124,7 @@ test.describe('application form', () => {
     await page.goto('/get-started');
     await fillToProgram(page);
     await page.getByRole('radio', { name: /^Pay per call/ }).check({ force: true });
-    await page.getByLabel('In the portal').check({ force: true });
+    await page.getByLabel('In the dashboard').check({ force: true });
     await page.locator('#company_website').fill('https://spam.example');
     await page.waitForTimeout(3100);
     await send(page);
@@ -141,7 +141,7 @@ test.describe('application form', () => {
     await page.goto('/get-started');
     await fillToProgram(page);
     await page.getByRole('radio', { name: /^Pay per call/ }).check({ force: true });
-    await page.getByLabel('In the portal').check({ force: true });
+    await page.getByLabel('In the dashboard').check({ force: true });
     await send(page);
     await expect(page.getByRole('status')).toContainText('couldn’t accept');
   });
@@ -150,7 +150,7 @@ test.describe('application form', () => {
     await page.goto('/get-started');
     await fillToProgram(page);
     await page.getByRole('radio', { name: /^Pay per call/ }).check({ force: true });
-    await page.getByLabel('In the portal').check({ force: true });
+    await page.getByLabel('In the dashboard').check({ force: true });
     await page.waitForTimeout(3100);
     await send(page);
     await expect(page.getByText('Thanks, Pat Tester — we got it.')).toBeVisible();

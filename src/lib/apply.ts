@@ -58,7 +58,7 @@ const STATE_CODES = Object.keys(STATES) as [StateCode, ...StateCode[]];
 
 export const VERTICALS = ['Final Expense', 'Medicare'] as const;
 export const PROGRAMS = ['Pay per application', 'Pay per call', 'Not sure yet'] as const;
-export const TAKE_CALLS = ['In the portal', 'On our own phones or dialer', 'Not sure yet'] as const;
+export const TAKE_CALLS = ['In the dashboard', 'On our own phones or dialer', 'Not sure yet'] as const;
 export const TIME_ZONES = ['Eastern', 'Central', 'Mountain', 'Pacific'] as const;
 export const BUFFERS = [
   '30 seconds',

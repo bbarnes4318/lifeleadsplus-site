@@ -30,8 +30,8 @@ const rate = [
 
 const needs = [
   ['users', 'Licensed agents', 'Licensed in the states you want calls from.'],
-  ['headset', 'A browser', 'Your agents take calls and log applications right in the portal.'],
-  ['wallet', 'A prepaid balance', 'Fund it once and top it up from the portal whenever you need.'],
+  ['headset', 'A browser', 'Your agents take calls and log applications right in the dashboard.'],
+  ['wallet', 'A prepaid balance', 'Fund it once and top it up from the dashboard whenever you need.'],
 ] as const;
 ---
 
@@ -157,10 +157,10 @@ const needs = [
   <FaqStrip
     lead="Common questions about pay per application."
     items={[
-      ['Do my agents need a dialer?', 'No. They take calls in the portal, in their browser.'],
+      ['Do my agents need a dialer?', 'No. They take calls in the dashboard, in their browser.'],
       [
         'What if an agent forgets to log an application?',
-        'Every call and every application show side by side in your portal, so a call without an application stands out.',
+        'Every call and every application show side by side in your dashboard, so a call without an application stands out.',
       ],
       ['Can I switch to pay per call later?', 'Yes. Tell us and we’ll move your program.'],
     ]}

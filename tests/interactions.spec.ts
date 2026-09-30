@@ -97,9 +97,9 @@ test('every /get-started button carries a data-cta location', async ({ page }) =
   }
 });
 
-test('portal showcase tabs switch the screenshot', async ({ page }) => {
+test('dashboard showcase tabs switch the screenshot', async ({ page }) => {
   await page.goto('/');
-  const tabs = page.getByRole('tablist', { name: 'Portal features' });
+  const tabs = page.getByRole('tablist', { name: 'Dashboard features' });
   const visibleImg = () => page.locator('[role=tabpanel]:visible img').last();
   await expect(visibleImg()).toHaveAttribute('src', /agents-floor/);
   await tabs.getByRole('tab', { name: 'Application Audit Log' }).click();

@@ -31,6 +31,6 @@ export const analyticsTools = [
 export const nav = [
   { href: '/pay-per-application', label: 'Pay-Per-App (PPA)' },
   { href: '/pay-per-call', label: 'Pay-Per-Call (PPC)' },
-  { href: '/platform', label: 'Live Portal' },
+  { href: '/platform', label: 'Agency Dashboard' },
   { href: '/faq', label: 'FAQ' },
 ];

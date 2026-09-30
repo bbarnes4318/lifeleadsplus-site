@@ -94,7 +94,7 @@ export const pricing = {
     cta: 'Set Up Pay-Per-Call',
     bullets: [
       'Calls that end inside your buffer are free',
-      'Take calls on your phones, your dialer or the portal',
+      'Take calls on your phones, your dialer or the dashboard',
       'Filter by state, caller age and hours',
       'Every call in your log with its length, recording and billable status',
     ],

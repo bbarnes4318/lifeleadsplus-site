@@ -1,4 +1,4 @@
-export const CATEGORIES = ['Programs', 'Pricing', 'Qualification', 'Billing', 'Portal'] as const;
+export const CATEGORIES = ['Programs', 'Pricing', 'Qualification', 'Billing', 'Dashboard'] as const;
 export type Category = (typeof CATEGORIES)[number];
 
 export const faqs: [string, string, Category][] = [
@@ -9,7 +9,7 @@ export const faqs: [string, string, Category][] = [
   ],
   [
     'How is an application verified?',
-    'Your agents log every application in the portal during the call. Each one is tied to its call and its recording, so you can check exactly what you’re charged for.',
+    'Your agents log every application in the dashboard during the call. Each one is tied to its call and its recording, so you can check exactly what you’re charged for.',
     'Programs',
   ],
   [
@@ -19,13 +19,13 @@ export const faqs: [string, string, Category][] = [
   ],
   [
     'Can I use this with my existing dialer or CRM?',
-    'Yes. Your agents can take calls in the portal with no extra software. On pay per call, we can also transfer calls to your own phones or dialer. Pay per application runs in the portal.',
+    'Yes. Your agents can take calls in the dashboard with no extra software. On pay per call, we can also transfer calls to your own phones or dialer. Pay per application runs in the dashboard.',
     'Programs',
   ],
   ['What verticals do you offer?', 'Final Expense and Medicare.', 'Programs'],
   [
     'What’s the difference between pay per application and pay per call?',
-    'Pay per application charges you for each application your agents submit in the portal. Pay per call charges you for each call that lasts past the buffer in your agreement.',
+    'Pay per application charges you for each application your agents submit in the dashboard. Pay per call charges you for each call that lasts past the buffer in your agreement.',
     'Programs',
   ],
   [
@@ -80,7 +80,7 @@ export const faqs: [string, string, Category][] = [
   ],
   [
     'Who else handles my calls?',
-    'No outside vendors sit between the caller and your agent. Screening, routing, transfer, recording and your portal all run in one closed system.',
+    'No outside vendors sit between the caller and your agent. Screening, routing, transfer, recording and your dashboard all run in one closed system.',
     'Qualification',
   ],
   [
@@ -90,26 +90,26 @@ export const faqs: [string, string, Category][] = [
   ],
   [
     'What if a call doesn’t meet my agreement?',
-    'Request a return from your call log within 30 days of the call. We review every request, and the decision shows in your portal.',
+    'Request a return from your call log within 30 days of the call. We review every request, and the decision shows in your dashboard.',
     'Billing',
   ],
   [
     'Can I get a statement for my accountant?',
-    'Yes. Download a statement for any month from your portal.',
+    'Yes. Download a statement for any month from your dashboard.',
     'Billing',
   ],
   [
-    'Do I have to use the portal?',
-    'On pay per application, yes: your agents take calls and log applications there. On pay per call, you can take calls on your own phones or dialer and use the portal for your call log, recordings, spend and statements.',
-    'Portal',
+    'Do I have to use the dashboard?',
+    'On pay per application, yes: your agents take calls and log applications there. On pay per call, you can take calls on your own phones or dialer and use the dashboard for your call log, recordings, spend and statements.',
+    'Dashboard',
   ],
   [
     'Do I need a phone system or dialer?',
-    'No. Your agents can take calls in their browser through the portal. On pay per call, we can also transfer calls to your own phones or dialer.',
-    'Portal',
+    'No. Your agents can take calls in their browser through the dashboard. On pay per call, we can also transfer calls to your own phones or dialer.',
+    'Dashboard',
   ],
-  ['Can I listen to my calls?', 'Yes. Every call in your call log has its recording.', 'Portal'],
-  ['How do I log in?', 'Use Client login at the top of any page.', 'Portal'],
+  ['Can I listen to my calls?', 'Yes. Every call in your call log has its recording.', 'Dashboard'],
+  ['How do I log in?', 'Use Client login at the top of any page.', 'Dashboard'],
 ];
 
 /** Question/answer pairs for a FaqStrip, looked up by question. */

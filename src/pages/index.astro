@@ -21,7 +21,7 @@ const steps = [
     title: 'Live transfer connects',
     icon: 'phone-incoming',
     price: '$0.00',
-    body: 'A pre-screened caller is transferred live to your agent in the portal.',
+    body: 'A pre-screened caller is transferred live to your agent in the dashboard.',
   },
   {
     title: 'Your agent pitches',
@@ -141,7 +141,7 @@ const jsonLd = {
       </div>
       <Frame
         shot="agents-floor"
-        alt="The Life Leads Plus portal showing agents who are ready, on a call, and their calls and applications today"
+        alt="The Life Leads Plus dashboard showing agents who are ready, on a call, and their calls and applications today"
         sizes="(min-width: 1248px) 672px, (min-width: 1024px) calc((100vw - 96px) * 7 / 12), calc(100vw - 32px)"
         hero
       />
@@ -257,12 +257,12 @@ const jsonLd = {
     <div class="container">
       <div class="flex flex-wrap items-end justify-between gap-6">
         <SectionHead
-          eyebrow="The portal"
+          eyebrow="Real-time agency dashboard"
           title="Your entire agency in one dashboard."
           lead="See which agents are available, listen to recordings, review applications and audit agent conversion, all from one dashboard."
           id="portal-title"
         />
-        <div class="segmented" role="tablist" aria-label="Portal features" data-tabs>
+        <div class="segmented" role="tablist" aria-label="Dashboard features" data-tabs>
           {showcase.map((f, i) => (
             <button
               type="button"
@@ -290,7 +290,7 @@ const jsonLd = {
             <h3 class="text-[1.625rem]">{f.title}</h3>
             <CheckList items={f.bullets} dark class="mt-5" />
             <a href="/platform" class="link-arrow mt-8">
-              See the portal
+              See the dashboard
               <Icon name="arrow-right" size={18} />
             </a>
           </div>

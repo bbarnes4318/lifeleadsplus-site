@@ -15,7 +15,7 @@ const application = (agency: string) => ({
   agents: '12',
   verticals: ['Final Expense'],
   program: 'Pay per call',
-  takeCalls: 'In the portal',
+  takeCalls: 'In the dashboard',
   ageFrom: '50',
   ageTo: '80',
   buffer: '90 seconds',
