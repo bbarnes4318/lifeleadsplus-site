@@ -20,7 +20,7 @@ function confirmation(a: Application) {
   const site = siteUrl.startsWith('http://localhost') ? '' : siteUrl;
   const text = `Hi ${a.name},\n\nThanks for applying to Life Leads Plus. We got your application for ${a.agency}.\n\nWe'll reply with your program, rate and agreement.\n\nLife Leads Plus`;
   const logo = site
-    ? `<img src="${esc(site)}/brand/wordmark.png" width="78" height="50" alt="Life Leads Plus" style="display:block">`
+    ? `<img src="${esc(site)}/brand/wordmark.png" width="240" height="40" alt="Life Leads Plus" style="display:block">`
     : '<strong style="color:#0B2350;font-size:20px">Life Leads Plus</strong>';
   return {
     subject: 'We got your application',
