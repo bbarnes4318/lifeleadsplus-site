@@ -9,7 +9,6 @@ import BrowserFrame from '../components/BrowserFrame.astro';
 import CheckList from '../components/CheckList.astro';
 import SectionHead from '../components/SectionHead.astro';
 import QualificationSection from '../components/QualificationSection.astro';
-import PricingSection from '../components/PricingSection.astro';
 import ClosedLoopSection from '../components/ClosedLoopSection.astro';
 import FaqStrip from '../components/FaqStrip.astro';
 import { features } from '../lib/features';
@@ -20,31 +19,31 @@ const steps = [
   {
     title: 'The call connects',
     icon: 'phone-incoming',
-    price: '$0.00',
+    status: 'No charge',
     body: 'A pre-screened caller is transferred live to your agent in the dashboard.',
   },
   {
     title: 'Your agent pitches',
     icon: 'headset',
-    price: '$0.00',
+    status: 'No charge',
     body: 'Take as long as you need. No timer tricks, no per-minute penalties.',
   },
   {
     title: 'No sale? You pay zero.',
     icon: 'circle-help',
-    price: '$0.00',
+    status: 'No charge',
     body: 'Not interested, changed their mind, hung up? No application submitted means nothing to pay.',
   },
   {
     title: 'Application submitted',
     icon: 'clipboard-check',
-    price: 'Starts at $199',
+    status: 'Your custom rate',
     body: 'Only when your agent submits an application do you pay. You pay for production.',
   },
 ] as const;
 
 const trust = [
-  ['wallet', '$0 unless an application is submitted'],
+  ['wallet', 'No application, no charge'],
   ['user-check', '6-point live screening'],
   ['headset', '100% of calls recorded'],
   ['map-pin', 'Only your licensed states'],
@@ -104,30 +103,27 @@ const jsonLd = {
 
 <Base
   title="Pay Only for Applications | Final Expense & Medicare Calls | Life Leads Plus"
-  description="Pay only for applications. Pre-screened Final Expense and Medicare calls sent straight to your agents. Pay $0 unless an application is submitted. PPA from $199."
+  description="Pay only for submitted applications. Pre-screened Final Expense and Medicare calls sent straight to your agents, with custom rates for pay per application and pay per call."
   jsonLd={jsonLd}
 >
   <section class="hero">
     <div class="container hero-grid">
-      <div>
+      <div class="hero-copy">
         <p class="eyebrow">Final Expense &amp; Medicare calls</p>
-        <!-- No whitespace inside the span: a trailing space would widen it past "way". -->
+        <!-- No whitespace inside the span: a trailing space would widen the underline. -->
         <!-- prettier-ignore -->
-        <h1 class="mt-4">
-          Qualified calls for your agents.<br class="hidden lg:inline" /> You only pay<br class="hidden lg:inline" /> for <span class="underline-stroke">applications<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span>.
-        </h1>
-        <p class="lead mt-6">
+        <h1>Qualified calls for your agents. You only pay for <span class="underline-stroke">applications<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 11.5C52 6.5 104 4 158 4.6c47 .5 92 3 139 6.4" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span>.</h1>
+        <p class="lead hero-lead">
           Pre-screened, live Final Expense and Medicare callers sent straight to your agents, ready
           to talk coverage. Every application your team writes is the only thing you pay for.
         </p>
-        <div class="mt-8 flex flex-wrap gap-3">
+        <div class="hero-actions">
           <a href="/get-started" class="btn btn-primary" data-cta="hero">
             Get Your Custom Rate
             <Icon name="arrow-right" size={18} />
           </a>
           <a href="#how-title" class="btn btn-secondary">
-            {' '}
-            See How PPA Works{' '}
+            See How PPA Works
           </a>
         </div>
         <ul class="trust">
@@ -140,9 +136,10 @@ const jsonLd = {
         </ul>
       </div>
       <Frame
+        class="hero-frame"
         shot="agents-floor"
         alt="The Life Leads Plus dashboard showing agents who are ready, on a call, and their calls and applications today"
-        sizes="(min-width: 1248px) 672px, (min-width: 1024px) calc((100vw - 96px) * 7 / 12), calc(100vw - 32px)"
+        sizes="(min-width: 1280px) 602px, (min-width: 1200px) calc((100vw - 104px) * 0.512), (min-width: 1024px) calc((100vw - 96px) / 2), calc(100vw - 32px)"
         hero
       />
     </div>
@@ -162,9 +159,7 @@ const jsonLd = {
     </div>
   </section>
 
-  <PricingSection bg="white" />
-
-  <QualificationSection bg="paper" />
+  <QualificationSection />
 
   <ClosedLoopSection />
 
@@ -313,37 +308,73 @@ const jsonLd = {
 
 <style>
   .hero {
-    padding-block: clamp(2.5rem, 6vw, 5rem);
+    padding-block: clamp(2.5rem, 5.5vw, 4.5rem) clamp(3.5rem, 7vw, 5.5rem);
   }
   .hero-grid {
     display: grid;
-    gap: 48px;
-    align-items: center;
+    gap: 3rem;
+  }
+  /* The headline is sized to its column (cqi), so it wraps the same way at every desktop width. */
+  .hero-copy {
+    container-type: inline-size;
+  }
+  .hero h1 {
+    margin-top: 1.25rem;
+    font-size: clamp(2.25rem, 1.4rem + 3.6vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+  /* 28px, not 24: the underline hangs into this gap. */
+  .hero-lead {
+    max-width: 36rem;
+    margin-top: 1.75rem;
+    line-height: 1.6;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  @media (max-width: 479px) {
+    .hero-actions .btn {
+      flex: 1 1 100%;
+    }
   }
   @media (min-width: 1024px) {
+    /* Even split below 1200px so both hero buttons still fit on one row. */
     .hero-grid {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 3rem;
+      align-items: start;
     }
-    /* Fit "Live insurance calls," on one line of the narrower 5fr column. */
+    /* Three lines: "Qualified calls for your / agents. You only pay / for applications." The
+       measure is in em, so the break points hold as the size follows the column. */
     .hero h1 {
-      font-size: clamp(2.5rem, 3.4vw, 3.125rem);
+      max-width: 10.4em;
+      font-size: clamp(2.625rem, 9.6cqi, 3.375rem);
+      text-wrap: wrap;
+    }
+    /* Top of the screenshot lines up with the cap height of the headline, not the eyebrow. */
+    .hero-grid > :global(.frame) {
+      margin-top: 3.125rem;
     }
   }
-  /* A little more line-height than other headings, so the underline has room between the
-     descenders above it and the ascenders of the next line. */
-  .hero h1 {
-    line-height: 1.2;
+  @media (min-width: 1200px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: 3.5rem;
+    }
   }
   .underline-stroke {
     position: relative;
     white-space: nowrap;
   }
-  /* The span's box ends at the font's descent (baseline + 0.217em in Plus Jakarta Sans), but the
-     "p" and "y" ink reaches baseline + 0.233em. The SVG starts at baseline + 0.107em + 1px, so the
-     curve's low ends (under "p" and "y") run about 0.32em below the baseline, clear of both
-     descenders, and its middle arch (about 0.18em below) stays above the next line's ascenders.
-     It is inset 0.07em each side to stay within the ink of "not the call". Pixel-tested at 360,
-     390, 768, 1024 and 1440px. */
+  /* "applications" is always the last word, so the stroke hangs below the last line and needs no
+     extra line-height. The SVG starts just under the baseline (the span's box ends at the font's
+     descent, baseline + 0.217em in Plus Jakarta Sans); its low ends run about 0.32em below the
+     baseline, clear of the "p" descenders, and it is inset 0.07em each side to stay within the
+     ink of the word. */
   .underline-stroke svg {
     position: absolute;
     left: 0.07em;
@@ -353,13 +384,18 @@ const jsonLd = {
     overflow: visible;
   }
   .trust {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.625rem 1.5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.625rem 1.75rem;
     margin-top: 1.75rem;
     color: var(--ink-2);
     font-size: 0.9375rem;
     font-weight: 550;
+  }
+  @media (min-width: 480px) {
+    .trust {
+      grid-template-columns: repeat(2, max-content);
+    }
   }
   .trust li {
     display: inline-flex;
@@ -367,6 +403,7 @@ const jsonLd = {
     gap: 0.5rem;
   }
   .trust :global(svg) {
+    flex-shrink: 0;
     color: var(--blue-strong);
   }
 

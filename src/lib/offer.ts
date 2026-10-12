@@ -73,13 +73,6 @@ export const pricing = {
       { vertical: 'Medicare', from: 199 },
     ],
     note: 'Zero cost per call. You pay strictly on results, and your rate moves with your agents’ conversion.',
-    cta: 'Apply for Pay-Per-App',
-    bullets: [
-      '$0 if no application is submitted',
-      'Calls in the browser, included. No dialer to buy.',
-      'Every application tied to its call recording',
-      'Prepaid balance. No surprise invoices.',
-    ],
   },
   ppc: {
     name: 'Pay-Per-Call',
@@ -91,13 +84,6 @@ export const pricing = {
       { vertical: 'Medicare', from: 25 },
     ],
     note: 'Predictable volume with buffer protection. Your final price depends on your filters: states, ages and buffer time.',
-    cta: 'Set Up Pay-Per-Call',
-    bullets: [
-      'Calls that end inside your buffer are free',
-      'Take calls on your phones, your dialer or the dashboard',
-      'Filter by state, caller age and hours',
-      'Every call in your log with its length, recording and billable status',
-    ],
   },
 } as const;
 

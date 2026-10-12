@@ -40,7 +40,7 @@ test('qualification tabs switch content and show the exact 6 items per vertical'
   await expect(items()).toHaveText(QUAL['Final Expense']);
 });
 
-for (const path of ['/', '/pay-per-application', '/pay-per-call', '/get-started', '/faq']) {
+for (const path of ['/pay-per-application', '/pay-per-call', '/get-started', '/faq']) {
   test(`prices render on ${path}`, async ({ page }) => {
     await page.goto(path);
     const text = await page.locator('main').innerText();
@@ -49,14 +49,10 @@ for (const path of ['/', '/pay-per-application', '/pay-per-call', '/get-started'
   });
 }
 
-test('home pay per call card shows what the price depends on', async ({ page }) => {
+test('home shows no dollar amounts', async ({ page }) => {
   await page.goto('/');
-  const card = page.getByRole('article', { name: 'Pay-Per-Call' });
-  await expect(card).toContainText('Price depends on:');
-  await expect(card.locator('.depends-pills')).toHaveText('States · Ages · Buffer time');
-  await expect(page.getByRole('article', { name: 'Pay-Per-Application' })).not.toContainText(
-    'Price depends on',
-  );
+  expect(await page.locator('body').innerText()).not.toMatch(/\$\s?\d/);
+  expect(await page.locator('meta[name=description]').getAttribute('content')).not.toMatch(/\$/);
 });
 
 test('pay per call filter section shows the three filters', async ({ page }) => {
@@ -78,13 +74,13 @@ test('cta_click fires with the right location', async ({ page }) => {
   await page.goto('/');
   // Record the click without following the link.
   await page.evaluate(() => document.addEventListener('click', (e) => e.preventDefault()));
-  for (const loc of ['hero', 'header', 'pricing_card', 'cta_band', 'footer'])
+  for (const loc of ['hero', 'header', 'cta_band', 'footer'])
     await page.locator(`a[data-cta=${loc}]:visible`).first().click();
   const calls = await page.evaluate(() => (window as unknown as { calls: unknown[][] }).calls);
   const locations = calls
     .filter(([, name]) => name === 'cta_click')
     .map(([, , p]) => (p as { location: string }).location);
-  expect(locations).toEqual(['hero', 'header', 'pricing_card', 'cta_band', 'footer']);
+  expect(locations).toEqual(['hero', 'header', 'cta_band', 'footer']);
 });
 
 test('every /get-started button carries a data-cta location', async ({ page }) => {
@@ -267,7 +263,7 @@ test('hero H1 punctuation sits against its word', async ({ page }) => {
   const text = runs.join('');
   // No space or &nbsp; before the punctuation, and each mark in the same text node as its word.
   expect(text).not.toMatch(/\s[,.]/); // JS \s includes U+00A0 (&nbsp;)
-  expect(runs.some((t) => t.includes('applications.'))).toBe(true);
+  expect(runs.some((t) => t.includes('agents.'))).toBe(true);
   expect(runs.some((t) => t.trim() === '.')).toBe(true);
   // The tight-bearing comma/period font is what renders them.
   await page.evaluate(() => document.fonts.ready);
