@@ -28,7 +28,7 @@ test('header nav links work', async ({ page }) => {
   await nav.getByRole('link', { name: 'Agency Dashboard' }).click();
   await expect(page).toHaveURL(/\/platform$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText('One dashboard');
-  await expect(page.getByRole('link', { name: 'Client login' }).first()).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'Agent login' }).first()).toHaveAttribute(
     'href',
     'https://portal.example.com/login',
   );

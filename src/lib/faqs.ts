@@ -109,7 +109,7 @@ export const faqs: [string, string, Category][] = [
     'Dashboard',
   ],
   ['Can I listen to my calls?', 'Yes. Every call in your call log has its recording.', 'Dashboard'],
-  ['How do I log in?', 'Use Client login at the top of any page.', 'Dashboard'],
+  ['How do I log in?', 'Use Agent login at the top of any page.', 'Dashboard'],
 ];
 
 /** Question/answer pairs for a FaqStrip, looked up by question. */
