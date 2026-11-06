@@ -5,6 +5,7 @@ const paths = [
   '/',
   '/pay-per-application',
   '/pay-per-call',
+  '/medicare-tv-calls',
   '/platform',
   '/faq',
   '/get-started',
