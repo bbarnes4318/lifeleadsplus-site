@@ -1,0 +1,545 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+
+const applyHref =
+  '/get-started?program=ppc&vertical=medicare&buffer=120%20seconds&utm_campaign=medicare-tv-inbound';
+
+const proof = [
+  { value: '$35', label: 'Per billable call', note: 'Simple, transparent pricing' },
+  { value: '120', suffix: 'sec', label: 'Buffer protection', note: 'Under 2 minutes? No call charge.' },
+  { value: '1 in 3', label: 'Our agency close rate', note: 'Observed, not guaranteed' },
+  { value: '100+', label: 'Applications per day', note: 'Produced by our own agency' },
+];
+
+const steps = [
+  {
+    number: '01',
+    icon: 'monitor' as const,
+    eyebrow: 'WE GENERATE THE DEMAND',
+    title: 'The TV commercial runs.',
+    body: 'Our Medicare television campaign invites viewers to call and discuss their coverage options. We invest in getting the phone to ring.',
+  },
+  {
+    number: '02',
+    icon: 'phone-incoming' as const,
+    eyebrow: 'THE CONSUMER TAKES ACTION',
+    title: 'They call us. Right now.',
+    body: 'Not an old web form. Not a list to dial tomorrow. The consumer initiates a real inbound conversation.',
+  },
+  {
+    number: '03',
+    icon: 'headset' as const,
+    eyebrow: 'YOUR TEAM TAKES THE CALL',
+    title: 'Your licensed agent picks up.',
+    body: 'We connect live inbound demand with participating agencies that have licensed agents ready to answer.',
+  },
+];
+
+const differentiators = [
+  {
+    icon: 'phone-incoming' as const,
+    title: 'Inbound by choice.',
+    body: 'The person on the line called after seeing a Medicare TV advertisement. You are responding to their interest, not interrupting their day.',
+  },
+  {
+    icon: 'clock' as const,
+    title: 'A 2-minute safety net.',
+    body: 'Calls that end before the 120-second billing threshold are not billed under this campaign offer.',
+  },
+  {
+    icon: 'sliders-horizontal' as const,
+    title: 'Built around your agency.',
+    body: 'Tell us your licensed states, agent capacity and call hours. We coordinate delivery around what your team can handle.',
+  },
+  {
+    icon: 'headphones' as const,
+    title: 'Your agents do what they do best.',
+    body: 'No prospecting list, no manual follow-up chase. Put your licensed team on conversations already in motion.',
+  },
+];
+
+const questions = [
+  {
+    question: 'Where do these Medicare calls come from?',
+    answer:
+      'Consumers see our Medicare television advertising and call the advertised phone number themselves. These are live, TV-generated inbound conversations—not aged internet leads or a list of phone numbers.',
+  },
+  {
+    question: 'Exactly when is the $35 charge triggered?',
+    answer:
+      'The campaign rate is $35 per billable call with a 120-second buffer. A call that ends before the 120-second threshold is not billed. Your signed agreement sets the final measurement and billing terms.',
+  },
+  {
+    question: 'Is the one-in-three closing rate guaranteed?',
+    answer:
+      'No. Our agency has observed approximately one application for every three calls and produces more than 100 applications per day. Those are internal results, not a guarantee. Your results will vary by agent, market, plan availability and other factors.',
+  },
+  {
+    question: 'Can you route to our existing agents and phones?',
+    answer:
+      'Tell us how your agents take calls and which states they are licensed to serve. We will review your setup and agree on routing and delivery before launch.',
+  },
+  {
+    question: 'How much volume can my team receive?',
+    answer:
+      'That depends on available TV response, your states, operating hours and agent capacity. Request an allocation and we will review the current fit with your agency.',
+  },
+  {
+    question: 'Is this for consumers looking to enroll in Medicare?',
+    answer:
+      'This page is exclusively for licensed Medicare agents and insurance agencies interested in purchasing inbound calls. It is not a consumer Medicare enrollment page.',
+  },
+];
+
+const wave = [27, 43, 36, 62, 49, 78, 51, 93, 59, 75, 39, 66, 90, 56, 41, 82, 61, 100, 46, 72, 53, 89, 44, 69, 35, 81, 52, 68, 42, 60];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Medicare TV Inbound Calls for Licensed Agents',
+  provider: { '@type': 'Organization', name: 'Life Leads Plus' },
+  description: 'Live consumer-initiated Medicare television inbound calls for licensed insurance agents and agencies.',
+  offers: { '@type': 'Offer', price: '35', priceCurrency: 'USD', description: 'Per billable call, 120-second buffer; subject to agreement.' },
+};
+---
+
+<Base
+  title="Medicare TV Inbound Calls | $35 / Call, 120-Second Buffer | Life Leads Plus"
+  description="Stop chasing Medicare leads. Answer live TV-generated inbound calls for $35 per billable call with a 120-second buffer. Built for licensed Medicare agents and agencies."
+  jsonLd={jsonLd}
+  dark
+>
+  <section class="med-hero navy" aria-labelledby="med-hero-title">
+    <div class="med-ambient" aria-hidden="true"></div>
+    <div class="container med-hero-grid">
+      <div class="med-hero-copy">
+        <div class="med-kicker"><span class="med-kicker-dot"></span> MEDICARE TV INBOUND · AGENT PARTNER PROGRAM</div>
+        <h1 id="med-hero-title">
+          Stop chasing <span class="med-muted">Medicare leads.</span><br />
+          <span class="med-accent">Start answering Medicare calls.</span>
+        </h1>
+        <p class="med-hero-lead">
+          We run the television ads. Consumers pick up the phone and call.
+          <strong>Your licensed agents take the live inbound conversations.</strong>
+          No recycled forms. No cold dialing. Just real people calling about Medicare coverage.
+        </p>
+        <div class="med-hero-ctas">
+          <a href={applyHref} class="btn btn-primary med-main-cta" data-cta="medicare_hero">
+            Request Your Call Allocation <Icon name="arrow-right" size={19} />
+          </a>
+          <a href="#med-proof" class="med-text-link">See the campaign numbers <Icon name="arrow-right" size={17} /></a>
+        </div>
+        <div class="med-mini-trust" aria-label="Campaign advantages">
+          <span><Icon name="check-circle" size={16} /> TV-generated</span>
+          <span><Icon name="check-circle" size={16} /> Consumer-initiated</span>
+          <span><Icon name="check-circle" size={16} /> 120-second buffer</span>
+        </div>
+      </div>
+
+      <div class="med-visual" aria-label="Illustration of an inbound television call being connected to a Medicare agent">
+        <div class="med-visual-head">
+          <span class="med-live-mark"><span></span> TV TO AGENT</span>
+          <span class="med-visual-id">INBOUND / 001</span>
+        </div>
+        <div class="med-visual-body">
+          <div class="med-origin">
+            <div class="med-tv-frame">
+              <div class="med-tv-topline">MEDICARE COVERAGE OPTIONS</div>
+              <div class="med-tv-screen"><Icon name="monitor" size={38} /><span>TV CAMPAIGN</span></div>
+              <div class="med-tv-dots"><i></i><i></i><i></i></div>
+            </div>
+            <div class="med-origin-label"><span class="med-origin-number">01</span><span>TV creates the interest</span></div>
+          </div>
+          <div class="med-route-line">
+            <span class="med-route-dash"></span>
+            <span class="med-route-dot"><Icon name="arrow-right" size={17} /></span>
+            <span class="med-route-dash"></span>
+          </div>
+          <div class="med-call-card">
+            <span class="med-call-tag"><Icon name="phone-incoming" size={15} /> INCOMING MEDICARE CALL</span>
+            <div class="med-call-title">They saw the ad.<br /><strong>They made the call.</strong></div>
+            <div class="med-wave" aria-hidden="true">
+              {wave.map((h) => <i style={'height:' + h + '%'}></i>)}
+            </div>
+            <div class="med-call-bottom"><span><i></i> Consumer initiated</span><span>LIVE CONVERSATION</span></div>
+          </div>
+          <div class="med-route-line">
+            <span class="med-route-dash"></span>
+            <span class="med-route-dot"><Icon name="arrow-right" size={17} /></span>
+            <span class="med-route-dash"></span>
+          </div>
+          <div class="med-agent-dest">
+            <div class="med-agent-icon"><Icon name="headset" size={25} /></div>
+            <div><strong>Your licensed agent</strong><span>Ready to take the call</span></div>
+            <span class="med-connect-badge">Connected by routing</span>
+          </div>
+        </div>
+        <div class="med-visual-foot"><Icon name="shield-check" size={14} /> Illustrative call journey · No simulated live statistics</div>
+      </div>
+    </div>
+    <div class="container med-proof-wrap" id="med-proof">
+      <div class="med-proof">
+        {proof.map((p) => (
+          <div class="med-proof-item">
+            <div class="med-proof-value">{p.value}{p.suffix && <small>{p.suffix}</small>}</div>
+            <strong>{p.label}</strong>
+            <span>{p.note}</span>
+          </div>
+        ))}
+      </div>
+      <p class="med-proof-disclaimer">Our own agency's observed production is not a guarantee of future conversion or call volume. Campaign billing is governed by the agreement.</p>
+    </div>
+  </section>
+
+  <section class="med-section med-intent" aria-labelledby="med-intent-title">
+    <div class="container">
+      <div class="med-section-head">
+        <span class="med-section-kicker">THE DIFFERENCE IS INTENT</span>
+        <h2 id="med-intent-title">A lead is a name on a list.<br /><span>A live inbound call is a conversation.</span></h2>
+        <p>Most lead vendors sell you someone to chase. We're putting your agents in front of consumers who have already taken the first step: they called.</p>
+      </div>
+      <div class="med-benefit-grid">
+        {differentiators.map((item, i) => (
+          <article class="med-benefit">
+            <span class="med-benefit-index">0{i + 1}</span>
+            <span class="med-benefit-icon"><Icon name={item.icon} size={25} /></span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="med-process" aria-labelledby="med-process-title">
+    <div class="container">
+      <div class="med-process-top">
+        <div class="med-section-head">
+          <span class="med-section-kicker">THE MODEL</span>
+          <h2 id="med-process-title">The ad does the prospecting.<br /><span>Your agents do the closing.</span></h2>
+        </div>
+        <a class="btn btn-secondary" href={applyHref} data-cta="medicare_process">Get Inbound Calls <Icon name="arrow-right" size={18} /></a>
+      </div>
+      <div class="med-process-grid">
+        {steps.map((step) => (
+          <article class="med-process-step">
+            <div class="med-step-top"><span>{step.number}</span><Icon name={step.icon} size={24} /></div>
+            <p class="med-step-eyebrow">{step.eyebrow}</p>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="med-section med-economics" aria-labelledby="med-economics-title">
+    <div class="container med-economics-grid">
+      <div class="med-economics-copy">
+        <span class="med-section-kicker">THE MATH MATTERS</span>
+        <h2 id="med-economics-title">Spend on conversations.<br /><span>Not on chasing people.</span></h2>
+        <p>Our agency's recent production has been approximately one application per three calls. Here's what the economics look like at the same conversion level.</p>
+        <div class="med-math-callout">
+          <div class="med-math-icon"><Icon name="badge-dollar-sign" size={25} /></div>
+          <div><strong>$105 estimated call cost per application</strong><span>At a one-in-three close rate and $35 per billable call.</span></div>
+        </div>
+        <p class="med-math-caveat">This is illustrative acquisition-cost math—not an earnings, production or conversion guarantee. It excludes agent compensation, overhead, marketing outside this call purchase, and other expenses.</p>
+      </div>
+      <div class="med-calc" aria-labelledby="med-calc-title">
+        <div class="med-calc-top"><div><p class="med-calc-eyebrow">AGENCY PRODUCTION MODEL</p><h3 id="med-calc-title">Run your own numbers.</h3></div><span class="med-calc-tag">ESTIMATE</span></div>
+        <div class="med-calc-field">
+          <label for="med-calls">Billable calls <output id="med-call-output" for="med-calls">30</output></label>
+          <input id="med-calls" type="range" min="10" max="100" step="5" value="30" />
+          <div class="med-range-labels"><span>10 calls</span><span>100 calls</span></div>
+        </div>
+        <div class="med-calc-field">
+          <label for="med-rate">Your estimated close rate <output id="med-rate-output" for="med-rate">33.3%</output></label>
+          <input id="med-rate" type="range" min="10" max="50" step="0.1" value="33.3" />
+          <div class="med-range-labels"><span>10%</span><span>50%</span></div>
+        </div>
+        <div class="med-calc-results" aria-live="polite">
+          <div><span>Call spend</span><strong id="med-cost-output">$1,050</strong></div>
+          <div><span>Estimated applications</span><strong id="med-apps-output">~10</strong></div>
+          <div class="med-highlight-result"><span>Est. cost per application</span><strong id="med-cpa-output">~$106</strong></div>
+        </div>
+        <div class="med-calc-bottom"><Icon name="circle-help" size={15} /><span>Calculator uses $35 per billable call. Outcomes are estimates; actual results vary.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="med-closer navy" aria-labelledby="med-closer-title">
+    <div class="container med-closer-grid">
+      <div>
+        <span class="med-section-kicker">FOR SERIOUS MEDICARE TEAMS</span>
+        <h2 id="med-closer-title">Your agents can't close<br />calls they never receive.</h2>
+        <p>The TV traffic is being generated. If you have licensed agents and the capacity to answer live Medicare calls, let's see if your team is a fit.</p>
+      </div>
+      <div class="med-closer-action">
+        <div class="med-closer-price"><span>CAMPAIGN OFFER</span><strong>$35<span>/ call</span></strong><small>120-second buffer · Billable calls only</small></div>
+        <a href={applyHref} class="btn btn-primary" data-cta="medicare_closer">Request Your Call Allocation <Icon name="arrow-right" size={18} /></a>
+        <span class="med-closer-foot">For licensed Medicare agents and agencies only.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="med-section med-faq" aria-labelledby="med-faq-title">
+    <div class="container med-faq-grid">
+      <div class="med-faq-intro">
+        <span class="med-section-kicker">STRAIGHT ANSWERS</span>
+        <h2 id="med-faq-title">The details that matter.</h2>
+        <p>Clear sourcing. Clear billing. A real conversation about your team's capacity.</p>
+        <a href={applyHref} class="med-inline-link" data-cta="medicare_faq">Let's discuss your states <Icon name="arrow-right" size={17} /></a>
+      </div>
+      <div class="med-faq-items">
+        {questions.map((item) => (
+          <details>
+            <summary>{item.question}<span aria-hidden="true">+</span></summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="med-last-cta">
+    <div class="container med-last-inner">
+      <span class="med-section-kicker">THE CALLS DON'T CLOSE THEMSELVES</span>
+      <h2>More conversations.<br />More opportunities to enroll.</h2>
+      <p>Put your Medicare team in front of consumer-initiated TV inbound calls.</p>
+      <a href={applyHref} class="btn btn-primary med-main-cta" data-cta="medicare_bottom">Apply for Medicare Inbound Calls <Icon name="arrow-right" size={18} /></a>
+      <small>Agency performance figures are internal historical observations, not a guarantee. This is a business-to-business offer; not affiliated with or endorsed by the U.S. government or Medicare.</small>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .med-hero { position: relative; overflow: hidden; padding: clamp(8.5rem, 13vw, 11rem) 0 2rem; }
+  .med-ambient { position: absolute; pointer-events: none; inset: 0; background: radial-gradient(ellipse 65% 58% at 76% 32%, rgba(0,129,241,.22), transparent 70%), radial-gradient(ellipse 34% 42% at 6% 88%, rgba(0,129,241,.12), transparent 75%); }
+  .med-hero-grid { position: relative; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,.94fr); gap: clamp(2rem,5vw,4.5rem); align-items: center; }
+  .med-hero-copy { padding-bottom: 2rem; }
+  .med-kicker { display: inline-flex; gap: .6rem; align-items: center; padding: .55rem .8rem; border: 1px solid rgba(140,200,255,.28); border-radius: 100px; background: rgba(140,200,255,.09); color: #b7daff; font-size: .67rem; font-weight: 800; line-height: 1.4; letter-spacing: .12em; }
+  .med-kicker-dot,.med-live-mark span { width: 7px; height: 7px; border-radius: 50%; background: #67d7ad; box-shadow: 0 0 0 4px rgba(103,215,173,.13); flex-shrink: 0; }
+  .med-hero h1 { max-width: 12em; margin: 1.65rem 0 1.5rem; font-size: clamp(2.85rem, 4.4vw, 4.8rem); line-height: 1.055; letter-spacing: -.055em; color: white; }
+  .med-hero .med-muted { color: #a9bdd8; }
+  .med-hero .med-accent { color: #83c5ff; }
+  .med-hero-lead { max-width: 36rem; font-size: clamp(1.05rem, 1.5vw, 1.22rem); line-height: 1.7; color: #c8d5e9; }
+  .med-hero-lead strong { color: #fff; font-weight: 750; }
+  .med-hero-ctas { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center; margin-top: 2rem; }
+  .med-hero :global(.med-main-cta) { min-height: 56px; padding-inline: 1.5rem; background: #0788f8; color: white; border: 1px solid rgba(255,255,255,.22); box-shadow: 0 16px 32px -12px rgba(0,0,0,.42); }
+  .med-hero :global(.med-main-cta:hover) { background: #0075dd; }
+  .med-text-link { display: inline-flex; align-items: center; gap: .3rem; color: #e1efff !important; font-weight: 700; font-size: .91rem; text-decoration: none; }
+  .med-text-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .med-mini-trust { display: flex; flex-wrap: wrap; gap: .75rem 1.4rem; margin-top: 2rem; color: #d5e4f7; font-size: .79rem; font-weight: 600; }
+  .med-mini-trust > span { display: flex; align-items: center; gap: .35rem; }
+  .med-mini-trust :global(svg) { color: #78ccff; }
+
+  .med-visual { position: relative; border: 1px solid rgba(205,226,255,.2); border-radius: 24px; padding: 1.15rem; background: linear-gradient(142deg,rgba(255,255,255,.12),rgba(255,255,255,.035) 50%,rgba(29,119,235,.15)); box-shadow: 0 32px 65px rgba(0,8,29,.36), inset 0 1px 0 rgba(255,255,255,.18); }
+  .med-visual-head { display: flex; align-items: center; justify-content: space-between; padding: .6rem .55rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,.13); gap: .4rem; }
+  .med-live-mark { display: flex; align-items: center; gap: .7rem; font-size: .72rem; font-weight: 800; letter-spacing: .12em; color: #fff; }
+  .med-visual-id { font-size: .62rem; letter-spacing: .12em; color: #9bb7d8; }
+  .med-visual-body { display: grid; justify-items: center; padding: 1.6rem 1rem 1rem; }
+  .med-origin { display: grid; justify-items: center; gap: .8rem; }
+  .med-tv-frame { width: min(100%,285px); padding: .8rem .9rem .65rem; border: 1px solid #5d7ca7; border-radius: 14px; background: #0a1d3e; box-shadow: 0 7px 20px rgba(0,0,0,.3); }
+  .med-tv-topline { font-size: .58rem; font-weight: 750; color: #9fc4ec; letter-spacing: .16em; text-align: center; }
+  .med-tv-screen { display: flex; align-items: center; justify-content: center; gap: .75rem; min-height: 70px; border-radius: 8px; background: linear-gradient(125deg,#13386f,#0474d7); color: white; margin-top: .55rem; font-size: .86rem; font-weight: 850; letter-spacing: .09em; }
+  .med-tv-dots { display: flex; justify-content: center; gap: 3px; margin-top: .62rem; }
+  .med-tv-dots i { width: 3px; height: 3px; background: #6794cf; border-radius: 50%; }
+  .med-origin-label { color: #c7d7ec; display: flex; align-items: center; gap: .5rem; font-size: .73rem; }
+  .med-origin-number { display: inline-grid; place-items: center; background: rgba(255,255,255,.1); color: white; font-size: .6rem; height: 22px; width: 22px; border-radius: 50%; }
+  .med-route-line { height: 58px; display: flex; flex-direction: column; align-items: center; gap: 0; padding: 3px 0; }
+  .med-route-dash { width: 1px; height: 16px; background: linear-gradient(#3669b6,#6ab9ff); }
+  .med-route-dot { height: 22px; width: 22px; display: grid; place-items: center; border: 1px solid rgba(122,198,255,.5); border-radius: 100px; background: #133a72; color: #b8ddff; transform: rotate(90deg); }
+  .med-call-card { width: min(100%,382px); padding: 1.15rem 1.3rem 1rem; background: white; border-radius: 17px; color: var(--navy); box-shadow: 0 16px 32px rgba(0,0,0,.18); }
+  .med-call-tag { display: inline-flex; align-items: center; gap: .45rem; color: #0b5cd6; background: #eaf2fe; border-radius: 100px; font-size: .62rem; font-weight: 850; letter-spacing: .065em; padding: .4rem .65rem; }
+  .med-call-title { font-size: 1.31rem; line-height: 1.25; letter-spacing: -.025em; margin-top: 1rem; font-weight: 500; color: #42516b; }
+  .med-call-title strong { display: inline-block; font-size: 1.6rem; font-weight: 850; color: #0b2350; }
+  .med-wave { height: 61px; display: flex; gap: 3px; align-items: center; margin: 1.1rem 0 .8rem; }
+  .med-wave i { flex: 1; min-width: 2px; border-radius: 99px; background: linear-gradient(#279cf4,#0b5cd6); }
+  .med-call-bottom { display: flex; justify-content: space-between; gap: .6rem; align-items: center; border-top: 1px solid #e4eaf2; padding-top: .85rem; font-size: .59rem; font-weight: 750; letter-spacing: .045em; color: #64738a; }
+  .med-call-bottom > span:first-child { display: inline-flex; align-items: center; gap: .35rem; font-size: .68rem; color: #17724a; letter-spacing: 0; }
+  .med-call-bottom i { height: 7px; width: 7px; background: #25ad74; border-radius: 50%; }
+  .med-agent-dest { display: grid; width: min(100%,350px); grid-template-columns: auto 1fr auto; gap: .8rem; align-items: center; background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.2); border-radius: 13px; padding: .85rem 1rem; color: white; }
+  .med-agent-icon { height: 40px; width: 40px; display: grid; place-items: center; border-radius: 10px; background: #1174d0; color: white; }
+  .med-agent-dest strong { display: block; line-height: 1.2; font-size: .84rem; }
+  .med-agent-dest > div:nth-child(2) span { display: block; font-size: .65rem; color: #b8cce5; margin-top: 4px; }
+  .med-connect-badge { color: #9ce9c4; border: 1px solid rgba(156,233,196,.3); background: rgba(0,190,120,.1); border-radius: 99px; padding: .35rem .48rem; font-size: .57rem; line-height: 1.4; text-align: center; }
+  .med-visual-foot { display: flex; gap: .4rem; align-items: center; justify-content: center; padding: .7rem 0 .1rem; text-align: center; color: #9cacc6; font-size: .62rem; }
+
+  .med-proof-wrap { position: relative; margin-top: 4.8rem; }
+  .med-proof { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); padding: 1.8rem 0; border-top: 1px solid rgba(180,211,252,.2); border-bottom: 1px solid rgba(180,211,252,.2); }
+  .med-proof-item { padding: 0 1.8rem; border-right: 1px solid rgba(180,211,252,.2); }
+  .med-proof-item:first-child { padding-left: 0; }
+  .med-proof-item:last-child { border: 0; }
+  .med-proof-value { font-family: var(--font-display); font-size: clamp(2rem,3.3vw,3.25rem); font-weight: 850; line-height: 1.05; letter-spacing: -.05em; color: white; }
+  .med-proof-value small { font-size: .42em; letter-spacing: -.015em; margin-left: .28em; color: #9fcaff; }
+  .med-proof-item strong { display: block; color: #d7e8ff; font-size: .83rem; margin-top: .55rem; }
+  .med-proof-item > span { display: block; color: #9db2cf; font-size: .7rem; margin-top: .2rem; }
+  .med-proof-disclaimer { color: #9aadc5; font-size: .7rem; max-width: unset; line-height: 1.6; margin-top: .95rem; }
+
+  .med-section { padding-block: clamp(5rem,9vw,8rem); }
+  .med-section-kicker { display: block; font-size: .69rem; font-weight: 850; letter-spacing: .15em; color: #0b5cd6; }
+  .med-section-head { max-width: 830px; }
+  .med-section-head h2, .med-economics h2, .med-faq h2, .med-last-cta h2, .med-closer h2 { font-size: clamp(2.2rem,4.15vw,4rem); line-height: 1.12; letter-spacing: -.045em; margin-top: 1rem; }
+  .med-section-head h2 span, .med-economics h2 span { color: #276fc9; }
+  .med-section-head > p, .med-economics-copy > p, .med-faq-intro > p { max-width: 650px; margin-top: 1.35rem; font-size: 1.09rem; color: var(--ink-2); }
+  .med-intent { background: #fff; }
+  .med-benefit-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1rem; margin-top: 3.2rem; }
+  .med-benefit { display: flex; flex-direction: column; padding: 1.65rem 1.45rem 1.9rem; background: #f7f9fd; border: 1px solid #e7edf5; border-radius: 16px; }
+  .med-benefit-index { display: block; text-align: right; color: #9aacbf; font-size: .67rem; font-weight: 800; letter-spacing: .1em; }
+  .med-benefit-icon { display: grid; place-items: center; background: #e7f1ff; color: #0b5cd6; height: 52px; width: 52px; border-radius: 14px; margin-top: .5rem; }
+  .med-benefit h3 { margin-top: 1.5rem; font-size: 1.22rem; letter-spacing: -.025em; }
+  .med-benefit p { color: #53627b; font-size: .91rem; line-height: 1.7; margin-top: .65rem; }
+
+  .med-process { background: #f3f6fb; padding-block: clamp(4.5rem,8vw,7rem); }
+  .med-process-top { display: flex; justify-content: space-between; gap: 2rem; align-items: end; }
+  .med-process-top :global(.btn) { flex-shrink: 0; }
+  .med-process-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; margin-top: 3rem; }
+  .med-process-step { background: #fff; padding: 2.25rem 2rem 2.4rem; border: 1px solid #dce6f3; border-radius: 17px; box-shadow: 0 8px 26px -22px #0b2350; }
+  .med-step-top { display: flex; justify-content: space-between; align-items: flex-start; color: #0b5cd6; }
+  .med-step-top > span { font-size: 3rem; color: #dce9fb; font-weight: 850; font-family: var(--font-display); line-height: 1; }
+  .med-step-eyebrow { color: #0b5cd6; font-size: .7rem; letter-spacing: .1em; font-weight: 850; margin-top: 2.1rem; }
+  .med-process-step h3 { margin-top: .6rem; font-size: 1.5rem; }
+  .med-process-step > p:last-child { color: #53627b; font-size: .96rem; line-height: 1.7; margin-top: .7rem; }
+
+  .med-economics { background: #fff; }
+  .med-economics-grid { display: grid; grid-template-columns: minmax(0,.94fr) minmax(0,1fr); gap: clamp(3rem,7vw,7rem); align-items: center; }
+  .med-math-callout { display: flex; gap: 1rem; align-items: flex-start; max-width: 520px; padding: 1.35rem; border-left: 3px solid #0b5cd6; background: #ecf4ff; border-radius: 0 13px 13px 0; margin-top: 2rem; }
+  .med-math-icon { flex-shrink: 0; display: grid; place-items: center; height: 43px; width: 43px; border-radius: 11px; background: #d3e7ff; color: #0b5cd6; }
+  .med-math-callout strong { display: block; color: #0b2350; font-size: 1.03rem; font-weight: 850; }
+  .med-math-callout span { display: block; color: #445f7d; font-size: .84rem; line-height: 1.6; margin-top: .35rem; }
+  .med-economics-copy .med-math-caveat { font-size: .74rem; line-height: 1.6; color: #61738b; margin-top: 1rem; }
+  .med-calc { background: #fff; border: 1px solid #dce5f3; box-shadow: 0 25px 70px -28px rgba(11,35,80,.23); border-radius: 23px; overflow: hidden; padding: 2rem; }
+  .med-calc-top { display: flex; gap: 1rem; align-items: center; justify-content: space-between; padding-bottom: 1.4rem; border-bottom: 1px solid #e6ebf2; }
+  .med-calc-eyebrow { color: #0b5cd6; font-size: .65rem; font-weight: 800; letter-spacing: .13em; }
+  .med-calc h3 { font-size: 1.5rem; margin-top: .45rem; }
+  .med-calc-tag { font-size: .63rem; font-weight: 850; letter-spacing: .1em; background: #eaf2fe; color: #0759bf; padding: .45rem .6rem; border-radius: 6px; }
+  .med-calc-field { margin-top: 1.55rem; }
+  .med-calc-field label { display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: #324563; font-size: .88rem; font-weight: 750; }
+  .med-calc-field output { color: #0b2350; font-size: 1.25rem; font-variant-numeric: tabular-nums; font-weight: 850; }
+  .med-calc-field input { width: 100%; accent-color: #0b5cd6; cursor: pointer; margin-top: .85rem; }
+  .med-range-labels { display: flex; justify-content: space-between; color: #70809a; font-size: .71rem; }
+  .med-calc-results { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .7rem; margin-top: 1.55rem; }
+  .med-calc-results > div { background: #f5f8fc; padding: 1rem; border-radius: 11px; }
+  .med-calc-results > div span { display: block; color: #536784; font-size: .73rem; font-weight: 650; }
+  .med-calc-results strong { display: block; font-size: 1.65rem; font-family: var(--font-display); font-variant-numeric: tabular-nums; color: #0b2350; letter-spacing: -.04em; margin-top: .3rem; }
+  .med-calc-results .med-highlight-result { grid-column: 1/-1; background: #0b2350; padding: 1.2rem; }
+  .med-calc-results .med-highlight-result span { color: #bdd7fa; }
+  .med-calc-results .med-highlight-result strong { color: #fff; font-size: 2.15rem; }
+  .med-calc-bottom { display: flex; gap: .5rem; margin-top: 1.1rem; color: #62728b; font-size: .7rem; line-height: 1.5; align-items: flex-start; }
+  .med-calc-bottom :global(svg) { flex-shrink: 0; }
+
+  .med-closer { padding-block: clamp(4rem,7vw,6rem); }
+  .med-closer-grid { display: grid; grid-template-columns: minmax(0,1fr) 330px; gap: 4rem; align-items: center; }
+  .med-closer h2 { color: #fff; margin-top: 1rem; }
+  .med-closer .med-section-kicker { color: #8cc8ff; }
+  .med-closer-grid > div > p { font-size: 1.15rem; max-width: 600px; color: #c8d3e6; margin-top: 1.25rem; }
+  .med-closer-action { display: flex; flex-direction: column; gap: 1.2rem; }
+  .med-closer-price { display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,.2); padding: 1.45rem; background: rgba(255,255,255,.065); border-radius: 17px; }
+  .med-closer-price > span { font-size: .69rem; font-weight: 850; letter-spacing: .15em; color: #a9c6ea; }
+  .med-closer-price strong { color: #fff; font-family: var(--font-display); font-weight: 850; font-size: 3.85rem; line-height: 1.25; letter-spacing: -.06em; }
+  .med-closer-price strong span { font-size: 1.3rem; letter-spacing: -.02em; color: #bad3f2; }
+  .med-closer-price small { color: #c8d3e6; font-size: .77rem; }
+  .med-closer-action :global(.btn) { background: #fff; color: #0b2350; white-space: normal; text-align: center; }
+  .med-closer-foot { text-align: center; font-size: .76rem; color: #b2c6df; }
+
+  .med-faq-grid { display: grid; grid-template-columns: minmax(0,.75fr) minmax(0,1.25fr); gap: clamp(2rem,6vw,6rem); }
+  .med-faq-intro > p { font-size: 1rem; }
+  .med-inline-link { display: inline-flex; gap: .5rem; align-items: center; margin-top: 1.7rem; color: #0b5cd6; font-size: .93rem; font-weight: 750; text-decoration: none; }
+  .med-inline-link:hover { text-decoration: underline; }
+  .med-faq-items { border-top: 1px solid #dfe6ef; }
+  .med-faq-items details { border-bottom: 1px solid #dfe6ef; }
+  .med-faq-items summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.35rem 0; cursor: pointer; list-style: none; color: #0b2350; font-size: .97rem; line-height: 1.45; font-weight: 800; }
+  .med-faq-items summary::-webkit-details-marker { display: none; }
+  .med-faq-items summary > span { color: #0b5cd6; font-size: 1.5rem; line-height: 1; font-weight: 450; transition: transform .18s ease; }
+  .med-faq-items details[open] summary > span { transform: rotate(45deg); }
+  .med-faq-items details p { color: #485d78; font-size: .95rem; line-height: 1.7; padding: 0 2rem 1.4rem 0; }
+
+  .med-last-cta { padding: 5.5rem 0 6rem; text-align: center; background: #edf4fd; }
+  .med-last-inner { display: flex; align-items: center; flex-direction: column; }
+  .med-last-cta h2 { margin-top: 1.1rem; }
+  .med-last-cta p { font-size: 1.11rem; color: #425875; margin-top: 1.2rem; }
+  .med-last-cta :global(.btn) { margin-top: 1.85rem; min-height: 56px; padding-inline: 1.7rem; }
+  .med-last-cta small { display: block; max-width: 730px; margin-top: 2.1rem; color: #63758b; font-size: .68rem; line-height: 1.7; }
+
+  @media (max-width: 1100px) {
+    .med-hero-grid { grid-template-columns: minmax(0,1fr) minmax(0,.9fr); gap: 2rem; }
+    .med-hero h1 { font-size: clamp(2.6rem,4.2vw,3.5rem); }
+    .med-benefit-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .med-connect-badge { display: none; }
+    .med-agent-dest { grid-template-columns: auto 1fr; }
+  }
+  @media (max-width: 900px) {
+    .med-hero { padding-top: calc(var(--header-h) + 3.2rem); }
+    .med-hero-grid { grid-template-columns: 1fr; }
+    .med-hero-copy { padding-bottom: 0; }
+    .med-hero h1 { max-width: 13em; font-size: clamp(2.85rem,7.1vw,4.65rem); }
+    .med-visual { max-width: 600px; width: 100%; margin-inline: auto; }
+    .med-proof { grid-template-columns: repeat(2,1fr); gap: 1.5rem 0; }
+    .med-proof-item:nth-child(2) { border-right: 0; }
+    .med-proof-item:nth-child(3) { padding-left: 0; }
+    .med-proof-item { padding-inline: 1.5rem; }
+    .med-process-grid { grid-template-columns: 1fr; }
+    .med-process-step { padding: 1.75rem; }
+    .med-step-eyebrow { margin-top: 1.25rem; }
+    .med-economics-grid, .med-faq-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .med-closer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .med-closer-action { max-width: 430px; }
+  }
+  @media (max-width: 640px) {
+    .med-hero { padding-bottom: 1.5rem; }
+    .med-kicker { font-size: .55rem; letter-spacing: .075em; }
+    .med-hero h1 { font-size: clamp(2.5rem,10.5vw,3.45rem); margin-top: 1.25rem; }
+    .med-hero-ctas { align-items: stretch; flex-direction: column; }
+    .med-hero-ctas :global(.btn), .med-hero-ctas .med-text-link { width: 100%; }
+    .med-text-link { justify-content: center; min-height: 36px; }
+    .med-visual { padding: .7rem; border-radius: 18px; }
+    .med-visual-body { padding: 1.2rem .5rem .7rem; }
+    .med-call-title { font-size: 1.09rem; }
+    .med-call-title strong { font-size: 1.32rem; }
+    .med-agent-dest { padding: .7rem; }
+    .med-proof-wrap { margin-top: 3rem; }
+    .med-proof-item { padding-inline: .8rem; }
+    .med-proof-value { font-size: 2.2rem; }
+    .med-proof-item strong { font-size: .75rem; }
+    .med-proof-item > span { font-size: .65rem; }
+    .med-benefit-grid { grid-template-columns: 1fr; gap: .85rem; margin-top: 2rem; }
+    .med-benefit { padding: 1.35rem; }
+    .med-process-top { display: block; }
+    .med-process-top :global(.btn) { margin-top: 2rem; width: 100%; }
+    .med-process-grid { margin-top: 2rem; }
+    .med-calc { padding: 1.2rem; border-radius: 16px; }
+    .med-calc-results strong { font-size: 1.35rem; }
+    .med-closer-action { max-width: unset; }
+    .med-last-cta { padding-block: 4.5rem; }
+    .med-last-cta :global(.btn) { width: 100%; white-space: normal; }
+  }
+</style>
+
+<script>
+  const calls = document.querySelector<HTMLInputElement>('#med-calls');
+  const rate = document.querySelector<HTMLInputElement>('#med-rate');
+  const updateEstimate = () => {
+    if (!calls || !rate) return;
+    const count = Number(calls.value);
+    const percent = Number(rate.value);
+    const spend = count * 35;
+    const applications = count * percent / 100;
+    const cpa = spend / applications;
+    const usd = (n: number) => '$' + Math.round(n).toLocaleString('en-US');
+    const outputs: Record<string, string> = {
+      'med-call-output': String(count),
+      'med-rate-output': String(percent) + '%',
+      'med-cost-output': usd(spend),
+      'med-apps-output': '~' + Math.round(applications),
+      'med-cpa-output': '~' + usd(cpa),
+    };
+    for (const [id, value] of Object.entries(outputs)) {
+      const output = document.getElementById(id);
+      if (output) output.textContent = value;
+    }
+  };
+  calls?.addEventListener('input', updateEstimate);
+  rate?.addEventListener('input', updateEstimate);
+  updateEstimate();
+</script>
