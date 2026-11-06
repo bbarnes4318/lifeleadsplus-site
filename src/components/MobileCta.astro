@@ -8,8 +8,8 @@ const ctaLabel = isMedicareCampaign ? 'Get Medicare Inbound Calls' : 'Get your r
 ---
 
 <div class="mobile-cta" data-mobile-cta hidden>
-  <a href="/get-started" class="btn btn-primary w-full" data-cta="mobile_bar">
-    Get your rate
+  <a href={applyHref} class="btn btn-primary w-full" data-cta="mobile_bar">
+    {ctaLabel}
     <Icon name="arrow-right" size={18} />
   </a>
 </div>
