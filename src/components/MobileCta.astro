@@ -1,5 +1,10 @@
 ---
 import Icon from './Icon.astro';
+const isMedicareCampaign = Astro.url.pathname.replace(/\/$/, '') === '/medicare-tv-calls';
+const applyHref = isMedicareCampaign
+  ? '/get-started?program=ppc&vertical=medicare&buffer=120%20seconds&utm_campaign=medicare-tv-inbound'
+  : '/get-started';
+const ctaLabel = isMedicareCampaign ? 'Get Medicare Inbound Calls' : 'Get your rate';
 ---
 
 <div class="mobile-cta" data-mobile-cta hidden>
