@@ -88,6 +88,12 @@ if (preProgram) preProgram.checked = true;
 form
   .querySelectorAll<HTMLInputElement>('input[name=verticals]')
   .forEach((v) => (v.checked ||= v.dataset.slug === q.get('vertical')));
+// Campaign-specific landing pages can preserve an agreed billing buffer in the application.
+const preBuffer = q.get('buffer');
+const bufferSelect = form.querySelector<HTMLSelectElement>('select[name=buffer]');
+if (preBuffer && bufferSelect && Array.from(bufferSelect.options).some((o) => o.value === preBuffer)) {
+  bufferSelect.value = preBuffer;
+}
 syncExtra();
 
 const collect = () => {
