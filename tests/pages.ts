@@ -2,6 +2,7 @@ export const pages = [
   ['home', '/'],
   ['pay-per-application', '/pay-per-application'],
   ['pay-per-call', '/pay-per-call'],
+  ['medicare-tv-calls', '/medicare-tv-calls'],
   ['platform', '/platform'],
   ['faq', '/faq'],
   ['get-started', '/get-started'],
